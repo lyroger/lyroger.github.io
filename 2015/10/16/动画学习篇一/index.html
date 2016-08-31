@@ -4,26 +4,33 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>Hello World | Hexo</title>
+    <title>动画学习篇一 | Hexo</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="John Doe">
     
 
     
-    <meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.
-Quick">
+    <meta name="description" content="前言  最近玩手游比较多，看到了GameCenter中个人中心有一些气泡效果特别好，于是想想怎么实现的，要是能放到自己写的程序中，也是一种不错的感觉，能感觉到应用有一种活力.
+进入正题先看看gamecenter中的效果是怎样的，然后我们在着步分析：
+我们先参考单个气泡效果，就拿GameCenter气泡来说吧，仔细看看，他有一个整体画圈的效果，还有一个一张一缩的动画，想到多个动画组合成的一个效果就可">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hello World">
-<meta property="og:url" content="http://yoursite.com/2016/08/30/hello-world/index.html">
+<meta property="og:title" content="动画学习篇一">
+<meta property="og:url" content="http://yoursite.com/2015/10/16/动画学习篇一/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.
-Quick">
-<meta property="og:updated_time" content="2016-08-30T07:23:52.000Z">
+<meta property="og:description" content="前言  最近玩手游比较多，看到了GameCenter中个人中心有一些气泡效果特别好，于是想想怎么实现的，要是能放到自己写的程序中，也是一种不错的感觉，能感觉到应用有一种活力.
+进入正题先看看gamecenter中的效果是怎样的，然后我们在着步分析：
+我们先参考单个气泡效果，就拿GameCenter气泡来说吧，仔细看看，他有一个整体画圈的效果，还有一个一张一缩的动画，想到多个动画组合成的一个效果就可">
+<meta property="og:image" content="http://yoursite.com/~/gameCenter1.gif">
+<meta property="og:image" content="http://yoursite.com/~/game1.gif">
+<meta property="og:image" content="http://yoursite.com/~/game2.gif">
+<meta property="og:updated_time" content="2016-07-06T03:00:49.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hello World">
-<meta name="twitter:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.
-Quick">
+<meta name="twitter:title" content="动画学习篇一">
+<meta name="twitter:description" content="前言  最近玩手游比较多，看到了GameCenter中个人中心有一些气泡效果特别好，于是想想怎么实现的，要是能放到自己写的程序中，也是一种不错的感觉，能感觉到应用有一种活力.
+进入正题先看看gamecenter中的效果是怎样的，然后我们在着步分析：
+我们先参考单个气泡效果，就拿GameCenter气泡来说吧，仔细看看，他有一个整体画圈的效果，还有一个一张一缩的动画，想到多个动画组合成的一个效果就可">
+<meta name="twitter:image" content="http://yoursite.com/~/gameCenter1.gif">
 
     
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
@@ -83,14 +90,14 @@ Quick">
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2016/08/30/hello-world/" title="Hello World" itemprop="url">Hello World</a>
+      <a href="/2015/10/16/动画学习篇一/" title="动画学习篇一" itemprop="url">动画学习篇一</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/about" title="John Doe" target="_blank" itemprop="author">John Doe</a>
 		
   <p class="article-time">
-    <time datetime="2016-08-30T07:23:52.000Z" itemprop="datePublished"> Published 2016-08-30</time>
+    <time datetime="2015-10-16T03:06:00.000Z" itemprop="datePublished"> Published 2015-10-16</time>
     
   </p>
 </header>
@@ -99,19 +106,18 @@ Quick">
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">Contents</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Quick-Start"><span class="toc-number">1.</span> <span class="toc-text">Quick Start</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Create-a-new-post"><span class="toc-number">1.1.</span> <span class="toc-text">Create a new post</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Run-server"><span class="toc-number">1.2.</span> <span class="toc-text">Run server</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Generate-static-files"><span class="toc-number">1.3.</span> <span class="toc-text">Generate static files</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Deploy-to-remote-sites"><span class="toc-number">1.4.</span> <span class="toc-text">Deploy to remote sites</span></a></li></ol></li></ol>
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#进入正题"><span class="toc-number">2.</span> <span class="toc-text">进入正题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-number">3.</span> <span class="toc-text">总结</span></a></li></ol>
 		
 		</div>
 		
-		<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
+		<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>  最近玩手游比较多，看到了GameCenter中个人中心有一些气泡效果特别好，于是想想怎么实现的，要是能放到自己写的程序中，也是一种不错的感觉，能感觉到应用有一种活力.</p>
+<h2 id="进入正题"><a href="#进入正题" class="headerlink" title="进入正题"></a>进入正题</h2><p>先看看gamecenter中的效果是怎样的，然后我们在着步分析：</p>
+<p><img src="~/gameCenter1.gif" alt=""><br>我们先参考单个气泡效果，就拿GameCenter气泡来说吧，仔细看看，他有一个整体画圈的效果，还有一个一张一缩的动画，想到多个动画组合成的一个效果就可以想到动画帧来做：CAKeyframeAnimation；<br>首先我们来实现一个画圈的效果，看看下面代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">CAKeyframeAnimation *pathAnimation = [CAKeyframeAnimation animationWithKeyPath:@&quot;position&quot;];</div><div class="line">    pathAnimation.calculationMode = kCAAnimationPaced;</div><div class="line">    pathAnimation.fillMode = kCAFillModeForwards;</div><div class="line">    pathAnimation.removedOnCompletion = NO;</div><div class="line">    pathAnimation.repeatCount = INFINITY;</div><div class="line">    pathAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];</div><div class="line">    pathAnimation.duration = 6.0;</div><div class="line">    </div><div class="line">    CGMutablePathRef curvedPath = CGPathCreateMutable();</div><div class="line">    CGFloat amplitude = 10;</div><div class="line">    CGRect circleContainer = CGRectInset(gameView.frame, gameView.bounds.size.width / 2 - amplitude, gameView.bounds.size.width / 2 - amplitude);</div><div class="line">    CGPathAddEllipseInRect(curvedPath, NULL, circleContainer);</div><div class="line">    </div><div class="line">    pathAnimation.path = curvedPath;</div><div class="line">    CGPathRelease(curvedPath);</div><div class="line">    [gameView.layer addAnimation:pathAnimation forKey:@&quot;gameCenterAnimation&quot;];</div></pre></td></tr></table></figure></p>
+<p>代码实现效果如下图：</p>
+<p><img src="~/game1.gif" alt=""><br>接下来我们来实现一张一缩的效果：<br>代码如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">CAKeyframeAnimation *scaleX = [CAKeyframeAnimation animationWithKeyPath:@&quot;transform.scale.x&quot;];</div><div class="line">    scaleX.duration = 1;</div><div class="line">    scaleX.values = @[@1.0, @1.1, @1.0];</div><div class="line">    scaleX.keyTimes = @[@0.0, @0.5, @1.0];</div><div class="line">    scaleX.repeatCount = INFINITY;</div><div class="line">    scaleX.autoreverses = YES;</div><div class="line">    </div><div class="line">    scaleX.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];</div><div class="line">    [gameView.layer addAnimation:scaleX forKey:@&quot;scaleX&quot;];</div><div class="line">    </div><div class="line">    </div><div class="line">    CAKeyframeAnimation *scaleY = [CAKeyframeAnimation animationWithKeyPath:@&quot;transform.scale.y&quot;];</div><div class="line">    scaleY.duration = 1.5;</div><div class="line">    scaleY.values = @[@1.0, @1.1, @1.0];</div><div class="line">    scaleY.keyTimes = @[@0.0, @0.5, @1.0];</div><div class="line">    scaleY.repeatCount = INFINITY;</div><div class="line">    scaleY.autoreverses = YES;</div><div class="line">    scaleX.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];</div><div class="line">    [gameView.layer addAnimation:scaleY forKey:@&quot;scaleY&quot;];</div></pre></td></tr></table></figure></p>
+<p>结合上面的代码一起，便可以看到整体效果：</p>
+<p><img src="~/game2.gif" alt=""></p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>很多动画其实就是由多个动画分解组合而成，所以要学会使用CAKeyframeAnimation。</p>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -124,7 +130,7 @@ Quick">
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://yoursite.com/2016/08/30/hello-world/" data-title="Hello World | Hexo" data-tsina="null" class="share clearfix">
+	  <div data-url="http://yoursite.com/2015/10/16/动画学习篇一/" data-title="动画学习篇一 | Hexo" data-tsina="null" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -137,11 +143,19 @@ Quick">
 	
 <nav class="article-nav clearfix">
  
+ <div class="prev" >
+ <a href="/2015/10/22/升级XCode7和iOS9相关问题/" title="升级XCode7和iOS9相关问题">
+  <strong>上一篇：</strong><br/>
+  <span>
+  升级XCode7和iOS9相关问题</span>
+</a>
+</div>
+
 
 <div class="next">
-<a href="/2016/08/25/Jenkins+Git自动构建/"  title="Jenkins+Git自动构建">
+<a href="/2015/10/14/UISearchBar的使用/"  title="UISearchBar的使用">
  <strong>下一篇：</strong><br/> 
- <span>Jenkins+Git自动构建
+ <span>UISearchBar的使用
 </span>
 </a>
 </div>
@@ -156,7 +170,7 @@ Quick">
   <div id="toc" class="toc-aside">
   <strong class="toc-title">Contents</strong>
  
- <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Quick-Start"><span class="toc-number">1.</span> <span class="toc-text">Quick Start</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Create-a-new-post"><span class="toc-number">1.1.</span> <span class="toc-text">Create a new post</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Run-server"><span class="toc-number">1.2.</span> <span class="toc-text">Run server</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Generate-static-files"><span class="toc-number">1.3.</span> <span class="toc-text">Generate static files</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Deploy-to-remote-sites"><span class="toc-number">1.4.</span> <span class="toc-text">Deploy to remote sites</span></a></li></ol></li></ol>
+ <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#进入正题"><span class="toc-number">2.</span> <span class="toc-text">进入正题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-number">3.</span> <span class="toc-text">总结</span></a></li></ol>
  
   </div>
 
