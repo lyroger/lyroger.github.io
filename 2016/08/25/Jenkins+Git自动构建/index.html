@@ -14,25 +14,25 @@
     <meta name="description" content="前言   想想以前，发给测试的测试包都是通过手动使用XCode来打包，如果项目工程比较大，Archive过程时间还是比较长的，打多了觉得特没劲，非常浪费时间，特别是使用了敏捷开发流程的，要是还用手动打包，估计你在打包上耗得时间都够你解决几个bug了。敏捷开发也是强调使用自动化的，所以也少不了自动构建的环节，那么接下来说说如何使用Jenkins+Git来自动构建我们的项目，从而方便测试，也让开发有更">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Jenkins+Git自动构建">
-<meta property="og:url" content="http://lyroger.github.com/2016/08/25/Jenkins+Git自动构建/index.html">
+<meta property="og:url" content="http://lyroger.github.io/2016/08/25/Jenkins+Git自动构建/index.html">
 <meta property="og:site_name" content="罗琰的技术博客">
 <meta property="og:description" content="前言   想想以前，发给测试的测试包都是通过手动使用XCode来打包，如果项目工程比较大，Archive过程时间还是比较长的，打多了觉得特没劲，非常浪费时间，特别是使用了敏捷开发流程的，要是还用手动打包，估计你在打包上耗得时间都够你解决几个bug了。敏捷开发也是强调使用自动化的，所以也少不了自动构建的环节，那么接下来说说如何使用Jenkins+Git来自动构建我们的项目，从而方便测试，也让开发有更">
-<meta property="og:image" content="http://lyroger.github.com/~/jenins首页.png">
-<meta property="og:image" content="http://lyroger.github.com/~/创建项目.png">
-<meta property="og:image" content="http://lyroger.github.com/~/创建项目1.png">
-<meta property="og:image" content="http://lyroger.github.com/~/配置项目-项目名称.png">
-<meta property="og:image" content="http://lyroger.github.com/~/项目配置-源码管理.png">
-<meta property="og:image" content="http://lyroger.github.com/~/项目配置-源码管理添加http授权.png">
-<meta property="og:image" content="http://lyroger.github.com/~/项目配置-源码管理SSH授权创建.png">
-<meta property="og:image" content="http://lyroger.github.com/~/构建1.png">
-<meta property="og:image" content="http://lyroger.github.com/~/项目配置-构建配置.png">
-<meta property="og:image" content="http://lyroger.github.com/~/工程配置.png">
-<meta property="og:image" content="http://lyroger.github.com/~/项目管理-立即构建.png">
+<meta property="og:image" content="http://lyroger.github.io/~/jenins首页.png">
+<meta property="og:image" content="http://lyroger.github.io/~/创建项目.png">
+<meta property="og:image" content="http://lyroger.github.io/~/创建项目1.png">
+<meta property="og:image" content="http://lyroger.github.io/~/配置项目-项目名称.png">
+<meta property="og:image" content="http://lyroger.github.io/~/项目配置-源码管理.png">
+<meta property="og:image" content="http://lyroger.github.io/~/项目配置-源码管理添加http授权.png">
+<meta property="og:image" content="http://lyroger.github.io/~/项目配置-源码管理SSH授权创建.png">
+<meta property="og:image" content="http://lyroger.github.io/~/构建1.png">
+<meta property="og:image" content="http://lyroger.github.io/~/项目配置-构建配置.png">
+<meta property="og:image" content="http://lyroger.github.io/~/工程配置.png">
+<meta property="og:image" content="http://lyroger.github.io/~/项目管理-立即构建.png">
 <meta property="og:updated_time" content="2016-08-29T02:04:09.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Jenkins+Git自动构建">
 <meta name="twitter:description" content="前言   想想以前，发给测试的测试包都是通过手动使用XCode来打包，如果项目工程比较大，Archive过程时间还是比较长的，打多了觉得特没劲，非常浪费时间，特别是使用了敏捷开发流程的，要是还用手动打包，估计你在打包上耗得时间都够你解决几个bug了。敏捷开发也是强调使用自动化的，所以也少不了自动构建的环节，那么接下来说说如何使用Jenkins+Git来自动构建我们的项目，从而方便测试，也让开发有更">
-<meta name="twitter:image" content="http://lyroger.github.com/~/jenins首页.png">
+<meta name="twitter:image" content="http://lyroger.github.io/~/jenins首页.png">
 
     
     <link rel="alternative" href="http://lyroger.github.io/atom.xml" title="罗琰的技术博客" type="application/atom+xml">
@@ -68,7 +68,7 @@
 					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
 						<label>Search</label>
 						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
-						<input type="hidden" name="q" value="site:lyroger.github.com">
+						<input type="hidden" name="q" value="site:lyroger.github.io">
 					</form>
 					
 					</li>
@@ -128,7 +128,7 @@
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://lyroger.github.com/2016/08/25/Jenkins+Git自动构建/" data-title="Jenkins+Git自动构建 | 罗琰的技术博客" data-tsina="null" class="share clearfix">
+	  <div data-url="http://lyroger.github.io/2016/08/25/Jenkins+Git自动构建/" data-title="Jenkins+Git自动构建 | 罗琰的技术博客" data-tsina="null" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -162,7 +162,7 @@
 
 	
 <section id="comments" class="comment">
-	<div class="ds-thread" data-thread-key="2016/08/25/Jenkins+Git自动构建/" data-title="Jenkins+Git自动构建" data-url="http://lyroger.github.com/2016/08/25/Jenkins+Git自动构建/"></div>
+	<div class="ds-thread" data-thread-key="2016/08/25/Jenkins+Git自动构建/" data-title="Jenkins+Git自动构建" data-url="http://lyroger.github.io/2016/08/25/Jenkins+Git自动构建/"></div>
 </section>
 
 
