@@ -35,7 +35,7 @@
 				<h1 class="site-name"><a href="/" title="罗琰的技术博客">罗琰的技术博客</a></h1>
 				<h2 class="blog-motto">积累与分享成长的技术经验</h2>
 			</div>
-			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
 			</a></div>
 			<nav class="animated">
 				<ul>
@@ -51,7 +51,7 @@
  					
 					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
 						<label>Search</label>
-						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
 						<input type="hidden" name="q" value="site:lyroger.github.io">
 					</form>
 					
@@ -76,7 +76,7 @@
 		<a href="/about" title="luoyan" target="_blank" itemprop="author">luoyan</a>
 		
   <p class="article-time">
-    <time datetime="2015-12-31T08:48:00.000Z" itemprop="datePublished"> Published 2015-12-31</time>
+    <time datetime="2015-12-31T08:48:00.000Z" itemprop="datePublished"> 发表于 2015-12-31</time>
     
   </p>
 </header>
@@ -133,7 +133,7 @@
 		<a href="/about" title="luoyan" target="_blank" itemprop="author">luoyan</a>
 		
   <p class="article-time">
-    <time datetime="2015-12-25T07:41:00.000Z" itemprop="datePublished"> Published 2015-12-25</time>
+    <time datetime="2015-12-25T07:41:00.000Z" itemprop="datePublished"> 发表于 2015-12-25</time>
     
   </p>
 </header>
@@ -190,7 +190,7 @@
 		<a href="/about" title="luoyan" target="_blank" itemprop="author">luoyan</a>
 		
   <p class="article-time">
-    <time datetime="2015-12-23T09:33:00.000Z" itemprop="datePublished"> Published 2015-12-23</time>
+    <time datetime="2015-12-23T09:33:00.000Z" itemprop="datePublished"> 发表于 2015-12-23</time>
     
   </p>
 </header>
@@ -247,7 +247,7 @@
 		<a href="/about" title="luoyan" target="_blank" itemprop="author">luoyan</a>
 		
   <p class="article-time">
-    <time datetime="2015-12-14T06:35:00.000Z" itemprop="datePublished"> Published 2015-12-14</time>
+    <time datetime="2015-12-14T06:35:00.000Z" itemprop="datePublished"> 发表于 2015-12-14</time>
     
   </p>
 </header>
@@ -310,7 +310,7 @@
 		<a href="/about" title="luoyan" target="_blank" itemprop="author">luoyan</a>
 		
   <p class="article-time">
-    <time datetime="2015-10-22T06:29:00.000Z" itemprop="datePublished"> Published 2015-10-22</time>
+    <time datetime="2015-10-22T06:29:00.000Z" itemprop="datePublished"> 发表于 2015-10-22</time>
     
   </p>
 </header>
@@ -369,7 +369,7 @@
 		<a href="/about" title="luoyan" target="_blank" itemprop="author">luoyan</a>
 		
   <p class="article-time">
-    <time datetime="2015-10-16T03:06:00.000Z" itemprop="datePublished"> Published 2015-10-16</time>
+    <time datetime="2015-10-16T03:06:00.000Z" itemprop="datePublished"> 发表于 2015-10-16</time>
     
   </p>
 </header>
@@ -429,7 +429,7 @@
 		<a href="/about" title="luoyan" target="_blank" itemprop="author">luoyan</a>
 		
   <p class="article-time">
-    <time datetime="2015-10-14T05:18:00.000Z" itemprop="datePublished"> Published 2015-10-14</time>
+    <time datetime="2015-10-14T05:18:00.000Z" itemprop="datePublished"> 发表于 2015-10-14</time>
     
   </p>
 </header>
@@ -452,7 +452,7 @@
 <p>打印出来的东西有点多，不要着急，要了解清楚这里面的结构还需要耐心和细心，我们先找到UISearchDisplayControllerContainerView，这个view下面有三个子view，其中一个子view中加载着UISearchResultsTableView，这个UISearchResultsTableView是估计大家都很熟悉吧，搜索出来的数据就是加载到这个UISearchResultsTableView上的，然后我们再仔细看看，三个子view中还有一个view下加载着_UISearchDisplayControllerDimmingView，我们试图在这个view上加一些东西，看看会有什么变化,我这里把预先初始化好了的提示页面加载到这个view上，代码如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">- (void)addTipsViewWithController：(UISearchDisplayController*)controller</div><div class="line">&#123;</div><div class="line">    UIView *supV = controller.searchResultsTableView.superview;</div><div class="line">    UIView *supsupV = supV.superview;</div><div class="line">    for (UIView *view in supsupV.subviews) &#123;</div><div class="line">        for (UIView *sencondView in view.subviews) &#123;</div><div class="line">            if ([sencondView isKindOfClass:[NSClassFromString(@&quot;_UISearchDisplayControllerDimmingView&quot;) class]]) &#123;</div><div class="line">                NSLog(@&quot;_UISearchDisplayControllerDimmingView&quot;);</div><div class="line">                if (![sencondView viewWithTag:99]) &#123;</div><div class="line">                    [sencondView addSubview:self.tempSearchDisplayBackgroungView];</div><div class="line">                &#125;</div><div class="line">                sencondView.alpha = 1;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 <p>或许你的 NSLog(@”_UISearchDisplayControllerDimmingView”);日志重来就没打印出来，不用着急，你可以延时加载此view<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">- (void)searchDisplayControllerWillBeginSearch:(UISearchDisplayController *)controller</div><div class="line">&#123;</div><div class="line">    [self performSelector:@selector(addTipsViewWithView:) withObject:controller afterDelay:0.1];</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 <p>这样就没问题了。然后我们来看看效果，是不是发现阴影层上有了我们自己加的页面呢？我们再修改下自己定义的提示页面，设置frame的大小为阴影层的大小，放在阴影层上，但每次都需要将阴影层的alpha设为1，如果每次设置，第二次以及后面搜索时，你加载的提示页面讲是透明的。最后来看看我的效果见下图：</p>
-<p><img src="images/最终效果.png" alt=""></p>
+<p><img src="~/最终效果.png" alt=""></p>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>遇到一些扩展性不是很强，或者布局复杂都不要着急，一定要静下心来慢慢查看，熟悉使用UIView的recursiveDescription，强调一定是UIView对象，如果觉得recursiveDescription打印出来的不够直观，推荐使用工具Reveal工具，不过他不是免费的哦。这款软件能直观立体的将试图展示出来，很快的定位试图结构。如有需要该文中提到的相关工程，可以到[这里][mark_SearchBar]下载。还有其他更好的方法，也希望大家多多交流。祝好！</p>
 <h2 id="mark-SearchBar-https-github-com-lyroger-SearchBarPro-SearchBarPro"><a href="#mark-SearchBar-https-github-com-lyroger-SearchBarPro-SearchBarPro" class="headerlink" title="[mark_SearchBar]: https://github.com/lyroger/SearchBarPro (SearchBarPro)"></a>[mark_SearchBar]: <a href="https://github.com/lyroger/SearchBarPro" target="_blank" rel="external">https://github.com/lyroger/SearchBarPro</a> (SearchBarPro)</h2><p>关注我的「lyroger」微信公众号：</p>
 <p><img src="~/qrcode_for_gh_6f53ca8d5aea_258.jpg" alt=""></p>
@@ -502,7 +502,7 @@
 		<a href="/about" title="luoyan" target="_blank" itemprop="author">luoyan</a>
 		
   <p class="article-time">
-    <time datetime="2015-10-14T05:16:00.000Z" itemprop="datePublished"> Published 2015-10-14</time>
+    <time datetime="2015-10-14T05:16:00.000Z" itemprop="datePublished"> 发表于 2015-10-14</time>
     
   </p>
 </header>
@@ -601,7 +601,7 @@
 		<a href="/about" title="luoyan" target="_blank" itemprop="author">luoyan</a>
 		
   <p class="article-time">
-    <time datetime="2015-09-08T06:18:00.000Z" itemprop="datePublished"> Published 2015-09-08</time>
+    <time datetime="2015-09-08T06:18:00.000Z" itemprop="datePublished"> 发表于 2015-09-08</time>
     
   </p>
 </header>
@@ -679,15 +679,15 @@
   </nav>
 
 </div>
-      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
 
 <div id="asidepart">
-<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
 <aside class="clearfix">
 
   
 <div class="github-card">
-<p class="asidetitle">Github Card</p>
+<p class="asidetitle">Github 名片</p>
 <div class="github-card" data-github="lyroger" data-width="220" data-height="119" data-theme="medium">
 <script type="text/javascript" src="//cdn.jsdelivr.net/github-cards/latest/widget.js" ></script>
 </div>
@@ -700,7 +700,7 @@
   
 
   <div class="linkslist">
-  <p class="asidetitle">Links</p>
+  <p class="asidetitle">友情链接</p>
     <ul>
         
           <li>
@@ -716,11 +716,11 @@
 
 
   <div class="rsspart">
-	<a href="http://lyroger.github.io/atom.xml" target="_blank" title="rss">RSS</a>
+	<a href="http://lyroger.github.io/atom.xml" target="_blank" title="rss">RSS 订阅</a>
 </div>
 
   <div class="weiboshow">
-  <p class="asidetitle">Weibo</p>
+  <p class="asidetitle">新浪微博</p>
     <iframe width="100%" height="119" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=119&fansRow=2&ptype=1&speed=0&skin=9&isTitle=1&noborder=1&isWeibo=0&isFans=0&uid=null&verifier=&dpc=1"></iframe>
 </div>
 
@@ -874,7 +874,7 @@ var _hmt = _hmt || [];
 <!-- Totop Begin -->
 
 	<div id="totop">
-	<a title="Back to Top"><img src="/img/scrollup.png"/></a>
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
 	</div>
 	<script src="/js/totop.js"></script>
 
