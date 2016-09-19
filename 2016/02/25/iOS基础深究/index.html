@@ -17,7 +17,7 @@
 <meta property="og:url" content="http://lyroger.github.io/2016/02/25/iOS基础深究/index.html">
 <meta property="og:site_name" content="罗琰的技术博客">
 <meta property="og:description" content="一、assign与weak的区别assign适用于基本数据类型，weak是适用于NSObject对象，并且是一个弱引用。assign其实也可以用来修饰对象，那么我们为什么不用它呢？因为被assign修饰的对象在释放之后，指针的地址还是存在的，也就是说指针并没有被置为nil。如果在后续的内存分配中，刚好分到了这块地址，程序就会崩溃掉。而weak修饰的对象在释放之后，指针地址会被置为nil。所以现在一">
-<meta property="og:updated_time" content="2016-07-06T03:03:41.000Z">
+<meta property="og:updated_time" content="2016-09-19T07:59:42.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="iOS基础深究">
 <meta name="twitter:description" content="一、assign与weak的区别assign适用于基本数据类型，weak是适用于NSObject对象，并且是一个弱引用。assign其实也可以用来修饰对象，那么我们为什么不用它呢？因为被assign修饰的对象在释放之后，指针的地址还是存在的，也就是说指针并没有被置为nil。如果在后续的内存分配中，刚好分到了这块地址，程序就会崩溃掉。而weak修饰的对象在释放之后，指针地址会被置为nil。所以现在一">
@@ -105,6 +105,11 @@
 		<footer class="article-footer clearfix">
 <div class="article-catetags">
 
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/基础篇/">基础篇</a>
+</div>
+
 
 </div>
 
@@ -170,7 +175,31 @@
 		<ul>
 		
 		  
+			<li><a href="/categories/swift/" title="swift">swift<sup>2</sup></a></li>
+		  
+		
+		  
 			<li><a href="/categories/动画/" title="动画">动画<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/基础篇/" title="基础篇">基础篇<sup>6</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/工具/" title="工具">工具<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/框架/" title="框架">框架<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/设计模式/" title="设计模式">设计模式<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/高效篇/" title="高效篇">高效篇<sup>4</sup></a></li>
 		  
 		
 		</ul>
@@ -178,6 +207,17 @@
 
 
   
+<div class="tagslist">
+	<p class="asidetitle">Tags</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/runtime/" title="runtime">runtime<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
 
   <div class="linkslist">
   <p class="asidetitle">Links</p>
