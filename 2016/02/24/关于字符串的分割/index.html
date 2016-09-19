@@ -11,19 +11,16 @@
     
 
     
-    <meta name="description" content="今天在字符串分割上遇到一个坑，一不小心便踩了，问题是这样的：我接收到服务端传过来的一个包含多个图片地址的字符串，使用“,”分割，我使用12```objective-c    NSArray *descImages = [descImage componentsSeparatedByString:@&amp;quot;,&amp;quot;];
-其实这个时候descImage等于””，但使用123456789101">
+    <meta name="description" content="今天在字符串分割上遇到一个坑，一不小心便踩了，问题是这样的：我接收到服务端传过来的一个包含多个图片地址的字符串，使用“,”分割，我使用componentsSeparatedByString:来分割，将多个图片地址存入数组，并根据数组的个数来加载默认图片，等图片下载完成后替换对应的默认图片。现在服务端给我返回了一个@””字符串，我的代码如下:1NSArray *descImages = [descI">
 <meta property="og:type" content="article">
 <meta property="og:title" content="关于字符串的分割">
 <meta property="og:url" content="http://lyroger.github.io/2016/02/24/关于字符串的分割/index.html">
 <meta property="og:site_name" content="罗琰的技术博客">
-<meta property="og:description" content="今天在字符串分割上遇到一个坑，一不小心便踩了，问题是这样的：我接收到服务端传过来的一个包含多个图片地址的字符串，使用“,”分割，我使用12```objective-c    NSArray *descImages = [descImage componentsSeparatedByString:@&amp;quot;,&amp;quot;];
-其实这个时候descImage等于””，但使用123456789101">
-<meta property="og:updated_time" content="2016-07-06T03:03:40.000Z">
+<meta property="og:description" content="今天在字符串分割上遇到一个坑，一不小心便踩了，问题是这样的：我接收到服务端传过来的一个包含多个图片地址的字符串，使用“,”分割，我使用componentsSeparatedByString:来分割，将多个图片地址存入数组，并根据数组的个数来加载默认图片，等图片下载完成后替换对应的默认图片。现在服务端给我返回了一个@””字符串，我的代码如下:1NSArray *descImages = [descI">
+<meta property="og:updated_time" content="2016-09-19T04:12:10.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="关于字符串的分割">
-<meta name="twitter:description" content="今天在字符串分割上遇到一个坑，一不小心便踩了，问题是这样的：我接收到服务端传过来的一个包含多个图片地址的字符串，使用“,”分割，我使用12```objective-c    NSArray *descImages = [descImage componentsSeparatedByString:@&amp;quot;,&amp;quot;];
-其实这个时候descImage等于””，但使用123456789101">
+<meta name="twitter:description" content="今天在字符串分割上遇到一个坑，一不小心便踩了，问题是这样的：我接收到服务端传过来的一个包含多个图片地址的字符串，使用“,”分割，我使用componentsSeparatedByString:来分割，将多个图片地址存入数组，并根据数组的个数来加载默认图片，等图片下载完成后替换对应的默认图片。现在服务端给我返回了一个@””字符串，我的代码如下:1NSArray *descImages = [descI">
 
     
     <link rel="alternative" href="http://lyroger.github.io/atom.xml" title="罗琰的技术博客" type="application/atom+xml">
@@ -42,7 +39,7 @@
 				<h1 class="site-name"><a href="/" title="罗琰的技术博客">罗琰的技术博客</a></h1>
 				<h2 class="blog-motto">积累与分享成长的技术经验</h2>
 			</div>
-			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
 			</a></div>
 			<nav class="animated">
 				<ul>
@@ -58,7 +55,7 @@
  					
 					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
 						<label>Search</label>
-						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
 						<input type="hidden" name="q" value="site:lyroger.github.io">
 					</form>
 					
@@ -81,21 +78,21 @@
 		<a href="/about" title="luoyan" target="_blank" itemprop="author">luoyan</a>
 		
   <p class="article-time">
-    <time datetime="2016-02-24T02:47:00.000Z" itemprop="datePublished"> Published 2016-02-24</time>
+    <time datetime="2016-02-24T02:47:00.000Z" itemprop="datePublished"> 发表于 2016-02-24</time>
     
   </p>
 </header>
 	<div class="article-content">
 		
 		<div id="toc" class="toc-article">
-			<strong class="toc-title">Contents</strong>
+			<strong class="toc-title">文章目录</strong>
 		
 			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#衍生学习"><span class="toc-number">1.</span> <span class="toc-text">衍生学习</span></a></li></ol>
 		
 		</div>
 		
-		<p>今天在字符串分割上遇到一个坑，一不小心便踩了，问题是这样的：我接收到服务端传过来的一个包含多个图片地址的字符串，使用“,”分割，我使用<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">```objective-c</div><div class="line">    NSArray *descImages = [descImage componentsSeparatedByString:@&quot;,&quot;];</div></pre></td></tr></table></figure></p>
-<p>其实这个时候descImage等于””，但使用<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">```objective-c</div><div class="line">- (void)testComponentSeparatedByString</div><div class="line">&#123;</div><div class="line">    NSString *descImage = @&quot;&quot;;</div><div class="line">    NSArray *descImages = [descImage componentsSeparatedByString:@&quot;,&quot;];</div><div class="line">    NSLog(@&quot;descImages = %@,descImages.count=%zd,descImage = %p,nil= %p&quot;,descImages,descImages.count,descImage,nil);</div><div class="line">&#125;</div><div class="line">打印出来的</div><div class="line">descImages = (</div><div class="line">    &quot;&quot;</div><div class="line">),descImages.count=1,descImage = 0x1001d5690,nil= 0x0</div></pre></td></tr></table></figure></p>
+		<p>今天在字符串分割上遇到一个坑，一不小心便踩了，问题是这样的：我接收到服务端传过来的一个包含多个图片地址的字符串，使用“,”分割，我使用<code>componentsSeparatedByString:</code>来分割，将多个图片地址存入数组，并根据数组的个数来加载默认图片，等图片下载完成后替换对应的默认图片。现在服务端给我返回了一个@””字符串，我的代码如下:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">NSArray *descImages = [descImage componentsSeparatedByString:@&quot;,&quot;];</div></pre></td></tr></table></figure></p>
+<p>其实这个时候descImage等于””，但使用<code>componentsSeparatedByString:</code>分割返回的数组是有一个对象的，就是一个空字符串，这个可能我并没想到，导致服务端返回空字符串时，我这边也多加载了一个图片，这个图片还一直下载不下来。这个也让我明白：<code>componentsSeparatedByString:</code>的意思，有分割字符就根据字符分割返回数组，没分割字符则返回被分割的字符串，@””也是一个字符串，它也是有内存地址的，跟nil并不一样。看看下面的代码就明白了:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">- (void)testComponentSeparatedByString</div><div class="line">&#123;</div><div class="line">    NSString *descImage = @&quot;&quot;;</div><div class="line">    NSArray *descImages = [descImage componentsSeparatedByString:@&quot;,&quot;];</div><div class="line">    NSLog(@&quot;descImages = %@,descImages.count=%zd,descImage = %p,nil= %p&quot;,descImages,descImages.count,descImage,nil);</div><div class="line">&#125;</div><div class="line">打印出来的</div><div class="line">descImages = (</div><div class="line">    &quot;&quot;</div><div class="line">),descImages.count=1,descImage = 0x1001d5690,nil= 0x0</div></pre></td></tr></table></figure></p>
 <p>因此要解决这个问题就得加一个判断给descImage.length&gt;0即可。</p>
 <h3 id="衍生学习"><a href="#衍生学习" class="headerlink" title="衍生学习"></a>衍生学习</h3><p>componentsSeparatedByCharactersInSet的使用，使用多个字符分割字符串：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">NSString *str = @&quot;A~B^C&quot;;</div><div class="line">NSArray *arr = [str componentsSeparatedByCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@&quot;^~&quot;]];</div><div class="line">NSLog(@&quot;%@&quot;, arr);</div><div class="line">打印出来</div><div class="line">(</div><div class="line">    A,</div><div class="line">    B,</div><div class="line">    C</div><div class="line">)</div></pre></td></tr></table></figure></p>
   
@@ -149,22 +146,22 @@
 
 
 </div>  
-      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
 
   <div id="toc" class="toc-aside">
-  <strong class="toc-title">Contents</strong>
+  <strong class="toc-title">文章目录</strong>
  
  <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#衍生学习"><span class="toc-number">1.</span> <span class="toc-text">衍生学习</span></a></li></ol>
  
   </div>
 
 <div id="asidepart">
-<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
 <aside class="clearfix">
 
   
 <div class="github-card">
-<p class="asidetitle">Github Card</p>
+<p class="asidetitle">Github 名片</p>
 <div class="github-card" data-github="lyroger" data-width="220" data-height="119" data-theme="medium">
 <script type="text/javascript" src="//cdn.jsdelivr.net/github-cards/latest/widget.js" ></script>
 </div>
@@ -177,7 +174,7 @@
   
 
   <div class="linkslist">
-  <p class="asidetitle">Links</p>
+  <p class="asidetitle">友情链接</p>
     <ul>
         
           <li>
@@ -193,11 +190,11 @@
 
 
   <div class="rsspart">
-	<a href="http://lyroger.github.io/atom.xml" target="_blank" title="rss">RSS</a>
+	<a href="http://lyroger.github.io/atom.xml" target="_blank" title="rss">RSS 订阅</a>
 </div>
 
   <div class="weiboshow">
-  <p class="asidetitle">Weibo</p>
+  <p class="asidetitle">新浪微博</p>
     <iframe width="100%" height="119" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=119&fansRow=2&ptype=1&speed=0&skin=9&isTitle=1&noborder=1&isWeibo=0&isFans=0&uid=null&verifier=&dpc=1"></iframe>
 </div>
 
@@ -440,7 +437,7 @@ var _hmt = _hmt || [];
 <!-- Totop Begin -->
 
 	<div id="totop">
-	<a title="Back to Top"><img src="/img/scrollup.png"/></a>
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
 	</div>
 	<script src="/js/totop.js"></script>
 
