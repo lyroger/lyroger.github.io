@@ -17,22 +17,22 @@
 <meta property="og:url" content="http://lyroger.github.io/2016/08/25/Jenkins+Git自动构建/index.html">
 <meta property="og:site_name" content="罗琰的技术博客">
 <meta property="og:description" content="前言   想想以前，发给测试的测试包都是通过手动使用XCode来打包，如果项目工程比较大，Archive过程时间还是比较长的，打多了觉得特没劲，非常浪费时间，特别是使用了敏捷开发流程的，要是还用手动打包，估计你在打包上耗得时间都够你解决几个bug了。敏捷开发也是强调使用自动化的，所以也少不了自动构建的环节，那么接下来说说如何使用Jenkins+Git来自动构建我们的项目，从而方便测试，也让开发有更">
-<meta property="og:image" content="http://lyroger.github.io/~/jenins首页.png">
-<meta property="og:image" content="http://lyroger.github.io/~/创建项目.png">
-<meta property="og:image" content="http://lyroger.github.io/~/创建项目1.png">
-<meta property="og:image" content="http://lyroger.github.io/~/配置项目-项目名称.png">
-<meta property="og:image" content="http://lyroger.github.io/~/项目配置-源码管理.png">
-<meta property="og:image" content="http://lyroger.github.io/~/项目配置-源码管理添加http授权.png">
-<meta property="og:image" content="http://lyroger.github.io/~/项目配置-源码管理SSH授权创建.png">
-<meta property="og:image" content="http://lyroger.github.io/~/构建1.png">
-<meta property="og:image" content="http://lyroger.github.io/~/项目配置-构建配置.png">
-<meta property="og:image" content="http://lyroger.github.io/~/工程配置.png">
-<meta property="og:image" content="http://lyroger.github.io/~/项目管理-立即构建.png">
-<meta property="og:updated_time" content="2016-08-29T02:04:09.000Z">
+<meta property="og:image" content="http://lyroger.github.io/images/jenins首页.png">
+<meta property="og:image" content="http://lyroger.github.io/images/创建项目.png">
+<meta property="og:image" content="http://lyroger.github.io/images/创建项目1.png">
+<meta property="og:image" content="http://lyroger.github.io/images/配置项目-项目名称.png">
+<meta property="og:image" content="http://lyroger.github.io/images/项目配置-源码管理.png">
+<meta property="og:image" content="http://lyroger.github.io/images/项目配置-源码管理添加http授权.png">
+<meta property="og:image" content="http://lyroger.github.io/images/项目配置-源码管理SSH授权创建.png">
+<meta property="og:image" content="http://lyroger.github.io/images/构建1.png">
+<meta property="og:image" content="http://lyroger.github.io/images/项目配置-构建配置.png">
+<meta property="og:image" content="http://lyroger.github.io/images/工程配置.png">
+<meta property="og:image" content="http://lyroger.github.io/images/项目管理-立即构建.png">
+<meta property="og:updated_time" content="2016-09-19T03:44:41.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Jenkins+Git自动构建">
 <meta name="twitter:description" content="前言   想想以前，发给测试的测试包都是通过手动使用XCode来打包，如果项目工程比较大，Archive过程时间还是比较长的，打多了觉得特没劲，非常浪费时间，特别是使用了敏捷开发流程的，要是还用手动打包，估计你在打包上耗得时间都够你解决几个bug了。敏捷开发也是强调使用自动化的，所以也少不了自动构建的环节，那么接下来说说如何使用Jenkins+Git来自动构建我们的项目，从而方便测试，也让开发有更">
-<meta name="twitter:image" content="http://lyroger.github.io/~/jenins首页.png">
+<meta name="twitter:image" content="http://lyroger.github.io/images/jenins首页.png">
 
     
     <link rel="alternative" href="http://lyroger.github.io/atom.xml" title="罗琰的技术博客" type="application/atom+xml">
@@ -104,17 +104,17 @@
 		</div>
 		
 		<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>   想想以前，发给测试的测试包都是通过手动使用XCode来打包，如果项目工程比较大，Archive过程时间还是比较长的，打多了觉得特没劲，非常浪费时间，特别是使用了敏捷开发流程的，要是还用手动打包，估计你在打包上耗得时间都够你解决几个bug了。敏捷开发也是强调使用自动化的，所以也少不了自动构建的环节，那么接下来说说如何使用Jenkins+Git来自动构建我们的项目，从而方便测试，也让开发有更多的经历投入到编码和业务中而不是浪费在这些无用的流程中。</p>
-<h2 id="一-Jenkins安装"><a href="#一-Jenkins安装" class="headerlink" title="一.Jenkins安装"></a>一.Jenkins安装</h2><p>1.下载最新的版本（一个 WAR 文件）。<a href="http://Jenkins-ci.org/" target="_blank" rel="external">Jenkins官方网址</a><br>2.运行 Java -jar jenkins.war 。<br>如果你的java环节低于java7 它会提示你升级java环节，你可以到<a href="https://www.java.com/en/download/" target="_blank" rel="external">这里下载</a>，安装最新的java环境。<br>如果一切顺利，那么只要在你本机浏览器中输入<a href="http://127.0.0.1:8080" target="_blank" rel="external">127.0.0.1:8080</a>即可看到Jenkins的主页面。<br><img src="~/jenins首页.png" alt=""></p>
-<h2 id="二-Jenkins配置"><a href="#二-Jenkins配置" class="headerlink" title="二.Jenkins配置"></a>二.Jenkins配置</h2><p>1.先新建一个项目。<br><img src="~/创建项目.png" alt=""><br>2.输入项目名称和构建风格。<br><img src="~/创建项目1.png" alt=""><br>3.项目配置</p>
-<p><img src="~/配置项目-项目名称.png" alt=""><br>4.源码管理</p>
-<p><img src="~/项目配置-源码管理.png" alt=""><br>这一步输入你项目在Git上的仓库地址，这里的授权有两种形式，一种是使用http登录，一种是使用ssh授权；<br>*如果使用http授权的看下图：</p>
-<p><img src="~/项目配置-源码管理添加http授权.png" alt=""><br>这里输入你git上的登录名和密码。<br>*如果使用SSH授权看下图：</p>
-<p><img src="~/项目配置-源码管理SSH授权创建.png" alt=""><br>kind要选择SSH Username with private key,Username可以随便输入，一个描述而已，Private Key选Enter directly，然后在Key中输入你在Git上的秘钥，这个秘钥的制作在我前面的<a href="http://roger.farbox.com/post/macshang-zhi-zuo-sshmi-yao" target="_blank" rel="external">博客</a>中有提到，这里就不多说了。最后点击Add，SSH的授权就制作OK了。<br>5.构建<br>源码可以下载了，那么接下来就是如何去生成一个ipa包了，我们通过构建的方式来实现，接下来我们来配置一下构建流程，构建的方式很多中，这里讲讲比较简单的一种，使用shell来实现。</p>
-<p><img src="~/构建1.png" alt=""></p>
-<p><img src="~/项目配置-构建配置.png" alt=""><br>编写脚本，这个脚本支持的是workspace的，如果没有使用workspace的，问题不大，稍作修改即可。脚本：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">cd $WORKSPACE</div><div class="line">SDK_VERSION=&quot;iphoneos8.3&quot;</div><div class="line"></div><div class="line">PROJECT_NAME=&quot;JenkinsDemo&quot;</div><div class="line">PROVISION_UUID=&quot;你的描述文件的UUID，可以通过在XCode选中描述文件ctr+c的方法获取到&quot;</div><div class="line">PROVISONING_PROFILE=&quot;JenkinsDemo_Distribution&quot;</div><div class="line"></div><div class="line">XCODE_PRJ=&quot;xcodeproj&quot;</div><div class="line">FILE_EXTENSION=&apos;xcworkspace&apos;</div><div class="line">PROJECT_DIR=`pwd`</div><div class="line">CD_XCODE_PRJ=`pwd`/$PROJECT_NAME.$XCODE_PRJ</div><div class="line">PROJECT_WORKSPACE=$PROJECT_DIR.</div><div class="line">PROJECT_BUILD=`pwd`/$PROJECT_NAME/BUILD</div><div class="line"></div><div class="line">APP_PATH=&quot;build/Release-iphoneos/$&#123;PROJECT_NAME&#125;.app&quot;</div><div class="line">TARGET_APP_PATH=&quot;build/Release-iphoneos/$&#123;PROJECT_NAME&#125;.ipa&quot;</div><div class="line">ARCHIVEPATH=&quot;build/Release-iphoneos/$&#123;PROJECT_NAME&#125;.xcarchive&quot;</div><div class="line"></div><div class="line">cd &quot;$PROJECT_DIR&quot;</div><div class="line"></div><div class="line">cd ..</div><div class="line">cd &quot;$CD_XCODE_PRJ&quot;</div><div class="line">sed -i &apos;&apos; &quot;s/\(PROVISIONING_PROFILE.=.\&quot;\).*\(\&quot;\)/\1$PROVISION_UUID\2/g&quot; project.pbxproj</div><div class="line">cd ..</div><div class="line">rm -rf build</div><div class="line">xcodebuild -workspace $PROJECT_DIR/$PROJECT_NAME.$FILE_EXTENSION -scheme $PROJECT_NAME -destination generic/platform=iOS archive -archivePath $ARCHIVEPATH</div><div class="line">xcodebuild -exportArchive -exportFormat IPA -archivePath $ARCHIVEPATH -exportPath $TARGET_APP_PATH -exportProvisioningProfile &quot;$&#123;PROVISONING_PROFILE&#125;&quot;</div><div class="line">curl -F &quot;file=@build/Release-iphoneos/JenkinsDemo.ipa&quot; -F &quot;uKey=蒲公英上的uKey&quot; -F &quot;_api_key=蒲公英上的apikey&quot; https://www.pgyer.com/apiv1/app/upload</div></pre></td></tr></table></figure></p>
+<h2 id="一-Jenkins安装"><a href="#一-Jenkins安装" class="headerlink" title="一.Jenkins安装"></a>一.Jenkins安装</h2><p>1.下载最新的版本（一个 WAR 文件）。<a href="http://Jenkins-ci.org/" target="_blank" rel="external">Jenkins官方网址</a><br>2.运行 Java -jar jenkins.war 。<br>如果你的java环节低于java7 它会提示你升级java环节，你可以到<a href="https://www.java.com/en/download/" target="_blank" rel="external">这里下载</a>，安装最新的java环境。<br>如果一切顺利，那么只要在你本机浏览器中输入<a href="http://127.0.0.1:8080" target="_blank" rel="external">127.0.0.1:8080</a>即可看到Jenkins的主页面。<br><img src="/images/jenins首页.png" alt=""></p>
+<h2 id="二-Jenkins配置"><a href="#二-Jenkins配置" class="headerlink" title="二.Jenkins配置"></a>二.Jenkins配置</h2><p>1.先新建一个项目。<br><img src="/images/创建项目.png" alt=""><br>2.输入项目名称和构建风格。<br><img src="/images/创建项目1.png" alt=""><br>3.项目配置</p>
+<p><img src="/images/配置项目-项目名称.png" alt=""><br>4.源码管理</p>
+<p><img src="/images/项目配置-源码管理.png" alt=""><br>这一步输入你项目在Git上的仓库地址，这里的授权有两种形式，一种是使用http登录，一种是使用ssh授权；<br>*如果使用http授权的看下图：</p>
+<p><img src="/images/项目配置-源码管理添加http授权.png" alt=""><br>这里输入你git上的登录名和密码。<br>*如果使用SSH授权看下图：</p>
+<p><img src="/images/项目配置-源码管理SSH授权创建.png" alt=""><br>kind要选择SSH Username with private key,Username可以随便输入，一个描述而已，Private Key选Enter directly，然后在Key中输入你在Git上的秘钥，这个秘钥的制作在我前面的<a href="http://roger.farbox.com/post/macshang-zhi-zuo-sshmi-yao" target="_blank" rel="external">博客</a>中有提到，这里就不多说了。最后点击Add，SSH的授权就制作OK了。<br>5.构建<br>源码可以下载了，那么接下来就是如何去生成一个ipa包了，我们通过构建的方式来实现，接下来我们来配置一下构建流程，构建的方式很多中，这里讲讲比较简单的一种，使用shell来实现。</p>
+<p><img src="/images/构建1.png" alt=""></p>
+<p><img src="/images/项目配置-构建配置.png" alt=""><br>编写脚本，这个脚本支持的是workspace的，如果没有使用workspace的，问题不大，稍作修改即可。脚本：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">cd $WORKSPACE</div><div class="line">SDK_VERSION=&quot;iphoneos8.3&quot;</div><div class="line"></div><div class="line">PROJECT_NAME=&quot;JenkinsDemo&quot;</div><div class="line">PROVISION_UUID=&quot;你的描述文件的UUID，可以通过在XCode选中描述文件ctr+c的方法获取到&quot;</div><div class="line">PROVISONING_PROFILE=&quot;JenkinsDemo_Distribution&quot;</div><div class="line"></div><div class="line">XCODE_PRJ=&quot;xcodeproj&quot;</div><div class="line">FILE_EXTENSION=&apos;xcworkspace&apos;</div><div class="line">PROJECT_DIR=`pwd`</div><div class="line">CD_XCODE_PRJ=`pwd`/$PROJECT_NAME.$XCODE_PRJ</div><div class="line">PROJECT_WORKSPACE=$PROJECT_DIR.</div><div class="line">PROJECT_BUILD=`pwd`/$PROJECT_NAME/BUILD</div><div class="line"></div><div class="line">APP_PATH=&quot;build/Release-iphoneos/$&#123;PROJECT_NAME&#125;.app&quot;</div><div class="line">TARGET_APP_PATH=&quot;build/Release-iphoneos/$&#123;PROJECT_NAME&#125;.ipa&quot;</div><div class="line">ARCHIVEPATH=&quot;build/Release-iphoneos/$&#123;PROJECT_NAME&#125;.xcarchive&quot;</div><div class="line"></div><div class="line">cd &quot;$PROJECT_DIR&quot;</div><div class="line"></div><div class="line">cd ..</div><div class="line">cd &quot;$CD_XCODE_PRJ&quot;</div><div class="line">sed -i &apos;&apos; &quot;s/\(PROVISIONING_PROFILE.=.\&quot;\).*\(\&quot;\)/\1$PROVISION_UUID\2/g&quot; project.pbxproj</div><div class="line">cd ..</div><div class="line">rm -rf build</div><div class="line">xcodebuild -workspace $PROJECT_DIR/$PROJECT_NAME.$FILE_EXTENSION -scheme $PROJECT_NAME -destination generic/platform=iOS archive -archivePath $ARCHIVEPATH</div><div class="line">xcodebuild -exportArchive -exportFormat IPA -archivePath $ARCHIVEPATH -exportPath $TARGET_APP_PATH -exportProvisioningProfile &quot;$&#123;PROVISONING_PROFILE&#125;&quot;</div><div class="line">curl -F &quot;file=@build/Release-iphoneos/JenkinsDemo.ipa&quot; -F &quot;uKey=蒲公英上的uKey&quot; -F &quot;_api_key=蒲公英上的apikey&quot; https://www.pgyer.com/apiv1/app/upload</div></pre></td></tr></table></figure></p>
 <p>*构建成功后这里可能会出现一个问题，你的项目工程中的配置需要设置一下shared，不然构建的会一直报错。找不到工程文件，如下图设置：</p>
-<p><img src="~/工程配置.png" alt=""><br>*OK，保存构建后，接下来就可以回到项目管理页面了。</p>
-<p><img src="~/项目管理-立即构建.png" alt=""><br><em>一般构建在一分钟左右，先下载源代码，然后打包，最后将ipa包上传到蒲公英平台。
+<p><img src="/images/工程配置.png" alt=""><br>*OK，保存构建后，接下来就可以回到项目管理页面了。</p>
+<p><img src="/images/项目管理-立即构建.png" alt=""><br><em>一般构建在一分钟左右，先下载源代码，然后打包，最后将ipa包上传到蒲公英平台。
 </em>可以看出，构建后蓝色的表示构建成功，红色和灰色表示构建失败，可以点击相应的图标，查看构建日志。</p>
   
 	</div>

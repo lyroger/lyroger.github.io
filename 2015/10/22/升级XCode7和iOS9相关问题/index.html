@@ -17,13 +17,13 @@
 <meta property="og:url" content="http://lyroger.github.io/2015/10/22/升级XCode7和iOS9相关问题/index.html">
 <meta property="og:site_name" content="罗琰的技术博客">
 <meta property="og:description" content="一.报Bitcode相关错误。12Framework/libraries/extends/QQSDK/TencentOpenAPI.framework/TencentOpenAPI(WeiyunAPI.o)&amp;apos; does not contain bitcode. You must rebuild it with bitcode enabled (Xcode setting ENABLE_B">
-<meta property="og:image" content="http://lyroger.github.io/~/code.jpg">
-<meta property="og:image" content="http://lyroger.github.io/~/plist.jpg">
-<meta property="og:updated_time" content="2016-07-06T03:00:51.000Z">
+<meta property="og:image" content="http://lyroger.github.io/images/code.jpg">
+<meta property="og:image" content="http://lyroger.github.io/images/plist.jpg">
+<meta property="og:updated_time" content="2016-09-19T03:43:44.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="升级XCode7和iOS9相关问题">
 <meta name="twitter:description" content="一.报Bitcode相关错误。12Framework/libraries/extends/QQSDK/TencentOpenAPI.framework/TencentOpenAPI(WeiyunAPI.o)&amp;apos; does not contain bitcode. You must rebuild it with bitcode enabled (Xcode setting ENABLE_B">
-<meta name="twitter:image" content="http://lyroger.github.io/~/code.jpg">
+<meta name="twitter:image" content="http://lyroger.github.io/images/code.jpg">
 
     
     <link rel="alternative" href="http://lyroger.github.io/atom.xml" title="罗琰的技术博客" type="application/atom+xml">
@@ -96,11 +96,11 @@
 		
 		<h2 id="一-报Bitcode相关错误。"><a href="#一-报Bitcode相关错误。" class="headerlink" title="一.报Bitcode相关错误。"></a>一.报Bitcode相关错误。</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Framework/libraries/extends/QQSDK/TencentOpenAPI.framework/TencentOpenAPI(WeiyunAPI.o)&apos; does not contain bitcode. You must rebuild it with bitcode enabled (Xcode setting ENABLE_BITCODE), obtain an updated library from the vendor, or disable bitcode for this target. for architecture arm64</div><div class="line">clang: error: linker command failed with exit code 1 (use -v to see invocation)</div></pre></td></tr></table></figure>
 <p>1.解决方案<br>工程文件中找到target-&gt;Build Settings-&gt;搜索bitcode，然后出现Enablecode选项，设置为NO即可。如图：</p>
-<p><img src="~/code.jpg" alt=""><br>重新build即可消除bitcode相关问题。</p>
+<p><img src="/images/code.jpg" alt=""><br>重新build即可消除bitcode相关问题。</p>
 <p>2.问题出现原因可以参考：<a href="http://www.cocoachina.com/ios/20150818/13078.html" title="理解Bitcode：一种中间代码" target="_blank" rel="external">理解Bitcode：一种中间代码</a></p>
 <h2 id="二-iOS9设备网络请求失败"><a href="#二-iOS9设备网络请求失败" class="headerlink" title="二.iOS9设备网络请求失败"></a>二.iOS9设备网络请求失败</h2><p>1.出现问题原因<br>iOS9把所有的http请求都改为https了：iOS9系统发送的网络请求将统一使用TLS 1.2 SSL。采用TLS 1.2 协议，目的是:强制增强数据访问安全，而且，系统 Foundation 框架下的相关网络请求，将不再默认使用 Http 等不安全的网络协议，而默认采用 TLS 1.2。服务器因此需要更新，以解析相关数据。如不更新，可通过在 Info.plist 中声明。<br>2.具体如何在info.plist中声明<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&lt;key&gt;NSAppTransportSecurity&lt;/key&gt;</div><div class="line">&lt;dict&gt;</div><div class="line">    &lt;key&gt;NSAllowsArbitraryLoads&lt;/key&gt;</div><div class="line">    &lt;true/&gt;</div><div class="line">&lt;/dict&gt;</div></pre></td></tr></table></figure></p>
 <p>如图所示:</p>
-<p><img src="~/plist.jpg" alt=""></p>
+<p><img src="/images/plist.jpg" alt=""></p>
   
 	</div>
 		<footer class="article-footer clearfix">

@@ -19,14 +19,14 @@
 <meta property="og:site_name" content="罗琰的技术博客">
 <meta property="og:description" content="前言数据库数据加密的必要性就不多说了，直接进入主题，如何使用FMDB对数据加密。这里我建议使用cocospod来管理第三方库，如果没有安装可以参考这里来安装.
 1.首先，我们的下载SQLCipher依赖库1.1 &apos;SQLCipher&apos;, &apos;~&amp;gt; 3.1.0&apos;```1234#### 2.其次，我们需要一个具有加密功能的FMDB版本；加密的FMDB其实是一个分支，也就是说，如果你的FMDB版本不支持S">
-<meta property="og:image" content="http://lyroger.github.io/~/F0547994-4A8E-43A8-A937-DC94A4637CA2.png">
-<meta property="og:image" content="http://lyroger.github.io/~/AFB7BECA-A6FF-4CE4-BAA1-99097EFAD5BF.png">
-<meta property="og:updated_time" content="2016-07-06T03:00:52.000Z">
+<meta property="og:image" content="http://lyroger.github.io/images/F0547994-4A8E-43A8-A937-DC94A4637CA2.png">
+<meta property="og:image" content="http://lyroger.github.io/images/AFB7BECA-A6FF-4CE4-BAA1-99097EFAD5BF.png">
+<meta property="og:updated_time" content="2016-09-19T03:43:31.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="FMDB使用SQLCipher加密">
 <meta name="twitter:description" content="前言数据库数据加密的必要性就不多说了，直接进入主题，如何使用FMDB对数据加密。这里我建议使用cocospod来管理第三方库，如果没有安装可以参考这里来安装.
 1.首先，我们的下载SQLCipher依赖库1.1 &apos;SQLCipher&apos;, &apos;~&amp;gt; 3.1.0&apos;```1234#### 2.其次，我们需要一个具有加密功能的FMDB版本；加密的FMDB其实是一个分支，也就是说，如果你的FMDB版本不支持S">
-<meta name="twitter:image" content="http://lyroger.github.io/~/F0547994-4A8E-43A8-A937-DC94A4637CA2.png">
+<meta name="twitter:image" content="http://lyroger.github.io/images/F0547994-4A8E-43A8-A937-DC94A4637CA2.png">
 
     
     <link rel="alternative" href="http://lyroger.github.io/atom.xml" title="罗琰的技术博客" type="application/atom+xml">
@@ -100,8 +100,8 @@
 		<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>数据库数据加密的必要性就不多说了，直接进入主题，如何使用FMDB对数据加密。<br>这里我建议使用cocospod来管理第三方库，如果没有安装可以参考<a href="http://blog.devtang.com/blog/2014/05/25/use-cocoapod-to-manage-ios-lib-dependency/" target="_blank" rel="external">这里</a>来安装.</p>
 <h4 id="1-首先，我们的下载SQLCipher依赖库"><a href="#1-首先，我们的下载SQLCipher依赖库" class="headerlink" title="1.首先，我们的下载SQLCipher依赖库"></a>1.首先，我们的下载SQLCipher依赖库</h4><p>1.1 <figure class="highlight plain"><figcaption><span>'SQLCipher', '~> 3.1.0'```</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">#### 2.其次，我们需要一个具有加密功能的FMDB版本；</div><div class="line">加密的FMDB其实是一个分支，也就是说，如果你的FMDB版本不支持SQLCipher加密，那么你就需要替换FMDB。Github上关于该分支的安装只提供了cocospod的安装方式。Github上FMDB的[地址](https://github.com/ccgus/fmdb);</div><div class="line">使用cocospod来跟新具有加密功能的FMDB</div><div class="line">2.1 将以前```pod &apos;FMDB&apos;``` 改成```pod &apos;FMDB/SQLCipher&apos;</div></pre></td></tr></table></figure></p>
 <p>2.2 更新pod <code>pod update</code></p>
-<h4 id="3-最后，修改一下你的代码"><a href="#3-最后，修改一下你的代码" class="headerlink" title="3.最后，修改一下你的代码"></a>3.最后，修改一下你的代码</h4><p>定义一个加密的key,这里我自定义了一个宏<code>DB_SECRETKEY</code>,然后在FMDB中的FMDatabase.m类中加一句代码，如下图:<br><img src="~/F0547994-4A8E-43A8-A937-DC94A4637CA2.png" alt=""></p>
-<h4 id="4-效果"><a href="#4-效果" class="headerlink" title="4.效果"></a>4.效果</h4><p>run下你的工程，并对数据库做一些操作，然后在使用其他管理工具打开数据时，你就发现他会提示你file is encrypted or is not a database<br><img src="~/AFB7BECA-A6FF-4CE4-BAA1-99097EFAD5BF.png" alt=""></p>
+<h4 id="3-最后，修改一下你的代码"><a href="#3-最后，修改一下你的代码" class="headerlink" title="3.最后，修改一下你的代码"></a>3.最后，修改一下你的代码</h4><p>定义一个加密的key,这里我自定义了一个宏<code>DB_SECRETKEY</code>,然后在FMDB中的FMDatabase.m类中加一句代码，如下图:<br><img src="/images/F0547994-4A8E-43A8-A937-DC94A4637CA2.png" alt=""></p>
+<h4 id="4-效果"><a href="#4-效果" class="headerlink" title="4.效果"></a>4.效果</h4><p>run下你的工程，并对数据库做一些操作，然后在使用其他管理工具打开数据时，你就发现他会提示你file is encrypted or is not a database<br><img src="/images/AFB7BECA-A6FF-4CE4-BAA1-99097EFAD5BF.png" alt=""></p>
   
 	</div>
 		<footer class="article-footer clearfix">
