@@ -12,26 +12,18 @@
     
 
     
-    <meta name="description" content="前言  最近玩手游比较多，看到了GameCenter中个人中心有一些气泡效果特别好，于是想想怎么实现的，要是能放到自己写的程序中，也是一种不错的感觉，能感觉到应用有一种活力.
-进入正题先看看gamecenter中的效果是怎样的，然后我们在着步分析：
-我们先参考单个气泡效果，就拿GameCenter气泡来说吧，仔细看看，他有一个整体画圈的效果，还有一个一张一缩的动画，想到多个动画组合成的一个效果就可">
+    <meta name="description" content="计算机系毕业热爱运动，个子没有一米八，但喜欢打篮球，运动细胞不那么活跃，却还是热衷羽毛球写过web程序，用过.net写过客户端程序，发布过App，用的是Objective-C想有一天，有那么一两个App，大家每天都能点击几下想有一天，在iOS开发界有点小名气博客换了搬了很多次家，希望这里是终点从此在此积累iOS相关经验，分享iOS相关技术联系微信公众号：邮箱：yan1079@126.com">
 <meta property="og:type" content="website">
 <meta property="og:title" content="动画学习篇一">
 <meta property="og:url" content="http://lyroger.github.io/about/index.html">
 <meta property="og:site_name" content="罗琰的技术博客">
-<meta property="og:description" content="前言  最近玩手游比较多，看到了GameCenter中个人中心有一些气泡效果特别好，于是想想怎么实现的，要是能放到自己写的程序中，也是一种不错的感觉，能感觉到应用有一种活力.
-进入正题先看看gamecenter中的效果是怎样的，然后我们在着步分析：
-我们先参考单个气泡效果，就拿GameCenter气泡来说吧，仔细看看，他有一个整体画圈的效果，还有一个一张一缩的动画，想到多个动画组合成的一个效果就可">
-<meta property="og:image" content="http://lyroger.github.io/images/gameCenter1.gif">
-<meta property="og:image" content="http://lyroger.github.io/images/game1.gif">
-<meta property="og:image" content="http://lyroger.github.io/images/game2.gif">
-<meta property="og:updated_time" content="2016-09-19T03:42:55.000Z">
+<meta property="og:description" content="计算机系毕业热爱运动，个子没有一米八，但喜欢打篮球，运动细胞不那么活跃，却还是热衷羽毛球写过web程序，用过.net写过客户端程序，发布过App，用的是Objective-C想有一天，有那么一两个App，大家每天都能点击几下想有一天，在iOS开发界有点小名气博客换了搬了很多次家，希望这里是终点从此在此积累iOS相关经验，分享iOS相关技术联系微信公众号：邮箱：yan1079@126.com">
+<meta property="og:image" content="http://lyroger.github.io/images/qrcode.jpg">
+<meta property="og:updated_time" content="2016-09-19T08:11:22.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="动画学习篇一">
-<meta name="twitter:description" content="前言  最近玩手游比较多，看到了GameCenter中个人中心有一些气泡效果特别好，于是想想怎么实现的，要是能放到自己写的程序中，也是一种不错的感觉，能感觉到应用有一种活力.
-进入正题先看看gamecenter中的效果是怎样的，然后我们在着步分析：
-我们先参考单个气泡效果，就拿GameCenter气泡来说吧，仔细看看，他有一个整体画圈的效果，还有一个一张一缩的动画，想到多个动画组合成的一个效果就可">
-<meta name="twitter:image" content="http://lyroger.github.io/images/gameCenter1.gif">
+<meta name="twitter:description" content="计算机系毕业热爱运动，个子没有一米八，但喜欢打篮球，运动细胞不那么活跃，却还是热衷羽毛球写过web程序，用过.net写过客户端程序，发布过App，用的是Objective-C想有一天，有那么一两个App，大家每天都能点击几下想有一天，在iOS开发界有点小名气博客换了搬了很多次家，希望这里是终点从此在此积累iOS相关经验，分享iOS相关技术联系微信公众号：邮箱：yan1079@126.com">
+<meta name="twitter:image" content="http://lyroger.github.io/images/qrcode.jpg">
 
     
     <link rel="alternative" href="/atom.xml" title="罗琰的技术博客" type="application/atom+xml">
@@ -95,15 +87,7 @@
 </header>
 	<div class="article-content">
 		
-		<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>  最近玩手游比较多，看到了GameCenter中个人中心有一些气泡效果特别好，于是想想怎么实现的，要是能放到自己写的程序中，也是一种不错的感觉，能感觉到应用有一种活力.</p>
-<h2 id="进入正题"><a href="#进入正题" class="headerlink" title="进入正题"></a>进入正题</h2><p>先看看gamecenter中的效果是怎样的，然后我们在着步分析：</p>
-<p><img src="/images/gameCenter1.gif" alt=""><br>我们先参考单个气泡效果，就拿GameCenter气泡来说吧，仔细看看，他有一个整体画圈的效果，还有一个一张一缩的动画，想到多个动画组合成的一个效果就可以想到动画帧来做：CAKeyframeAnimation；<br>首先我们来实现一个画圈的效果，看看下面代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">CAKeyframeAnimation *pathAnimation = [CAKeyframeAnimation animationWithKeyPath:@&quot;position&quot;];</div><div class="line">    pathAnimation.calculationMode = kCAAnimationPaced;</div><div class="line">    pathAnimation.fillMode = kCAFillModeForwards;</div><div class="line">    pathAnimation.removedOnCompletion = NO;</div><div class="line">    pathAnimation.repeatCount = INFINITY;</div><div class="line">    pathAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];</div><div class="line">    pathAnimation.duration = 6.0;</div><div class="line">    </div><div class="line">    CGMutablePathRef curvedPath = CGPathCreateMutable();</div><div class="line">    CGFloat amplitude = 10;</div><div class="line">    CGRect circleContainer = CGRectInset(gameView.frame, gameView.bounds.size.width / 2 - amplitude, gameView.bounds.size.width / 2 - amplitude);</div><div class="line">    CGPathAddEllipseInRect(curvedPath, NULL, circleContainer);</div><div class="line">    </div><div class="line">    pathAnimation.path = curvedPath;</div><div class="line">    CGPathRelease(curvedPath);</div><div class="line">    [gameView.layer addAnimation:pathAnimation forKey:@&quot;gameCenterAnimation&quot;];</div></pre></td></tr></table></figure></p>
-<p>代码实现效果如下图：</p>
-<p><img src="/images/game1.gif" alt=""><br>接下来我们来实现一张一缩的效果：<br>代码如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">CAKeyframeAnimation *scaleX = [CAKeyframeAnimation animationWithKeyPath:@&quot;transform.scale.x&quot;];</div><div class="line">    scaleX.duration = 1;</div><div class="line">    scaleX.values = @[@1.0, @1.1, @1.0];</div><div class="line">    scaleX.keyTimes = @[@0.0, @0.5, @1.0];</div><div class="line">    scaleX.repeatCount = INFINITY;</div><div class="line">    scaleX.autoreverses = YES;</div><div class="line">    </div><div class="line">    scaleX.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];</div><div class="line">    [gameView.layer addAnimation:scaleX forKey:@&quot;scaleX&quot;];</div><div class="line">    </div><div class="line">    </div><div class="line">    CAKeyframeAnimation *scaleY = [CAKeyframeAnimation animationWithKeyPath:@&quot;transform.scale.y&quot;];</div><div class="line">    scaleY.duration = 1.5;</div><div class="line">    scaleY.values = @[@1.0, @1.1, @1.0];</div><div class="line">    scaleY.keyTimes = @[@0.0, @0.5, @1.0];</div><div class="line">    scaleY.repeatCount = INFINITY;</div><div class="line">    scaleY.autoreverses = YES;</div><div class="line">    scaleX.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];</div><div class="line">    [gameView.layer addAnimation:scaleY forKey:@&quot;scaleY&quot;];</div></pre></td></tr></table></figure></p>
-<p>结合上面的代码一起，便可以看到整体效果：</p>
-<p><img src="/images/game2.gif" alt=""></p>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>很多动画其实就是由多个动画分解组合而成，所以要学会使用CAKeyframeAnimation。</p>
-  
+		<p>计算机系毕业</p><br><p>热爱运动，个子没有一米八，但喜欢打篮球，运动细胞不那么活跃，却还是热衷羽毛球</p><br><p>写过web程序，用过.net</p><br><p>写过客户端程序，发布过App，用的是Objective-C</p><br><p>想有一天，有那么一两个App，大家每天都能点击几下</p><br><p>想有一天，在iOS开发界有点小名气</p><br><p>博客换了搬了很多次家，希望这里是终点</p><br><p>从此在此积累iOS相关经验，分享iOS相关技术</p><br><p></p><br><p></p><br><h4 id="toc_0">联系</h4><br><p>微信公众号：</p><br><p><img src="/images/qrcode.jpg" alt="微信公众号"></p><br><p>邮箱：yan1079@126.com</p>  
 	</div>
 		<footer class="article-footer clearfix">
 <div class="article-catetags">
