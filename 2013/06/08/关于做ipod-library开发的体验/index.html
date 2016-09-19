@@ -4,23 +4,26 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>关于字符串的分割 | 罗琰的技术博客</title>
+    <title>关于做ipod library开发的体验 | 罗琰的技术博客</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="luoyan">
     
 
     
-    <meta name="description" content="今天在字符串分割上遇到一个坑，一不小心便踩了，问题是这样的：我接收到服务端传过来的一个包含多个图片地址的字符串，使用“,”分割，我使用”componentsSeparatedByString:”来分割，将多个图片地址存入数组，并根据数组的个数来加载默认图片，等图片下载完成后替换对应的默认图片。现在服务端给我返回了一个@””字符串，我的代码如下:1NSArray *descImages = [des">
+    <meta name="description" content="最近在忙着做一个文件传输的软件，刚开始也没去想项目实现的困难度，可不可行。怎么说呢，因为有类似的软件都已经上线了，别人都已经实现了，就算在可行性上面做再多的分析，也是多余的了。做这个项目也是我换工作后的第一个项目，以前做ios开发时间并不是很长，对ios开发的经验也是有限的。也没想过会遇到什么困难，既来之则安之了吧。
+　　项目分下来后，我被安排做音视频模块和图片模块，主要做UI和媒体文件的获取任务">
 <meta property="og:type" content="article">
-<meta property="og:title" content="关于字符串的分割">
-<meta property="og:url" content="http://lyroger.github.io/2016/02/24/关于字符串的分割/index.html">
+<meta property="og:title" content="关于做ipod library开发的体验">
+<meta property="og:url" content="http://lyroger.github.io/2013/06/08/关于做ipod-library开发的体验/index.html">
 <meta property="og:site_name" content="罗琰的技术博客">
-<meta property="og:description" content="今天在字符串分割上遇到一个坑，一不小心便踩了，问题是这样的：我接收到服务端传过来的一个包含多个图片地址的字符串，使用“,”分割，我使用”componentsSeparatedByString:”来分割，将多个图片地址存入数组，并根据数组的个数来加载默认图片，等图片下载完成后替换对应的默认图片。现在服务端给我返回了一个@””字符串，我的代码如下:1NSArray *descImages = [des">
-<meta property="og:updated_time" content="2016-09-19T07:59:15.000Z">
+<meta property="og:description" content="最近在忙着做一个文件传输的软件，刚开始也没去想项目实现的困难度，可不可行。怎么说呢，因为有类似的软件都已经上线了，别人都已经实现了，就算在可行性上面做再多的分析，也是多余的了。做这个项目也是我换工作后的第一个项目，以前做ios开发时间并不是很长，对ios开发的经验也是有限的。也没想过会遇到什么困难，既来之则安之了吧。
+　　项目分下来后，我被安排做音视频模块和图片模块，主要做UI和媒体文件的获取任务">
+<meta property="og:updated_time" content="2016-09-19T09:00:59.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="关于字符串的分割">
-<meta name="twitter:description" content="今天在字符串分割上遇到一个坑，一不小心便踩了，问题是这样的：我接收到服务端传过来的一个包含多个图片地址的字符串，使用“,”分割，我使用”componentsSeparatedByString:”来分割，将多个图片地址存入数组，并根据数组的个数来加载默认图片，等图片下载完成后替换对应的默认图片。现在服务端给我返回了一个@””字符串，我的代码如下:1NSArray *descImages = [des">
+<meta name="twitter:title" content="关于做ipod library开发的体验">
+<meta name="twitter:description" content="最近在忙着做一个文件传输的软件，刚开始也没去想项目实现的困难度，可不可行。怎么说呢，因为有类似的软件都已经上线了，别人都已经实现了，就算在可行性上面做再多的分析，也是多余的了。做这个项目也是我换工作后的第一个项目，以前做ios开发时间并不是很长，对ios开发的经验也是有限的。也没想过会遇到什么困难，既来之则安之了吧。
+　　项目分下来后，我被安排做音视频模块和图片模块，主要做UI和媒体文件的获取任务">
 
     
     <link rel="alternative" href="/atom.xml" title="罗琰的技术博客" type="application/atom+xml">
@@ -71,14 +74,14 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2016/02/24/关于字符串的分割/" title="关于字符串的分割" itemprop="url">关于字符串的分割</a>
+      <a href="/2013/06/08/关于做ipod-library开发的体验/" title="关于做ipod library开发的体验" itemprop="url">关于做ipod library开发的体验</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/about" title="luoyan" target="_blank" itemprop="author">luoyan</a>
 		
   <p class="article-time">
-    <time datetime="2016-02-24T02:47:00.000Z" itemprop="datePublished"> Published 2016-02-24</time>
+    <time datetime="2013-06-08T08:56:48.000Z" itemprop="datePublished"> Published 2013-06-08</time>
     
   </p>
 </header>
@@ -87,14 +90,13 @@
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">Contents</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#衍生学习"><span class="toc-number">1.</span> <span class="toc-text">衍生学习</span></a></li></ol>
+			
 		
 		</div>
 		
-		<p>今天在字符串分割上遇到一个坑，一不小心便踩了，问题是这样的：我接收到服务端传过来的一个包含多个图片地址的字符串，使用“,”分割，我使用”componentsSeparatedByString:”来分割，将多个图片地址存入数组，并根据数组的个数来加载默认图片，等图片下载完成后替换对应的默认图片。现在服务端给我返回了一个@””字符串，我的代码如下:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">NSArray *descImages = [descImage componentsSeparatedByString:@&quot;,&quot;];</div></pre></td></tr></table></figure></p>
-<p>其实这个时候descImage等于””，但使用”componentsSeparatedByString:”分割返回的数组是有一个对象的，就是一个空字符串，这个可能我并没想到，导致服务端返回空字符串时，我这边也多加载了一个图片，这个图片还一直下载不下来。这个也让我明白：”componentsSeparatedByString:”的意思，有分割字符就根据字符分割返回数组，没分割字符则返回被分割的字符串，@””也是一个字符串，它也是有内存地址的，跟nil并不一样。看看下面的代码就明白了:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">- (void)testComponentSeparatedByString</div><div class="line">&#123;</div><div class="line">    NSString *descImage = @&quot;&quot;;</div><div class="line">    NSArray *descImages = [descImage componentsSeparatedByString:@&quot;,&quot;];</div><div class="line">    NSLog(@&quot;descImages = %@,descImages.count=%zd,descImage = %p,nil= %p&quot;,descImages,descImages.count,descImage,nil);</div><div class="line">&#125;</div><div class="line">打印出来的</div><div class="line">descImages = (</div><div class="line">    &quot;&quot;</div><div class="line">),descImages.count=1,descImage = 0x1001d5690,nil= 0x0</div></pre></td></tr></table></figure></p>
-<p>因此要解决这个问题就得加一个判断给descImage.length&gt;0即可。</p>
-<h3 id="衍生学习"><a href="#衍生学习" class="headerlink" title="衍生学习"></a>衍生学习</h3><p>componentsSeparatedByCharactersInSet的使用，使用多个字符分割字符串：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">NSString *str = @&quot;A~B^C&quot;;</div><div class="line">NSArray *arr = [str componentsSeparatedByCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@&quot;^~&quot;]];</div><div class="line">NSLog(@&quot;%@&quot;, arr);</div><div class="line">打印出来</div><div class="line">(</div><div class="line">    A,</div><div class="line">    B,</div><div class="line">    C</div><div class="line">)</div></pre></td></tr></table></figure></p>
+		<p>最近在忙着做一个文件传输的软件，刚开始也没去想项目实现的困难度，可不可行。怎么说呢，因为有类似的软件都已经上线了，别人都已经实现了，就算在可行性上面做再多的分析，也是多余的了。做这个项目也是我换工作后的第一个项目，以前做ios开发时间并不是很长，对ios开发的经验也是有限的。也没想过会遇到什么困难，既来之则安之了吧。</p>
+<p>　　项目分下来后，我被安排做音视频模块和图片模块，主要做UI和媒体文件的获取任务和播放。看起来并不是很多事情，我按照以前的工作思维，拿到需求，找到解决方案，考虑工作周期，计划工作量，恭恭敬敬的做起来。一般我的做法都是先把自己没把握的问题先去找个解决方案，要是有了这些方案后，工作起来就不会感觉到压力，就只是工作量的问题了。所以看了需求后，我第一个就是去找怎么获取ipod里面的文件，以及它们的基本属性，比如音乐文件，它们的专辑名称、歌手、封面等。当时在博客园上找到了一篇关于获取ipod音乐文件基本信息的博客，很兴奋的看完了，同时也转载到了自己的博客中，供自己以后随时翻阅，在我的博客中叫《ios获取音乐库信息（转）》，当时看的也不是原文，所以我也不知道原文在哪，就只是在标题上加了个“转”字，以表非自己著作。然后我便按照此篇文章将ipod里的操作都完成了，播放音乐，音乐列表，音乐文件的封面，歌手等。其实仅仅只是做到这些，并不是很难，因为你只需要使用MPMediaQuery就可以获取ipod里的所有音乐文件，然后循环他的item就可以拿到每个音乐文件对象，根据音乐文件对象的valueForProperty：方法可以拿到你想要的东西。小说明一下：并不是你想要的所有都能拿到。正因为这个，我才遇到了些问题，也是我在此项目中遇到最困难最难解决的问题。也开始了解ios系统的基本原理。文章开始就说了，我是要做一个文件传输的软件，所以并不是只将自己程序中的文件传输，既然要提到ipod，也意味着要对ipod里面的文件进行操作，需要播放，传输等。我想：做ios开发的人都知道ios是一个比较封闭的，这也是此系统的高安全性所在。他基于沙盒原理，想要对其他程序的文件进行操作，不是系统给出的接口，你是没办法去实现你想要的需求的。所以当时我一直对ipod文件导出困惑不解，查阅了很多资料，发过很多贴，问过一些同事，但都没能解决问题。所以这个问题也拖了很久。问题不主要在于怎么导出，关键在于导出后还能提供给其他平台的系统使用，比如android系统。这就是文件的格式问题了。因为在ios系统中，提供的接口导出的文件基本上是m4a、caf等的格式。这些格式在android系统上播放不了。所以要想在其他系统中也能播放，也就只能是mp3格式了。想要导出成mp3格式的文件，我想很多人都想要这个需求吧，这是我在很多贴上看到的，但基本上没人能把这个导出成mp3格式的解决方案贴的很详细。后来我能想到的办法就是使用网上说的lame库，首先将ipod里面的文件导出成caf格式的，再通过lame库将其转换成mp3格式的。我试了，成功了，让我兴奋了一把，但导出的结果却不尽人意。有两个最严重的缺点，一个是转换的时间比较长，10M的文件转换花了一分钟，我想：对于一个文件传输的软件是接受不了这个现实的；二就是它转换后音质变底了，文件大小也明显变小了。我想这是mp3格式的问题，mp3本身就是有损的转换。做到这里了，我实在是绝望了，不知道怎么去解决这个问题了。但别的软件有是怎么解决这个问题的呢？我自己都不知道怎么去说服自己，难道别人是自己做的格式转换？还是花了钱给了苹果找了接口直接导出mp3文件？这些困惑我无法证实。突然感觉到绝望了。我也开始转移了注意，着手做了其他项目。也就在做其他项目不久，终于看到希望了，有个同事在网上找到了一个demo，导出mp3文件就在一秒之内解决。很神奇，让我有惊讶有兴奋。没有音质的损失，文件大小基本没变化，但还是丢失了一些基本元素，比如歌曲的封面、歌手等属性。要想做到属性也不丢失，还得自己加上这些属性，我想我们已经做的更好了，能导出mp3文件已经实在是让我很兴奋了。这些小问题也就先不看吧。</p>
+<p>　　导出mp3格式的文件了，问题也就解决了。我心情也平复了许多。如果有朋友也有此方面的需求，可以到这里下载<a href="https://github.com/lyroger/TSLibraryImport" target="_blank" rel="external">demo</a></p>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -112,7 +114,7 @@
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://lyroger.github.io/2016/02/24/关于字符串的分割/" data-title="关于字符串的分割 | 罗琰的技术博客" data-tsina="null" class="share clearfix">
+	  <div data-url="http://lyroger.github.io/2013/06/08/关于做ipod-library开发的体验/" data-title="关于做ipod library开发的体验 | 罗琰的技术博客" data-tsina="null" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -126,27 +128,19 @@
 <nav class="article-nav clearfix">
  
  <div class="prev" >
- <a href="/2016/02/25/iOS基础深究/" title="iOS基础深究">
+ <a href="/2015/09/08/iOS/" title="iOS学习笔记">
   <strong>上一篇：</strong><br/>
   <span>
-  iOS基础深究</span>
+  iOS学习笔记</span>
 </a>
 </div>
 
-
-<div class="next">
-<a href="/2016/01/21/线上APP使用动态库添加需求方式/"  title="动态添加需求(动态库)">
- <strong>下一篇：</strong><br/> 
- <span>动态添加需求(动态库)
-</span>
-</a>
-</div>
 
 </nav>
 
 	
 <section id="comments" class="comment">
-	<div class="ds-thread" data-thread-key="2016/02/24/关于字符串的分割/" data-title="关于字符串的分割" data-url="http://lyroger.github.io/2016/02/24/关于字符串的分割/"></div>
+	<div class="ds-thread" data-thread-key="2013/06/08/关于做ipod-library开发的体验/" data-title="关于做ipod library开发的体验" data-url="http://lyroger.github.io/2013/06/08/关于做ipod-library开发的体验/"></div>
 </section>
 
 
@@ -156,7 +150,7 @@
   <div id="toc" class="toc-aside">
   <strong class="toc-title">Contents</strong>
  
- <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#衍生学习"><span class="toc-number">1.</span> <span class="toc-text">衍生学习</span></a></li></ol>
+ 
  
   </div>
 
