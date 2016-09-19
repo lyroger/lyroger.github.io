@@ -23,7 +23,7 @@
 <meta name="twitter:description" content="一、assign与weak的区别assign适用于基本数据类型，weak是适用于NSObject对象，并且是一个弱引用。assign其实也可以用来修饰对象，那么我们为什么不用它呢？因为被assign修饰的对象在释放之后，指针的地址还是存在的，也就是说指针并没有被置为nil。如果在后续的内存分配中，刚好分到了这块地址，程序就会崩溃掉。而weak修饰的对象在释放之后，指针地址会被置为nil。所以现在一">
 
     
-    <link rel="alternative" href="http://lyroger.github.io/atom.xml" title="罗琰的技术博客" type="application/atom+xml">
+    <link rel="alternative" href="/atom.xml" title="罗琰的技术博客" type="application/atom+xml">
     
     
     
@@ -39,7 +39,7 @@
 				<h1 class="site-name"><a href="/" title="罗琰的技术博客">罗琰的技术博客</a></h1>
 				<h2 class="blog-motto">积累与分享成长的技术经验</h2>
 			</div>
-			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜單">
 			</a></div>
 			<nav class="animated">
 				<ul>
@@ -55,7 +55,7 @@
  					
 					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
 						<label>Search</label>
-						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
 						<input type="hidden" name="q" value="site:lyroger.github.io">
 					</form>
 					
@@ -78,14 +78,14 @@
 		<a href="/about" title="luoyan" target="_blank" itemprop="author">luoyan</a>
 		
   <p class="article-time">
-    <time datetime="2016-02-25T01:37:00.000Z" itemprop="datePublished"> Published 2016-02-25</time>
+    <time datetime="2016-02-25T01:37:00.000Z" itemprop="datePublished"> 發表於 2016-02-25</time>
     
   </p>
 </header>
 	<div class="article-content">
 		
 		<div id="toc" class="toc-article">
-			<strong class="toc-title">Contents</strong>
+			<strong class="toc-title">文章目錄</strong>
 		
 			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#一、assign与weak的区别"><span class="toc-number">1.</span> <span class="toc-text">一、assign与weak的区别</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二、nonatomic与atomic"><span class="toc-number">2.</span> <span class="toc-text">二、nonatomic与atomic</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#三、ARC模式下重写set方法"><span class="toc-number">3.</span> <span class="toc-text">三、ARC模式下重写set方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#四、block属性为什么需要使用copy修饰"><span class="toc-number">4.</span> <span class="toc-text">四、block属性为什么需要使用copy修饰</span></a></li></ol>
 		
@@ -151,35 +151,25 @@
 
 
 </div>  
-      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
+      <div class="openaside"><a class="navbutton" href="#" title="顯示側邊欄"></a></div>
 
   <div id="toc" class="toc-aside">
-  <strong class="toc-title">Contents</strong>
+  <strong class="toc-title">文章目錄</strong>
  
  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#一、assign与weak的区别"><span class="toc-number">1.</span> <span class="toc-text">一、assign与weak的区别</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二、nonatomic与atomic"><span class="toc-number">2.</span> <span class="toc-text">二、nonatomic与atomic</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#三、ARC模式下重写set方法"><span class="toc-number">3.</span> <span class="toc-text">三、ARC模式下重写set方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#四、block属性为什么需要使用copy修饰"><span class="toc-number">4.</span> <span class="toc-text">四、block属性为什么需要使用copy修饰</span></a></li></ol>
  
   </div>
 
 <div id="asidepart">
-<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
+<div class="closeaside"><a class="closebutton" href="#" title="隱藏側邊欄"></a></div>
 <aside class="clearfix">
-
-  
-<div class="github-card">
-<p class="asidetitle">Github Card</p>
-<div class="github-card" data-github="lyroger" data-width="220" data-height="119" data-theme="medium">
-<script type="text/javascript" src="//cdn.jsdelivr.net/github-cards/latest/widget.js" ></script>
-</div>
-  </div>
-
-
 
   
 
   
 
   <div class="linkslist">
-  <p class="asidetitle">Links</p>
+  <p class="asidetitle">友情鏈接</p>
     <ul>
         
           <li>
@@ -191,15 +181,8 @@
     </ul>
 </div>
 
-  
-
-
-  <div class="rsspart">
-	<a href="http://lyroger.github.io/atom.xml" target="_blank" title="rss">RSS</a>
-</div>
-
   <div class="weiboshow">
-  <p class="asidetitle">Weibo</p>
+  <p class="asidetitle">新浪微博</p>
     <iframe width="100%" height="119" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=119&fansRow=2&ptype=1&speed=0&skin=9&isTitle=1&noborder=1&isWeibo=0&isFans=0&uid=null&verifier=&dpc=1"></iframe>
 </div>
 
@@ -442,7 +425,7 @@ var _hmt = _hmt || [];
 <!-- Totop Begin -->
 
 	<div id="totop">
-	<a title="Back to Top"><img src="/img/scrollup.png"/></a>
+	<a title="返回頂部"><img src="/img/scrollup.png"/></a>
 	</div>
 	<script src="/js/totop.js"></script>
 
