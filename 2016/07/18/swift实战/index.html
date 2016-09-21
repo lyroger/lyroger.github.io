@@ -12,18 +12,18 @@
 
     
     <meta name="description" content="OC调用swift方式在OC代码中引入头文件 #import “项目名称-swift.h”即可用OC语法调用swift写的代码了。
-swift中如何写Block在swift中定义一个闭包的关键词为 12345678910111213141516171819202122232425在A类中定义一个闭包``` swift//定义一个闭包typealias LoginSuceesedBlock = (s">
+swift中如何写Block在swift中定义一个闭包的关键词为 typealias在A类中定义一个闭包1234567891011121314151617181920212223//定义一个闭包typealias LoginSuceesedBlock = (succe">
 <meta property="og:type" content="article">
 <meta property="og:title" content="swift实战">
 <meta property="og:url" content="http://lyroger.github.io/2016/07/18/swift实战/index.html">
 <meta property="og:site_name" content="罗琰的技术博客">
 <meta property="og:description" content="OC调用swift方式在OC代码中引入头文件 #import “项目名称-swift.h”即可用OC语法调用swift写的代码了。
-swift中如何写Block在swift中定义一个闭包的关键词为 12345678910111213141516171819202122232425在A类中定义一个闭包``` swift//定义一个闭包typealias LoginSuceesedBlock = (s">
-<meta property="og:updated_time" content="2016-09-19T07:57:15.000Z">
+swift中如何写Block在swift中定义一个闭包的关键词为 typealias在A类中定义一个闭包1234567891011121314151617181920212223//定义一个闭包typealias LoginSuceesedBlock = (succe">
+<meta property="og:updated_time" content="2016-09-21T01:47:17.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="swift实战">
 <meta name="twitter:description" content="OC调用swift方式在OC代码中引入头文件 #import “项目名称-swift.h”即可用OC语法调用swift写的代码了。
-swift中如何写Block在swift中定义一个闭包的关键词为 12345678910111213141516171819202122232425在A类中定义一个闭包``` swift//定义一个闭包typealias LoginSuceesedBlock = (s">
+swift中如何写Block在swift中定义一个闭包的关键词为 typealias在A类中定义一个闭包1234567891011121314151617181920212223//定义一个闭包typealias LoginSuceesedBlock = (succe">
 
     
     <link rel="alternative" href="/atom.xml" title="罗琰的技术博客" type="application/atom+xml">
@@ -95,7 +95,7 @@ swift中如何写Block在swift中定义一个闭包的关键词为 1234567891011
 		</div>
 		
 		<h2 id="OC调用swift方式"><a href="#OC调用swift方式" class="headerlink" title="OC调用swift方式"></a>OC调用swift方式</h2><p>在OC代码中引入头文件 #import “项目名称-swift.h”<br>即可用OC语法调用swift写的代码了。</p>
-<h2 id="swift中如何写Block"><a href="#swift中如何写Block" class="headerlink" title="swift中如何写Block"></a>swift中如何写Block</h2><p>在swift中定义一个闭包的关键词为 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">在A类中定义一个闭包</div><div class="line">``` swift</div><div class="line">//定义一个闭包</div><div class="line">typealias LoginSuceesedBlock = (successed:Bool)-&gt;Void</div><div class="line">class LoginViewController:UIViewController&#123;</div><div class="line">    //将函数指针赋值给loginActionBlock闭包</div><div class="line">    func initWithBlock(closure:LoginSuceesedBlock?)&#123;</div><div class="line">        loginActionBlock = closure</div><div class="line">    &#125;</div><div class="line">    private func loginAction(sender:AnyObject?) &#123;</div><div class="line">        let loginSuccessed:Bool = loginViewModel.loginRequestAction(textUserName.text!,passWord: textPwd.text!)</div><div class="line">        if loginSuccessed &#123;</div><div class="line">            //block 回调</div><div class="line">            if (loginActionBlock != nil) &#123;</div><div class="line">                self.loginActionBlock!(successed: true)</div><div class="line">            &#125;</div><div class="line">        &#125; else &#123;</div><div class="line">            let alert:UIAlertView =  UIAlertView()</div><div class="line">            alert.title = &quot;提示&quot;</div><div class="line">            alert.message = &quot;登录失败&quot;</div><div class="line">            alert.addButtonWithTitle(&quot;OK&quot;)</div><div class="line">            alert.show()</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h2 id="swift中如何写Block"><a href="#swift中如何写Block" class="headerlink" title="swift中如何写Block"></a>swift中如何写Block</h2><p>在swift中定义一个闭包的关键词为 <code>typealias</code><br>在A类中定义一个闭包<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//定义一个闭包</span></div><div class="line"><span class="keyword">typealias</span> <span class="type">LoginSuceesedBlock</span> = (successed:<span class="type">Bool</span>)-&gt;<span class="type">Void</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">LoginViewController</span>:<span class="title">UIViewController</span></span>&#123;</div><div class="line">    <span class="comment">//将函数指针赋值给loginActionBlock闭包</span></div><div class="line">    <span class="function"><span class="keyword">func</span> <span class="title">initWithBlock</span><span class="params">(closure:LoginSuceesedBlock?)</span></span>&#123;</div><div class="line">        loginActionBlock = closure</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">private</span> <span class="function"><span class="keyword">func</span> <span class="title">loginAction</span><span class="params">(sender:AnyObject?)</span></span> &#123;</div><div class="line">        <span class="keyword">let</span> loginSuccessed:<span class="type">Bool</span> = loginViewModel.loginRequestAction(textUserName.text!,passWord: textPwd.text!)</div><div class="line">        <span class="keyword">if</span> loginSuccessed &#123;</div><div class="line">            <span class="comment">//block 回调</span></div><div class="line">            <span class="keyword">if</span> (loginActionBlock != <span class="literal">nil</span>) &#123;</div><div class="line">                <span class="keyword">self</span>.loginActionBlock!(successed: <span class="literal">true</span>)</div><div class="line">            &#125;</div><div class="line">        &#125; <span class="keyword">else</span> &#123;</div><div class="line">            <span class="keyword">let</span> alert:<span class="type">UIAlertView</span> =  <span class="type">UIAlertView</span>()</div><div class="line">            alert.title = <span class="string">"提示"</span></div><div class="line">            alert.message = <span class="string">"登录失败"</span></div><div class="line">            alert.addButtonWithTitle(<span class="string">"OK"</span>)</div><div class="line">            alert.show()</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 <p>在B类中传一个函数到A类<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">authorizeOperation</span><span class="params">()</span></span> &#123;</div><div class="line">        <span class="keyword">let</span> loginVC = <span class="type">LoginViewController</span>()</div><div class="line">        loginVC.initWithBlock(loginActionSuccessed)</div><div class="line">        <span class="keyword">self</span>.navigationController?.pushViewController(loginVC, animated: <span class="literal">true</span>)</div><div class="line">    &#125;</div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">loginActionSuccessed</span><span class="params">(successed:Bool)</span></span> -&gt; <span class="type">Void</span> &#123;</div><div class="line">        <span class="keyword">if</span> successed &#123;</div><div class="line">            <span class="comment">//todo loginSuccessed something</span></div><div class="line">        &#125;</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
   
 	</div>
@@ -107,6 +107,11 @@ swift中如何写Block在swift中定义一个闭包的关键词为 1234567891011
   <a class="article-category-link" href="/categories/swift/">swift</a>
 </div>
 
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/swift/">swift</a>
+  </div>
 
 </div>
 
@@ -207,6 +212,10 @@ swift中如何写Block在swift中定义一个闭包的关键词为 1234567891011
 <div class="tagslist">
 	<p class="asidetitle">Tags</p>
 		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/swift/" title="swift">swift<sup>1</sup></a></li>
+			
 		
 			
 				<li><a href="/tags/runtime/" title="runtime">runtime<sup>1</sup></a></li>
