@@ -1,0 +1,506 @@
+
+ <!DOCTYPE HTML>
+<html >
+<head>
+  <meta charset="UTF-8">
+  
+    <title>Jenkins+Git自动构建 | 罗琰的技术博客</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="luoyan">
+    
+
+    
+    <meta name="description" content="前言   想想以前，发给测试的测试包都是通过手动使用XCode来打包，如果项目工程比较大，Archive过程时间还是比较长的，打多了觉得特没劲，非常浪费时间，特别是使用了敏捷开发流程的，要是还用手动打包，估计你在打包上耗得时间都够你解决几个bug了。敏捷开发也是强调使用自动化的，所以也少不了自动构建的环节，那么接下来说说如何使用Jenkins+Git来自动构建我们的项目，从而方便测试，也让开发有更">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Jenkins+Git自动构建">
+<meta property="og:url" content="http://lyroger.github.io/2016/08/25/Jenkins+Git自动构建/index.html">
+<meta property="og:site_name" content="罗琰的技术博客">
+<meta property="og:description" content="前言   想想以前，发给测试的测试包都是通过手动使用XCode来打包，如果项目工程比较大，Archive过程时间还是比较长的，打多了觉得特没劲，非常浪费时间，特别是使用了敏捷开发流程的，要是还用手动打包，估计你在打包上耗得时间都够你解决几个bug了。敏捷开发也是强调使用自动化的，所以也少不了自动构建的环节，那么接下来说说如何使用Jenkins+Git来自动构建我们的项目，从而方便测试，也让开发有更">
+<meta property="og:image" content="http://lyroger.github.io/images/jenins首页.png">
+<meta property="og:image" content="http://lyroger.github.io/images/创建项目.png">
+<meta property="og:image" content="http://lyroger.github.io/images/创建项目1.png">
+<meta property="og:image" content="http://lyroger.github.io/images/配置项目-项目名称.png">
+<meta property="og:image" content="http://lyroger.github.io/images/项目配置-源码管理.png">
+<meta property="og:image" content="http://lyroger.github.io/images/项目配置-源码管理添加http授权.png">
+<meta property="og:image" content="http://lyroger.github.io/images/项目配置-源码管理SSH授权创建.png">
+<meta property="og:image" content="http://lyroger.github.io/images/构建1.png">
+<meta property="og:image" content="http://lyroger.github.io/images/项目配置-构建配置.png">
+<meta property="og:image" content="http://lyroger.github.io/images/工程配置.png">
+<meta property="og:image" content="http://lyroger.github.io/images/项目管理-立即构建.png">
+<meta property="og:updated_time" content="2016-09-19T07:58:18.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Jenkins+Git自动构建">
+<meta name="twitter:description" content="前言   想想以前，发给测试的测试包都是通过手动使用XCode来打包，如果项目工程比较大，Archive过程时间还是比较长的，打多了觉得特没劲，非常浪费时间，特别是使用了敏捷开发流程的，要是还用手动打包，估计你在打包上耗得时间都够你解决几个bug了。敏捷开发也是强调使用自动化的，所以也少不了自动构建的环节，那么接下来说说如何使用Jenkins+Git来自动构建我们的项目，从而方便测试，也让开发有更">
+<meta name="twitter:image" content="http://lyroger.github.io/images/jenins首页.png">
+
+    
+    <link rel="alternative" href="/atom.xml" title="罗琰的技术博客" type="application/atom+xml">
+    
+    
+    
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="罗琰的技术博客">罗琰的技术博客</a></h1>
+				<h2 class="blog-motto">积累与分享成长的技术经验</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+						<li><a href="/about">About</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
+						<input type="hidden" name="q" value="site:lyroger.github.io">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2016/08/25/Jenkins+Git自动构建/" title="Jenkins+Git自动构建" itemprop="url">Jenkins+Git自动构建</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="luoyan" target="_blank" itemprop="author">luoyan</a>
+		
+  <p class="article-time">
+    <time datetime="2016-08-25T09:52:00.000Z" itemprop="datePublished"> Published 2016-08-25</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">Contents</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#一-Jenkins安装"><span class="toc-number">2.</span> <span class="toc-text">一.Jenkins安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二-Jenkins配置"><span class="toc-number">3.</span> <span class="toc-text">二.Jenkins配置</span></a></li></ol>
+		
+		</div>
+		
+		<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>   想想以前，发给测试的测试包都是通过手动使用XCode来打包，如果项目工程比较大，Archive过程时间还是比较长的，打多了觉得特没劲，非常浪费时间，特别是使用了敏捷开发流程的，要是还用手动打包，估计你在打包上耗得时间都够你解决几个bug了。敏捷开发也是强调使用自动化的，所以也少不了自动构建的环节，那么接下来说说如何使用Jenkins+Git来自动构建我们的项目，从而方便测试，也让开发有更多的经历投入到编码和业务中而不是浪费在这些无用的流程中。</p>
+<h2 id="一-Jenkins安装"><a href="#一-Jenkins安装" class="headerlink" title="一.Jenkins安装"></a>一.Jenkins安装</h2><p>1.下载最新的版本（一个 WAR 文件）。<a href="http://Jenkins-ci.org/" target="_blank" rel="external">Jenkins官方网址</a><br>2.运行 Java -jar jenkins.war 。<br>如果你的java环节低于java7 它会提示你升级java环节，你可以到<a href="https://www.java.com/en/download/" target="_blank" rel="external">这里下载</a>，安装最新的java环境。<br>如果一切顺利，那么只要在你本机浏览器中输入<a href="http://127.0.0.1:8080" target="_blank" rel="external">127.0.0.1:8080</a>即可看到Jenkins的主页面。<br><img src="/images/jenins首页.png" alt=""></p>
+<h2 id="二-Jenkins配置"><a href="#二-Jenkins配置" class="headerlink" title="二.Jenkins配置"></a>二.Jenkins配置</h2><p>1.先新建一个项目。<br><img src="/images/创建项目.png" alt=""><br>2.输入项目名称和构建风格。<br><img src="/images/创建项目1.png" alt=""><br>3.项目配置</p>
+<p><img src="/images/配置项目-项目名称.png" alt=""><br>4.源码管理</p>
+<p><img src="/images/项目配置-源码管理.png" alt=""><br>这一步输入你项目在Git上的仓库地址，这里的授权有两种形式，一种是使用http登录，一种是使用ssh授权；<br>*如果使用http授权的看下图：</p>
+<p><img src="/images/项目配置-源码管理添加http授权.png" alt=""><br>这里输入你git上的登录名和密码。<br>*如果使用SSH授权看下图：</p>
+<p><img src="/images/项目配置-源码管理SSH授权创建.png" alt=""><br>kind要选择SSH Username with private key,Username可以随便输入，一个描述而已，Private Key选Enter directly，然后在Key中输入你在Git上的秘钥，这个秘钥的制作在我前面的<a href="http://roger.farbox.com/post/macshang-zhi-zuo-sshmi-yao" target="_blank" rel="external">博客</a>中有提到，这里就不多说了。最后点击Add，SSH的授权就制作OK了。<br>5.构建<br>源码可以下载了，那么接下来就是如何去生成一个ipa包了，我们通过构建的方式来实现，接下来我们来配置一下构建流程，构建的方式很多中，这里讲讲比较简单的一种，使用shell来实现。</p>
+<p><img src="/images/构建1.png" alt=""></p>
+<p><img src="/images/项目配置-构建配置.png" alt=""><br>编写脚本，这个脚本支持的是workspace的，如果没有使用workspace的，问题不大，稍作修改即可。脚本：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">cd $WORKSPACE</div><div class="line">SDK_VERSION=&quot;iphoneos8.3&quot;</div><div class="line"></div><div class="line">PROJECT_NAME=&quot;JenkinsDemo&quot;</div><div class="line">PROVISION_UUID=&quot;你的描述文件的UUID，可以通过在XCode选中描述文件ctr+c的方法获取到&quot;</div><div class="line">PROVISONING_PROFILE=&quot;JenkinsDemo_Distribution&quot;</div><div class="line"></div><div class="line">XCODE_PRJ=&quot;xcodeproj&quot;</div><div class="line">FILE_EXTENSION=&apos;xcworkspace&apos;</div><div class="line">PROJECT_DIR=`pwd`</div><div class="line">CD_XCODE_PRJ=`pwd`/$PROJECT_NAME.$XCODE_PRJ</div><div class="line">PROJECT_WORKSPACE=$PROJECT_DIR.</div><div class="line">PROJECT_BUILD=`pwd`/$PROJECT_NAME/BUILD</div><div class="line"></div><div class="line">APP_PATH=&quot;build/Release-iphoneos/$&#123;PROJECT_NAME&#125;.app&quot;</div><div class="line">TARGET_APP_PATH=&quot;build/Release-iphoneos/$&#123;PROJECT_NAME&#125;.ipa&quot;</div><div class="line">ARCHIVEPATH=&quot;build/Release-iphoneos/$&#123;PROJECT_NAME&#125;.xcarchive&quot;</div><div class="line"></div><div class="line">cd &quot;$PROJECT_DIR&quot;</div><div class="line"></div><div class="line">cd ..</div><div class="line">cd &quot;$CD_XCODE_PRJ&quot;</div><div class="line">sed -i &apos;&apos; &quot;s/\(PROVISIONING_PROFILE.=.\&quot;\).*\(\&quot;\)/\1$PROVISION_UUID\2/g&quot; project.pbxproj</div><div class="line">cd ..</div><div class="line">rm -rf build</div><div class="line">xcodebuild -workspace $PROJECT_DIR/$PROJECT_NAME.$FILE_EXTENSION -scheme $PROJECT_NAME -destination generic/platform=iOS archive -archivePath $ARCHIVEPATH</div><div class="line">xcodebuild -exportArchive -exportFormat IPA -archivePath $ARCHIVEPATH -exportPath $TARGET_APP_PATH -exportProvisioningProfile &quot;$&#123;PROVISONING_PROFILE&#125;&quot;</div><div class="line">curl -F &quot;file=@build/Release-iphoneos/JenkinsDemo.ipa&quot; -F &quot;uKey=蒲公英上的uKey&quot; -F &quot;_api_key=蒲公英上的apikey&quot; https://www.pgyer.com/apiv1/app/upload</div></pre></td></tr></table></figure></p>
+<p>*构建成功后这里可能会出现一个问题，你的项目工程中的配置需要设置一下shared，不然构建的会一直报错。找不到工程文件，如下图设置：</p>
+<p><img src="/images/工程配置.png" alt=""><br>*OK，保存构建后，接下来就可以回到项目管理页面了。</p>
+<p><img src="/images/项目管理-立即构建.png" alt=""><br><em>一般构建在一分钟左右，先下载源代码，然后打包，最后将ipa包上传到蒲公英平台。
+</em>可以看出，构建后蓝色的表示构建成功，红色和灰色表示构建失败，可以点击相应的图标，查看构建日志。</p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/工具/">工具</a>
+</div>
+
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://lyroger.github.io/2016/08/25/Jenkins+Git自动构建/" data-title="Jenkins+Git自动构建 | 罗琰的技术博客" data-tsina="null" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2016/08/30/hello-hexo/" title="Hello Hexo">
+  <strong>上一篇：</strong><br/>
+  <span>
+  Hello Hexo</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2016/07/18/swift实战/"  title="swift实战">
+ <strong>下一篇：</strong><br/> 
+ <span>swift实战
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section id="comments" class="comment">
+	<div class="ds-thread" data-thread-key="2016/08/25/Jenkins+Git自动构建/" data-title="Jenkins+Git自动构建" data-url="http://lyroger.github.io/2016/08/25/Jenkins+Git自动构建/"></div>
+</section>
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">Contents</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#一-Jenkins安装"><span class="toc-number">2.</span> <span class="toc-text">一.Jenkins安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二-Jenkins配置"><span class="toc-number">3.</span> <span class="toc-text">二.Jenkins配置</span></a></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
+<aside class="clearfix">
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">Categories</p>
+		<ul>
+		
+		  
+			<li><a href="/categories/swift/" title="swift">swift<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/动画/" title="动画">动画<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/基础篇/" title="基础篇">基础篇<sup>7</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/工具/" title="工具">工具<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/框架/" title="框架">框架<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/设计模式/" title="设计模式">设计模式<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/高效篇/" title="高效篇">高效篇<sup>4</sup></a></li>
+		  
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">Tags</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/swift/" title="swift">swift<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/runtime/" title="runtime">runtime<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="aboutinfo">
+  	<p class="asidetitle">微信公众号</p>
+    <div>欢迎关注我的微信公众号</div>
+    <img src="/images/qrcode.jpg" alt="微信公众号">
+</div>
+
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I&#39;m luoyan Page in Google. <br/>
+			This is my blog,believe it or not.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		<a href="http://weibo.com/3314058724" target="_blank" class="icon-weibo" title="微博"></a>
+		
+		
+		<a href="https://github.com/lyroger" target="_blank" class="icon-github" title="github"></a>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		<a href="mailto:yan1079@126.com" target="_blank" class="icon-email" title="Email Me"></a>
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2016 
+		
+		<a href="/about" target="_blank" title="luoyan">luoyan</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"lyroger"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+<script>
+(function(){
+    var bp = document.createElement('script');
+    bp.src = '//push.zhanzhang.baidu.com/push.js';
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+<!-- Analytics Begin -->
+
+
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="Back to Top"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>

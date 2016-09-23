@@ -1,0 +1,487 @@
+
+ <!DOCTYPE HTML>
+<html >
+<head>
+  <meta charset="UTF-8">
+  
+    <title>FMDB使用SQLCipher加密 | 罗琰的技术博客</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="luoyan">
+    
+
+    
+    <meta name="description" content="前言数据库数据加密的必要性就不多说了，直接进入主题，如何使用FMDB对数据加密。这里我建议使用cocospod来管理第三方库，如果没有安装可以参考这里来安装.
+1.首先，我们的下载SQLCipher依赖库1.1 &apos;SQLCipher&apos;, &apos;~&amp;gt; 3.1.0&apos;```1234#### 2.其次，我们需要一个具有加密功能的FMDB版本；加密的FMDB其实是一个分支，也就是说，如果你的FMDB版本不支持S">
+<meta property="og:type" content="article">
+<meta property="og:title" content="FMDB使用SQLCipher加密">
+<meta property="og:url" content="http://lyroger.github.io/2015/12/23/FMDB数据库加密/index.html">
+<meta property="og:site_name" content="罗琰的技术博客">
+<meta property="og:description" content="前言数据库数据加密的必要性就不多说了，直接进入主题，如何使用FMDB对数据加密。这里我建议使用cocospod来管理第三方库，如果没有安装可以参考这里来安装.
+1.首先，我们的下载SQLCipher依赖库1.1 &apos;SQLCipher&apos;, &apos;~&amp;gt; 3.1.0&apos;```1234#### 2.其次，我们需要一个具有加密功能的FMDB版本；加密的FMDB其实是一个分支，也就是说，如果你的FMDB版本不支持S">
+<meta property="og:image" content="http://lyroger.github.io/images/F0547994-4A8E-43A8-A937-DC94A4637CA2.png">
+<meta property="og:image" content="http://lyroger.github.io/images/AFB7BECA-A6FF-4CE4-BAA1-99097EFAD5BF.png">
+<meta property="og:updated_time" content="2016-09-19T03:43:31.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="FMDB使用SQLCipher加密">
+<meta name="twitter:description" content="前言数据库数据加密的必要性就不多说了，直接进入主题，如何使用FMDB对数据加密。这里我建议使用cocospod来管理第三方库，如果没有安装可以参考这里来安装.
+1.首先，我们的下载SQLCipher依赖库1.1 &apos;SQLCipher&apos;, &apos;~&amp;gt; 3.1.0&apos;```1234#### 2.其次，我们需要一个具有加密功能的FMDB版本；加密的FMDB其实是一个分支，也就是说，如果你的FMDB版本不支持S">
+<meta name="twitter:image" content="http://lyroger.github.io/images/F0547994-4A8E-43A8-A937-DC94A4637CA2.png">
+
+    
+    <link rel="alternative" href="/atom.xml" title="罗琰的技术博客" type="application/atom+xml">
+    
+    
+    
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="罗琰的技术博客">罗琰的技术博客</a></h1>
+				<h2 class="blog-motto">积累与分享成长的技术经验</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+						<li><a href="/about">About</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
+						<input type="hidden" name="q" value="site:lyroger.github.io">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2015/12/23/FMDB数据库加密/" title="FMDB使用SQLCipher加密" itemprop="url">FMDB使用SQLCipher加密</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="luoyan" target="_blank" itemprop="author">luoyan</a>
+		
+  <p class="article-time">
+    <time datetime="2015-12-23T09:33:00.000Z" itemprop="datePublished"> Published 2015-12-23</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">Contents</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-首先，我们的下载SQLCipher依赖库"><span class="toc-number">1.1.</span> <span class="toc-text">1.首先，我们的下载SQLCipher依赖库</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-最后，修改一下你的代码"><span class="toc-number">1.2.</span> <span class="toc-text">3.最后，修改一下你的代码</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-效果"><span class="toc-number">1.3.</span> <span class="toc-text">4.效果</span></a></li></ol></li></ol>
+		
+		</div>
+		
+		<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>数据库数据加密的必要性就不多说了，直接进入主题，如何使用FMDB对数据加密。<br>这里我建议使用cocospod来管理第三方库，如果没有安装可以参考<a href="http://blog.devtang.com/blog/2014/05/25/use-cocoapod-to-manage-ios-lib-dependency/" target="_blank" rel="external">这里</a>来安装.</p>
+<h4 id="1-首先，我们的下载SQLCipher依赖库"><a href="#1-首先，我们的下载SQLCipher依赖库" class="headerlink" title="1.首先，我们的下载SQLCipher依赖库"></a>1.首先，我们的下载SQLCipher依赖库</h4><p>1.1 <figure class="highlight plain"><figcaption><span>'SQLCipher', '~> 3.1.0'```</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">#### 2.其次，我们需要一个具有加密功能的FMDB版本；</div><div class="line">加密的FMDB其实是一个分支，也就是说，如果你的FMDB版本不支持SQLCipher加密，那么你就需要替换FMDB。Github上关于该分支的安装只提供了cocospod的安装方式。Github上FMDB的[地址](https://github.com/ccgus/fmdb);</div><div class="line">使用cocospod来跟新具有加密功能的FMDB</div><div class="line">2.1 将以前```pod &apos;FMDB&apos;``` 改成```pod &apos;FMDB/SQLCipher&apos;</div></pre></td></tr></table></figure></p>
+<p>2.2 更新pod <code>pod update</code></p>
+<h4 id="3-最后，修改一下你的代码"><a href="#3-最后，修改一下你的代码" class="headerlink" title="3.最后，修改一下你的代码"></a>3.最后，修改一下你的代码</h4><p>定义一个加密的key,这里我自定义了一个宏<code>DB_SECRETKEY</code>,然后在FMDB中的FMDatabase.m类中加一句代码，如下图:<br><img src="/images/F0547994-4A8E-43A8-A937-DC94A4637CA2.png" alt=""></p>
+<h4 id="4-效果"><a href="#4-效果" class="headerlink" title="4.效果"></a>4.效果</h4><p>run下你的工程，并对数据库做一些操作，然后在使用其他管理工具打开数据时，你就发现他会提示你file is encrypted or is not a database<br><img src="/images/AFB7BECA-A6FF-4CE4-BAA1-99097EFAD5BF.png" alt=""></p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://lyroger.github.io/2015/12/23/FMDB数据库加密/" data-title="FMDB使用SQLCipher加密 | 罗琰的技术博客" data-tsina="null" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2015/12/25/Objective-C代码混淆/" title="Objective-C代码混淆">
+  <strong>上一篇：</strong><br/>
+  <span>
+  Objective-C代码混淆</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2015/12/14/swift学习笔记（基础篇）/"  title="swift学习笔记（基础篇）">
+ <strong>下一篇：</strong><br/> 
+ <span>swift学习笔记（基础篇）
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section id="comments" class="comment">
+	<div class="ds-thread" data-thread-key="2015/12/23/FMDB数据库加密/" data-title="FMDB使用SQLCipher加密" data-url="http://lyroger.github.io/2015/12/23/FMDB数据库加密/"></div>
+</section>
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">Contents</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-首先，我们的下载SQLCipher依赖库"><span class="toc-number">1.1.</span> <span class="toc-text">1.首先，我们的下载SQLCipher依赖库</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-最后，修改一下你的代码"><span class="toc-number">1.2.</span> <span class="toc-text">3.最后，修改一下你的代码</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-效果"><span class="toc-number">1.3.</span> <span class="toc-text">4.效果</span></a></li></ol></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
+<aside class="clearfix">
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">Categories</p>
+		<ul>
+		
+		  
+			<li><a href="/categories/swift/" title="swift">swift<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/动画/" title="动画">动画<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/基础篇/" title="基础篇">基础篇<sup>7</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/工具/" title="工具">工具<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/框架/" title="框架">框架<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/设计模式/" title="设计模式">设计模式<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/高效篇/" title="高效篇">高效篇<sup>4</sup></a></li>
+		  
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">Tags</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/swift/" title="swift">swift<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/runtime/" title="runtime">runtime<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="aboutinfo">
+  	<p class="asidetitle">微信公众号</p>
+    <div>欢迎关注我的微信公众号</div>
+    <img src="/images/qrcode.jpg" alt="微信公众号">
+</div>
+
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I&#39;m luoyan Page in Google. <br/>
+			This is my blog,believe it or not.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		<a href="http://weibo.com/3314058724" target="_blank" class="icon-weibo" title="微博"></a>
+		
+		
+		<a href="https://github.com/lyroger" target="_blank" class="icon-github" title="github"></a>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		<a href="mailto:yan1079@126.com" target="_blank" class="icon-email" title="Email Me"></a>
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2016 
+		
+		<a href="/about" target="_blank" title="luoyan">luoyan</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"lyroger"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+<script>
+(function(){
+    var bp = document.createElement('script');
+    bp.src = '//push.zhanzhang.baidu.com/push.js';
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+<!-- Analytics Begin -->
+
+
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="Back to Top"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>
