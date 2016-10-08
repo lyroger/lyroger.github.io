@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://lyroger.github.io/"/>
-  <updated>2016-09-19T05:57:31.000Z</updated>
+  <updated>2016-09-26T08:32:58.000Z</updated>
   <id>http://lyroger.github.io/</id>
   
   <author>
@@ -17,10 +17,10 @@
   
   <entry>
     <title>Hello Hexo</title>
-    <link href="http://lyroger.github.io/2016/08/30/hello-hexo/"/>
-    <id>http://lyroger.github.io/2016/08/30/hello-hexo/</id>
-    <published>2016-08-30T07:23:52.000Z</published>
-    <updated>2016-09-19T05:57:31.000Z</updated>
+    <link href="http://lyroger.github.io/2016/09/26/hello-hexo/"/>
+    <id>http://lyroger.github.io/2016/09/26/hello-hexo/</id>
+    <published>2016-09-26T08:32:58.000Z</published>
+    <updated>2016-09-26T08:32:58.000Z</updated>
     
     <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
 <h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>
@@ -43,11 +43,60 @@
   </entry>
   
   <entry>
+    <title>使用Cordova搭建混合框架</title>
+    <link href="http://lyroger.github.io/2016/09/23/%E4%BD%BF%E7%94%A8Cordova%E6%90%AD%E5%BB%BA%E6%B7%B7%E5%90%88%E6%A1%86%E6%9E%B6/"/>
+    <id>http://lyroger.github.io/2016/09/23/使用Cordova搭建混合框架/</id>
+    <published>2016-09-23T06:22:31.000Z</published>
+    <updated>2016-10-08T10:02:00.000Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>  入职公司不久，花了一个多月开发了一个原生APP，这也只是个开始，首先强调的是，我们公司并不是外包公司，但需要开发的项目其实还挺多的，为了解决这个问题，我们需要周期短，响应快，来满足公司的需求，我们只能抛弃纯原生APP的开发方案，选择目前市场比较热门的技术方案：<em>Hybrid App</em>。使用<em>Hybrid App</em>的技术框架其实有很多开源的技术方案，比如使用<a href="http://cordova.apache.org" target="_blank" rel="external">Cordova</a>，<a href="http://reactnative.cn" target="_blank" rel="external">React Native</a>，等。这两个技术方案其实都还不错，由于我们公司有人以前有使用<em>Cordova</em>框架的经验，所以我们选择了<em>Cordova</em>,这个理由听起来感觉有些过不去，但有时候领导就是喜欢听取有经验的方案。不过走到现在确实觉得<em>Cordova</em>也很不错,没出什么问题，也都能满足项目上的需求。</p>
+<h2 id="搭建框架"><a href="#搭建框架" class="headerlink" title="搭建框架"></a>搭建框架</h2><p> 接下来我们来搭建一个<em>Hybrid App</em>试试手吧，创建一个<code>MyHybridDemo</code>，使用<code>Pod</code>来管理<em>Cordova</em>框架，可以通过命令<code>pod &#39;Cordova&#39;</code>从Github上下载<em>Cordova</em>，集成<em>Cordova</em>到工程中后，还缺html5与原生代码交互的桥梁，需要一些js的支撑，你可以查看<a href="http://cordova.apache.org/docs/en/latest/guide/cli/index.html" target="_blank" rel="external">官网</a>的文档，一步一步创建相应文件。也可以直接从我的<a href="">MyHybridDemo</a>中拷贝www文件夹和config.xml文件集成到你的工程中。到这里集成框架算是ok了，接下来就是写业务代码了。在写业务代码之前首先来介绍一下www目录下的文件和config.xml文件的作用。<br> 使用终端cd到www目录下，使用<code>tree -L 4</code>（需安装tree工具）命令查看www目录：<br> <figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">.</div><div class="line">├── assets</div><div class="line">│   ├── images</div><div class="line">│   ├── js</div><div class="line">│   └── style</div><div class="line">├── cordova-js-src</div><div class="line">│   ├── exec.js</div><div class="line">│   └── platform.js</div><div class="line">├── cordova.js</div><div class="line">├── cordova_plugins.js</div><div class="line">├── index.html</div><div class="line">└── plugins</div><div class="line">    ├── com.exmind.photopickerplugin</div></pre></td></tr></table></figure></p>
+<ul>
+<li><code>assets</code>:该目录是用来放资源文件的，比如h5相关的业务图片，视频等资源文件。</li>
+<li><code>cordova-js-src</code>:该目录是存放cordova的js框架代码，这个你直接拷贝过来就ok了，不用多管。</li>
+<li><code>cordova.js</code>:该文件是cordova的js框架代码。直接拷贝。</li>
+<li><code>cordova_plugins.js</code>:该js文件是cordova来定义js插件文件，他包含定义插件的文件的路径，插件ID，以及插件名称。最终获取一个插件集合。</li>
+<li><code>plugins</code>:该文件夹是js调用原生插件的入口，所有插件可以放到此文件夹中。比如拍照，定位，分享等插件js。</li>
+<li>最后还有一个config.xml文件,该xml文件主要是用作配置属性的。可以配置h5入口，也可以配置UIWebView的属性等。</li>
+</ul>
+<h2 id="插件的配置和定义"><a href="#插件的配置和定义" class="headerlink" title="插件的配置和定义"></a>插件的配置和定义</h2><p>  了解了框架后，来实战一下，用例就拿web端调用APP的系统相机和相册吧。</p>
+<p>  一. 首先我们用<code>Objective-C</code>原生代码写好调用系统相机和相册的方法。具体实现我就不写了，需要注意的一点就是该类需要继承Cordova的<code>CDVPlugin</code>类，调用的插件方法需要传一个<code>CDVInvokedUrlCommand</code>类型的参数，以便回调。<br>  <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">@interface PhotoPickerPlugin : CDVPlugin</div><div class="line">// 获取图片</div><div class="line">- (void)getPictures:(CDVInvokedUrlCommand *)command;</div><div class="line">// 删除图片文件</div><div class="line">- (void)deleteFile:(CDVInvokedUrlCommand *)command;</div><div class="line">@end</div></pre></td></tr></table></figure></p>
+<p>  二. 写完原生代码后，如何让web端调起我们的代码呢？框架搭建好后，其实只要稍作配置就ok了，你只需要动动四个文件。</p>
+<ol>
+<li>第一个就是config.xml，这个是配置你的插件名称，告诉Cordova你定义了这么个插件类（这里我们定义的是：<code>PhotoPickerPlugin</code>）。  </li>
+<li><p>第二个文件:添加一个<code>PhotoPickerPlugin.js</code>插件类，供web端调用的。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">cordova.define(<span class="string">"com.exmind.photopickerplugin.PhotoPickerPlugin"</span>, <span class="function"><span class="keyword">function</span>(<span class="params">require, exports, module</span>) </span>&#123;</div><div class="line">           </div><div class="line">   <span class="keyword">var</span> argscheck = <span class="built_in">require</span>(<span class="string">'cordova/argscheck'</span>);</div><div class="line">   <span class="keyword">var</span> exec = <span class="built_in">require</span>(<span class="string">'cordova/exec'</span>);</div><div class="line">   <span class="keyword">var</span> PhotoPickerPlugin = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">   </div><div class="line">   &#125;;</div><div class="line">   <span class="comment">// 获取系统相册图片</span></div><div class="line">   PhotoPickerPlugin.prototype.getPictures = <span class="function"><span class="keyword">function</span>(<span class="params">success, fail, maxCount</span>) </span>&#123;</div><div class="line">       exec(success, fail, <span class="string">"PhotoPickerPlugin"</span>, <span class="string">"getPictures"</span>, [maxCount]);</div><div class="line">   &#125;;</div><div class="line">   <span class="comment">// 删除图片</span></div><div class="line">   PhotoPickerPlugin.prototype.deleteFile = <span class="function"><span class="keyword">function</span>(<span class="params">success, fail, filePaths</span>) </span>&#123;</div><div class="line">       exec(success, fail, <span class="string">"PhotoPickerPlugin"</span>, <span class="string">"deleteFile"</span>, filePaths);</div><div class="line">   &#125;;</div><div class="line">   </div><div class="line">   <span class="keyword">var</span> me = <span class="keyword">new</span> PhotoPickerPlugin();</div><div class="line">   <span class="built_in">module</span>.exports = me;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+</li>
+<li><p>第三个文件：<code>cordova_plugins.js</code>，在这个文件中你需要定义插件js插件类以及他的路径和唯一标示。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">  <span class="string">"file"</span>: <span class="string">"plugins/com.exmind.photopickerplugin/www/PhotoPickerPlugin.js"</span>,</div><div class="line">  <span class="string">"id"</span>: <span class="string">"com.exmind.photopickerplugin.PhotoPickerPlugin"</span>,</div><div class="line">  <span class="string">"clobbers"</span>: [</div><div class="line">               <span class="string">"PhotoPickerPlugin"</span></div><div class="line">               ]</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>最后一个文件就是在使用该插件的地方引用<code>cordova_plugins.js</code> 和 <code>cordova.js</code>。</p>
+</li>
+</ol>
+<p>修改好这四个文件后，js代码就可以直接调用<code>PhotoPickerPlugin</code>的<code>getPictures:</code>,<code>deleteFile:</code>方法了。<br>调用方式:<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">PhotoPickerPlugin. getPictures(<span class="function"><span class="keyword">function</span> (<span class="params">success</span>) </span>&#123;&#125;, <span class="function"><span class="keyword">function</span> (<span class="params">fail</span>) </span>&#123;&#125;,<span class="number">6</span>);</div></pre></td></tr></table></figure></p>
+<p>如何让原生代码返回数据给web端呢？web端拿到success，和fail回调，原生代码如何将数据组织到这个回调用呢？我们回到<code>PhotoPickerPlugin.m</code>类中，来看看实现。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">- (void)imagePickerController:(TZImagePickerController *)picker didFinishPickingPhotos:(NSArray&lt;UIImage *&gt; *)photos sourceAssets:(NSArray *)assets isSelectOriginalPhoto:(BOOL)isSelectOriginalPhoto</div><div class="line">&#123;</div><div class="line">    CDVPluginResult* result = nil;</div><div class="line">    NSMutableArray *resultStrings = [[NSMutableArray alloc] init];</div><div class="line">    NSData* data = nil;</div><div class="line">    NSError* err = nil;</div><div class="line">    NSFileManager* fileMgr = [[NSFileManager alloc] init];</div><div class="line">    NSString* filePath;</div><div class="line">    </div><div class="line">    for (UIImage *image in photos) &#123;</div><div class="line">        int i = 1;</div><div class="line">        do &#123;</div><div class="line">            filePath = [NSString stringWithFormat:@&quot;%@/%@%04d.%@&quot;, [self getFileDocPath], @&quot;cdv_photo_&quot;, i++, @&quot;jpg&quot;];</div><div class="line">        &#125; while ([fileMgr fileExistsAtPath:filePath]);</div><div class="line">        </div><div class="line">        @autoreleasepool &#123;</div><div class="line">            data = UIImageJPEGRepresentation(image,0.5);</div><div class="line">            if (![data writeToFile:filePath options:NSAtomicWrite error:&amp;err]) &#123;</div><div class="line">                result = [CDVPluginResult resultWithStatus:CDVCommandStatus_IO_EXCEPTION messageAsString:[err localizedDescription]];</div><div class="line">                break;</div><div class="line">            &#125; else &#123;</div><div class="line">                [resultStrings addObject:[[NSURL fileURLWithPath:filePath] absoluteString]];</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsArray:resultStrings];</div><div class="line">    [self.commandDelegate sendPluginResult:result callbackId:self.pCommand.callbackId];</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>看最后一句代码，便是将结果通过<code>CDVPluginResult</code>类发送给对应的command。<br>到此我们应该掌握了如何从web端调用App端的代码了。在其他场景，其实还需要App端调用web端的方法，那如何调用呢？熟悉UIWebView的同学应该都知道UIWebView中有一个<code>stringByEvaluatingJavaScriptFromString:</code>方法。对，你可以使用该方法调用js方法，不过cordova也封装了一个方法供你使用，你可以通过<code>CDVCommandDelegateImpl</code>类的<code>evalJs:</code>方法实现调用js代码。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h2&gt;&lt;p&gt;  入职公司不久，花了一个多月开发了一个原生APP，这也只是个开始，首先强调的是，我们公司并不是外包公司，但需要开发的项目其实还挺多的，为了
+    
+    </summary>
+    
+      <category term="框架" scheme="http://lyroger.github.io/categories/%E6%A1%86%E6%9E%B6/"/>
+    
+    
+      <category term="Hybrid App" scheme="http://lyroger.github.io/tags/Hybrid-App/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Jenkins+Git自动构建</title>
     <link href="http://lyroger.github.io/2016/08/25/Jenkins+Git%E8%87%AA%E5%8A%A8%E6%9E%84%E5%BB%BA/"/>
     <id>http://lyroger.github.io/2016/08/25/Jenkins+Git自动构建/</id>
     <published>2016-08-25T09:52:00.000Z</published>
-    <updated>2016-09-19T07:58:18.000Z</updated>
+    <updated>2016-09-26T08:32:58.000Z</updated>
     
     <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>   想想以前，发给测试的测试包都是通过手动使用XCode来打包，如果项目工程比较大，Archive过程时间还是比较长的，打多了觉得特没劲，非常浪费时间，特别是使用了敏捷开发流程的，要是还用手动打包，估计你在打包上耗得时间都够你解决几个bug了。敏捷开发也是强调使用自动化的，所以也少不了自动构建的环节，那么接下来说说如何使用Jenkins+Git来自动构建我们的项目，从而方便测试，也让开发有更多的经历投入到编码和业务中而不是浪费在这些无用的流程中。</p>
 <h2 id="一-Jenkins安装"><a href="#一-Jenkins安装" class="headerlink" title="一.Jenkins安装"></a>一.Jenkins安装</h2><p>1.下载最新的版本（一个 WAR 文件）。<a href="http://Jenkins-ci.org/" target="_blank" rel="external">Jenkins官方网址</a><br>2.运行 Java -jar jenkins.war 。<br>如果你的java环节低于java7 它会提示你升级java环节，你可以到<a href="https://www.java.com/en/download/" target="_blank" rel="external">这里下载</a>，安装最新的java环境。<br>如果一切顺利，那么只要在你本机浏览器中输入<a href="http://127.0.0.1:8080" target="_blank" rel="external">127.0.0.1:8080</a>即可看到Jenkins的主页面。<br><img src="/images/jenins首页.png" alt=""></p>
@@ -80,7 +129,7 @@
     <link href="http://lyroger.github.io/2016/07/18/swift%E5%AE%9E%E6%88%98/"/>
     <id>http://lyroger.github.io/2016/07/18/swift实战/</id>
     <published>2016-07-18T03:26:00.000Z</published>
-    <updated>2016-09-21T01:47:17.000Z</updated>
+    <updated>2016-09-26T08:32:58.000Z</updated>
     
     <content type="html"><![CDATA[<h2 id="OC调用swift方式"><a href="#OC调用swift方式" class="headerlink" title="OC调用swift方式"></a>OC调用swift方式</h2><p>在OC代码中引入头文件 #import “项目名称-swift.h”<br>即可用OC语法调用swift写的代码了。</p>
 <h2 id="swift中如何写Block"><a href="#swift中如何写Block" class="headerlink" title="swift中如何写Block"></a>swift中如何写Block</h2><p>在swift中定义一个闭包的关键词为 <code>typealias</code><br>在A类中定义一个闭包<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//定义一个闭包</span></div><div class="line"><span class="keyword">typealias</span> <span class="type">LoginSuceesedBlock</span> = (successed:<span class="type">Bool</span>)-&gt;<span class="type">Void</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">LoginViewController</span>:<span class="title">UIViewController</span></span>&#123;</div><div class="line">    <span class="comment">//将函数指针赋值给loginActionBlock闭包</span></div><div class="line">    <span class="function"><span class="keyword">func</span> <span class="title">initWithBlock</span><span class="params">(closure:LoginSuceesedBlock?)</span></span>&#123;</div><div class="line">        loginActionBlock = closure</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">private</span> <span class="function"><span class="keyword">func</span> <span class="title">loginAction</span><span class="params">(sender:AnyObject?)</span></span> &#123;</div><div class="line">        <span class="keyword">let</span> loginSuccessed:<span class="type">Bool</span> = loginViewModel.loginRequestAction(textUserName.text!,passWord: textPwd.text!)</div><div class="line">        <span class="keyword">if</span> loginSuccessed &#123;</div><div class="line">            <span class="comment">//block 回调</span></div><div class="line">            <span class="keyword">if</span> (loginActionBlock != <span class="literal">nil</span>) &#123;</div><div class="line">                <span class="keyword">self</span>.loginActionBlock!(successed: <span class="literal">true</span>)</div><div class="line">            &#125;</div><div class="line">        &#125; <span class="keyword">else</span> &#123;</div><div class="line">            <span class="keyword">let</span> alert:<span class="type">UIAlertView</span> =  <span class="type">UIAlertView</span>()</div><div class="line">            alert.title = <span class="string">"提示"</span></div><div class="line">            alert.message = <span class="string">"登录失败"</span></div><div class="line">            alert.addButtonWithTitle(<span class="string">"OK"</span>)</div><div class="line">            alert.show()</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
@@ -105,7 +154,7 @@
     <link href="http://lyroger.github.io/2016/07/08/MVVM%E6%A8%A1%E5%BC%8F%E7%9A%84%E5%AD%A6%E4%B9%A0/"/>
     <id>http://lyroger.github.io/2016/07/08/MVVM模式的学习/</id>
     <published>2016-07-08T03:15:00.000Z</published>
-    <updated>2016-09-19T07:58:45.000Z</updated>
+    <updated>2016-09-26T08:32:58.000Z</updated>
     
     <content type="html"><![CDATA[<h2 id="一-前言"><a href="#一-前言" class="headerlink" title="一 前言"></a>一 前言</h2><p>这里就不多说为什么要学习MVVM模式了，新东西当然需要有一颗进步的心态去接纳它，不管他是否真的能在实际开发中帮到你，我想至少会在某种场景中用到。好吧，我们先来理解一下什么是MVVM模式吧。</p>
 <h2 id="MVVM的理解"><a href="#MVVM的理解" class="headerlink" title="MVVM的理解"></a>MVVM的理解</h2><p>MVVM这种模式其实是来自<a href="https://msdn.microsoft.com/en-us/library/hh848246.aspx" target="_blank" rel="external">微软</a>的，我们用一张视图来概括一下MVVM吧</p>
@@ -127,22 +176,27 @@
   </entry>
   
   <entry>
-    <title>Mac上制作SSH秘钥</title>
-    <link href="http://lyroger.github.io/2016/07/07/Mac%E4%B8%8A%E5%88%B6%E4%BD%9CSSH%E7%A7%98%E9%92%A5/"/>
-    <id>http://lyroger.github.io/2016/07/07/Mac上制作SSH秘钥/</id>
+    <title>Mac上的小技巧</title>
+    <link href="http://lyroger.github.io/2016/07/07/Mac%E4%B8%8A%E7%9A%84%E5%B0%8F%E6%8A%80%E5%B7%A7/"/>
+    <id>http://lyroger.github.io/2016/07/07/Mac上的小技巧/</id>
     <published>2016-07-07T09:16:00.000Z</published>
-    <updated>2016-09-19T07:59:53.000Z</updated>
+    <updated>2016-09-26T09:03:04.000Z</updated>
     
-    <content type="html"><![CDATA[<p>打开终端，$ ssh-keygen 一路enter下。<br>生成  在当前用户名下 会有一个.sh文件。<br>查看 .ssh<br>$ ls -a ~/.ssh  通过搜索目录<br>id_rsa<br>id_rsa.pub<br>打开  id_rsa.pub文件 里面就有需要的ssh key。<br>或者使用文本编辑工具打开该文件，命令是：<br>vim ~/.ssh/id_rsa.pub</p>
+    <content type="html"><![CDATA[<h3 id="1-制作SSH秘钥"><a href="#1-制作SSH秘钥" class="headerlink" title="1.制作SSH秘钥"></a>1.制作SSH秘钥</h3><p>打开终端，$ ssh-keygen 一路enter下。<br>生成  在当前用户名下 会有一个.sh文件。<br>查看 .ssh<br>$ ls -a ~/.ssh  通过搜索目录<br>id_rsa<br>id_rsa.pub<br>打开  id_rsa.pub文件 里面就有需要的ssh key。<br>或者使用文本编辑工具打开该文件，命令是：<code>vim ~/.ssh/id_rsa.pub</code></p>
+<h3 id="2-显示或隐藏mac下的隐藏文件"><a href="#2-显示或隐藏mac下的隐藏文件" class="headerlink" title="2.显示或隐藏mac下的隐藏文件"></a>2.显示或隐藏mac下的隐藏文件</h3><ol>
+<li>显示Mac隐藏文件的命令：<code>defaults write com.apple.finder AppleShowAllFiles  YES</code></li>
+<li>隐藏Mac隐藏文件的命令：<code>defaults write com.apple.finder AppleShowAllFiles  NO</code></li>
+<li>设置完后，不会立马起效，需要重新启动Finder.可以通过命令:<code>killall Finder</code> 。</li>
+</ol>
 ]]></content>
     
     <summary type="html">
     
-      &lt;p&gt;打开终端，$ ssh-keygen 一路enter下。&lt;br&gt;生成  在当前用户名下 会有一个.sh文件。&lt;br&gt;查看 .ssh&lt;br&gt;$ ls -a ~/.ssh  通过搜索目录&lt;br&gt;id_rsa&lt;br&gt;id_rsa.pub&lt;br&gt;打开  id_rsa.pub文件 里面
+      &lt;h3 id=&quot;1-制作SSH秘钥&quot;&gt;&lt;a href=&quot;#1-制作SSH秘钥&quot; class=&quot;headerlink&quot; title=&quot;1.制作SSH秘钥&quot;&gt;&lt;/a&gt;1.制作SSH秘钥&lt;/h3&gt;&lt;p&gt;打开终端，$ ssh-keygen 一路enter下。&lt;br&gt;生成  在当前用户名下
     
     </summary>
     
-      <category term="基础篇" scheme="http://lyroger.github.io/categories/%E5%9F%BA%E7%A1%80%E7%AF%87/"/>
+      <category term="工具" scheme="http://lyroger.github.io/categories/%E5%B7%A5%E5%85%B7/"/>
     
     
   </entry>
@@ -152,7 +206,7 @@
     <link href="http://lyroger.github.io/2016/07/06/ReactiveCocoa%E5%AD%A6%E4%B9%A0/"/>
     <id>http://lyroger.github.io/2016/07/06/ReactiveCocoa学习/</id>
     <published>2016-07-06T01:39:00.000Z</published>
-    <updated>2016-09-19T07:58:04.000Z</updated>
+    <updated>2016-09-26T08:32:58.000Z</updated>
     
     <content type="html"><![CDATA[<h2 id="一、signal的释放问题"><a href="#一、signal的释放问题" class="headerlink" title="一、signal的释放问题"></a>一、signal的释放问题</h2><p>当signal作为local变量时，如果没有被subscribe，那么方法执行完后，该变量会被dealloc。但如果signal有被subscribe，那么subscriber会持有该signal，直到signal sendCompleted或sendError时，才会解除持有关系，signal才会被dealloc。</p>
 ]]></content>
@@ -173,7 +227,7 @@
     <link href="http://lyroger.github.io/2016/02/25/iOS%E5%9F%BA%E7%A1%80%E6%B7%B1%E7%A9%B6/"/>
     <id>http://lyroger.github.io/2016/02/25/iOS基础深究/</id>
     <published>2016-02-25T01:37:00.000Z</published>
-    <updated>2016-09-19T07:59:42.000Z</updated>
+    <updated>2016-09-26T08:32:58.000Z</updated>
     
     <content type="html"><![CDATA[<h2 id="一、assign与weak的区别"><a href="#一、assign与weak的区别" class="headerlink" title="一、assign与weak的区别"></a>一、assign与weak的区别</h2><p>assign适用于基本数据类型，weak是适用于NSObject对象，并且是一个弱引用。<br>assign其实也可以用来修饰对象，那么我们为什么不用它呢？因为被assign修饰的对象在释放之后，指针的地址还是存在的，也就是说指针并没有被置为nil。如果在后续的内存分配中，刚好分到了这块地址，程序就会崩溃掉。<br>而weak修饰的对象在释放之后，指针地址会被置为nil。所以现在一般弱引用就是用weak。<br>所以在使用assign修饰对象，就有可能会导致程序EXC_BAD_ACCESS异常，也就是所谓的野指针错误！</p>
 <h2 id="二、nonatomic与atomic"><a href="#二、nonatomic与atomic" class="headerlink" title="二、nonatomic与atomic"></a>二、nonatomic与atomic</h2><p>nonatomic: 非原子性访问，对属性赋值的时候不加锁，多线程并发访问会提高性能。若不加此属性，则默认是两个访问方法都为原子型事务访问。<br>atomic:是Objc使用的一种线程保护技术，基本上来讲，是防止在写未完成的时候被另外一个线程读取，造成数据错误。而这种机制是耗费系统资源的，所以在iPhone这种小型设备上，如果没有使用多线程间的通讯编程，那么nonatomic是一个非常好的选择。</p>
@@ -202,7 +256,7 @@
     <link href="http://lyroger.github.io/2016/02/24/%E5%85%B3%E4%BA%8E%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9A%84%E5%88%86%E5%89%B2/"/>
     <id>http://lyroger.github.io/2016/02/24/关于字符串的分割/</id>
     <published>2016-02-24T02:47:00.000Z</published>
-    <updated>2016-09-19T07:59:15.000Z</updated>
+    <updated>2016-09-26T08:32:58.000Z</updated>
     
     <content type="html"><![CDATA[<p>今天在字符串分割上遇到一个坑，一不小心便踩了，问题是这样的：我接收到服务端传过来的一个包含多个图片地址的字符串，使用“,”分割，我使用”componentsSeparatedByString:”来分割，将多个图片地址存入数组，并根据数组的个数来加载默认图片，等图片下载完成后替换对应的默认图片。现在服务端给我返回了一个@””字符串，我的代码如下:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">NSArray *descImages = [descImage componentsSeparatedByString:@&quot;,&quot;];</div></pre></td></tr></table></figure></p>
 <p>其实这个时候descImage等于””，但使用”componentsSeparatedByString:”分割返回的数组是有一个对象的，就是一个空字符串，这个可能我并没想到，导致服务端返回空字符串时，我这边也多加载了一个图片，这个图片还一直下载不下来。这个也让我明白：”componentsSeparatedByString:”的意思，有分割字符就根据字符分割返回数组，没分割字符则返回被分割的字符串，@””也是一个字符串，它也是有内存地址的，跟nil并不一样。看看下面的代码就明白了:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">- (void)testComponentSeparatedByString</div><div class="line">&#123;</div><div class="line">    NSString *descImage = @&quot;&quot;;</div><div class="line">    NSArray *descImages = [descImage componentsSeparatedByString:@&quot;,&quot;];</div><div class="line">    NSLog(@&quot;descImages = %@,descImages.count=%zd,descImage = %p,nil= %p&quot;,descImages,descImages.count,descImage,nil);</div><div class="line">&#125;</div><div class="line">打印出来的</div><div class="line">descImages = (</div><div class="line">    &quot;&quot;</div><div class="line">),descImages.count=1,descImage = 0x1001d5690,nil= 0x0</div></pre></td></tr></table></figure></p>
@@ -226,7 +280,7 @@
     <link href="http://lyroger.github.io/2016/01/21/%E7%BA%BF%E4%B8%8AAPP%E4%BD%BF%E7%94%A8%E5%8A%A8%E6%80%81%E5%BA%93%E6%B7%BB%E5%8A%A0%E9%9C%80%E6%B1%82%E6%96%B9%E5%BC%8F/"/>
     <id>http://lyroger.github.io/2016/01/21/线上APP使用动态库添加需求方式/</id>
     <published>2016-01-21T06:26:00.000Z</published>
-    <updated>2016-09-19T08:01:00.000Z</updated>
+    <updated>2016-09-26T08:32:58.000Z</updated>
     
     <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>前些天，公司提出需要动态添加一些需求给线上App，当时觉得有点不太好办，因为当时还没有头绪，后来上网查了些资料，如<a href="http://blog.csdn.net/like7xiaoben/article/details/44081257" target="_blank" rel="external">这篇文章</a>，不过他这只是将写好的动态库拷贝到本地的沙盒中，也就是有这个方法然后我有了头绪，我只需将写好的动态库压缩上传到服务器，提供线上APP下载，解压后加载动态库执行代码即可实现其功能。接下来还是来看看具体操作和过程中遇到的一些问题和注意点吧。整个需求我写了一个<a href="https://github.com/lyroger/DynamicDemo" target="_blank" rel="external">demo</a>,你可以先下载这个<a href="https://github.com/lyroger/DynamicDemo" target="_blank" rel="external">demo</a>,对照此文章来理解。</p>
 <h3 id="一、生成动态库"><a href="#一、生成动态库" class="headerlink" title="一、生成动态库"></a>一、生成动态库</h3><p>Xcode6就支持动态库了，所以只要使用XCode6及更高版本的XCode便可以生成动态库。<br><img src="/images/9E729546-8D22-48A6-A3D7-88FBDD787DD9.png" alt=""><br>此demo中满足需求的动态库我取名叫DynamicFramework.framework。在这个动态库中我实现了弹出一个UIViewController和在这个UIViewController中加载了动态库中的资源文件。并在这个动态库中引用了其他的动态库（此的demo中引用的是CommonFramework.framework），并调用其他库中的方法。这样就可以满足灵活调用和灵活添加需求的要求了。如果你需要给线上app提供动态库，你可以将写好的动态库压缩上传到服务器提供下载。</p>
@@ -259,7 +313,7 @@
     <link href="http://lyroger.github.io/2016/01/07/%E5%8A%A8%E6%80%81%E4%BF%AE%E5%A4%8D%E7%BA%BF%E4%B8%8Abug/"/>
     <id>http://lyroger.github.io/2016/01/07/动态修复线上bug/</id>
     <published>2016-01-07T06:23:00.000Z</published>
-    <updated>2016-09-19T08:03:33.000Z</updated>
+    <updated>2016-09-26T08:32:58.000Z</updated>
     
     <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>这个主题是在QQ空间终端开发团队公众号的一篇文章看到的(<a href="http://zhuanlan.zhihu.com/magilu/20288657" target="_blank" rel="external">链接地址</a>)，平时开发中确实没有使用过，为了以后派上用途，在这写这篇文章记录一下。QQ空间终端开发团队公众号一文中提到的使用TPatch来动态修复补丁，我找了很久确没找到TPatch的下载地址，而且他还不开源，但通过他我却了解到其他比较好用的动态修复补丁的框架，比如<a href="http://jspatch.com" target="_blank" rel="external">JSPatch</a>,这篇文章我就JSPatch来记录如何使用JSPatch修复线上APP的bug。</p>
 <h3 id="修复的基本原理"><a href="#修复的基本原理" class="headerlink" title="修复的基本原理"></a>修复的基本原理</h3><p>能实现线上修复bug的最根本的原理是因为 Objective-C 是一门动态语言，OC上所有方法的调用/类的生成都通过 Objective-C Runtime 在运行时进行，所以我们可以通过类名/方法名反射得到相应的类和方法，也可以替换某个类的方法为新的实现，还可以新注册一个类，为类添加方法。</p>
@@ -298,7 +352,7 @@
     <link href="http://lyroger.github.io/2015/12/31/runtime%E9%82%A3%E4%BA%9B%E4%BA%8B%EF%BC%88%E4%B8%80%EF%BC%89/"/>
     <id>http://lyroger.github.io/2015/12/31/runtime那些事（一）/</id>
     <published>2015-12-31T08:48:00.000Z</published>
-    <updated>2016-09-19T08:01:48.000Z</updated>
+    <updated>2016-09-26T08:32:58.000Z</updated>
     
     <content type="html"><![CDATA[<blockquote>
 <p>工作中，确实没有刻意去使用runtime机制，作为一种实用的机制，我们不得不去累积这些知识，然后灵活使用。为了为runtime的知识累积，准备写一些关于runtime系列的文章。</p>
@@ -327,7 +381,7 @@
     <link href="http://lyroger.github.io/2015/12/25/Objective-C%E4%BB%A3%E7%A0%81%E6%B7%B7%E6%B7%86/"/>
     <id>http://lyroger.github.io/2015/12/25/Objective-C代码混淆/</id>
     <published>2015-12-25T07:41:00.000Z</published>
-    <updated>2016-09-19T08:01:19.000Z</updated>
+    <updated>2016-09-26T08:32:58.000Z</updated>
     
     <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>本方法参考CSDN博主 念茜<a href="http://blog.csdn.net/yiyaaixuexi/article/details/29201699" target="_blank" rel="external">iOS安全攻防（二十三）：Objective-C代码混淆</a>,为深度理解，自己按照步骤做了一遍。并写下收获和体会。</p>
 <h4 id="一、为什么需要对工程代码进行混淆"><a href="#一、为什么需要对工程代码进行混淆" class="headerlink" title="一、为什么需要对工程代码进行混淆"></a>一、为什么需要对工程代码进行混淆</h4><p>这里我不多说了，可以参考<a href="http://my.csdn.net/yiyaaixuexi" target="_blank" rel="external">念茜</a>的iOS安全攻防系列博客。</p>
@@ -360,7 +414,7 @@
     <link href="http://lyroger.github.io/2015/12/23/FMDB%E6%95%B0%E6%8D%AE%E5%BA%93%E5%8A%A0%E5%AF%86/"/>
     <id>http://lyroger.github.io/2015/12/23/FMDB数据库加密/</id>
     <published>2015-12-23T09:33:00.000Z</published>
-    <updated>2016-09-19T03:43:31.000Z</updated>
+    <updated>2016-09-26T08:32:58.000Z</updated>
     
     <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>数据库数据加密的必要性就不多说了，直接进入主题，如何使用FMDB对数据加密。<br>这里我建议使用cocospod来管理第三方库，如果没有安装可以参考<a href="http://blog.devtang.com/blog/2014/05/25/use-cocoapod-to-manage-ios-lib-dependency/" target="_blank" rel="external">这里</a>来安装.</p>
 <h4 id="1-首先，我们的下载SQLCipher依赖库"><a href="#1-首先，我们的下载SQLCipher依赖库" class="headerlink" title="1.首先，我们的下载SQLCipher依赖库"></a>1.首先，我们的下载SQLCipher依赖库</h4><p>1.1 <figure class="highlight plain"><figcaption><span>'SQLCipher', '~> 3.1.0'```</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">#### 2.其次，我们需要一个具有加密功能的FMDB版本；</div><div class="line">加密的FMDB其实是一个分支，也就是说，如果你的FMDB版本不支持SQLCipher加密，那么你就需要替换FMDB。Github上关于该分支的安装只提供了cocospod的安装方式。Github上FMDB的[地址](https://github.com/ccgus/fmdb);</div><div class="line">使用cocospod来跟新具有加密功能的FMDB</div><div class="line">2.1 将以前```pod &apos;FMDB&apos;``` 改成```pod &apos;FMDB/SQLCipher&apos;</div></pre></td></tr></table></figure></p>
@@ -383,7 +437,7 @@
     <link href="http://lyroger.github.io/2015/12/14/swift%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E5%9F%BA%E7%A1%80%E7%AF%87%EF%BC%89/"/>
     <id>http://lyroger.github.io/2015/12/14/swift学习笔记（基础篇）/</id>
     <published>2015-12-14T06:35:00.000Z</published>
-    <updated>2016-09-19T07:57:28.000Z</updated>
+    <updated>2016-09-26T08:32:58.000Z</updated>
     
     <content type="html"><![CDATA[<p>####一数值型字面量</p>
 <ul>
@@ -421,7 +475,7 @@
     <link href="http://lyroger.github.io/2015/10/22/%E5%8D%87%E7%BA%A7XCode7%E5%92%8CiOS9%E7%9B%B8%E5%85%B3%E9%97%AE%E9%A2%98/"/>
     <id>http://lyroger.github.io/2015/10/22/升级XCode7和iOS9相关问题/</id>
     <published>2015-10-22T06:29:00.000Z</published>
-    <updated>2016-09-19T03:43:44.000Z</updated>
+    <updated>2016-09-26T08:32:58.000Z</updated>
     
     <content type="html"><![CDATA[<h2 id="一-报Bitcode相关错误。"><a href="#一-报Bitcode相关错误。" class="headerlink" title="一.报Bitcode相关错误。"></a>一.报Bitcode相关错误。</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Framework/libraries/extends/QQSDK/TencentOpenAPI.framework/TencentOpenAPI(WeiyunAPI.o)&apos; does not contain bitcode. You must rebuild it with bitcode enabled (Xcode setting ENABLE_BITCODE), obtain an updated library from the vendor, or disable bitcode for this target. for architecture arm64</div><div class="line">clang: error: linker command failed with exit code 1 (use -v to see invocation)</div></pre></td></tr></table></figure>
 <p>1.解决方案<br>工程文件中找到target-&gt;Build Settings-&gt;搜索bitcode，然后出现Enablecode选项，设置为NO即可。如图：</p>
@@ -446,7 +500,7 @@
     <link href="http://lyroger.github.io/2015/10/16/%E5%8A%A8%E7%94%BB%E5%AD%A6%E4%B9%A0%E7%AF%87%E4%B8%80/"/>
     <id>http://lyroger.github.io/2015/10/16/动画学习篇一/</id>
     <published>2015-10-16T03:06:00.000Z</published>
-    <updated>2016-09-19T07:54:14.000Z</updated>
+    <updated>2016-09-26T08:32:58.000Z</updated>
     
     <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>  最近玩手游比较多，看到了GameCenter中个人中心有一些气泡效果特别好，于是想想怎么实现的，要是能放到自己写的程序中，也是一种不错的感觉，能感觉到应用有一种活力.</p>
 <h2 id="进入正题"><a href="#进入正题" class="headerlink" title="进入正题"></a>进入正题</h2><p>先看看gamecenter中的效果是怎样的，然后我们在着步分析：</p>
@@ -474,7 +528,7 @@
     <link href="http://lyroger.github.io/2015/10/14/UISearchBar%E7%9A%84%E4%BD%BF%E7%94%A8/"/>
     <id>http://lyroger.github.io/2015/10/14/UISearchBar的使用/</id>
     <published>2015-10-14T05:18:00.000Z</published>
-    <updated>2016-09-19T08:00:21.000Z</updated>
+    <updated>2016-09-26T08:32:58.000Z</updated>
     
     <content type="html"><![CDATA[<p>最近在项目中写搜索比较多，然而UI设计对页面的效果和布局都有所严谨，发布测试版本后设计或多或少会拿着app跑到面前来说这些差那些，作为开发人员，这些都习以为常了。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">简介的介绍一下，此文主要想要介绍的内容：在搜索框激活时，出现的并不是遮罩层，而是想利用遮罩层做些其他事情，比如提示语、历史搜索记录等需求。</div></pre></td></tr></table></figure>
@@ -516,7 +570,7 @@
     <link href="http://lyroger.github.io/2015/10/14/Markdown%E5%AD%A6%E4%B9%A0/"/>
     <id>http://lyroger.github.io/2015/10/14/Markdown学习/</id>
     <published>2015-10-14T05:16:00.000Z</published>
-    <updated>2016-09-19T08:00:04.000Z</updated>
+    <updated>2016-09-26T08:32:58.000Z</updated>
     
     <content type="html"><![CDATA[<h2 id="一-标题"><a href="#一-标题" class="headerlink" title="一.标题"></a>一.标题</h2><h1 id="一级标题"><a href="#一级标题" class="headerlink" title="一级标题"></a>一级标题</h1><h2 id="二级标题"><a href="#二级标题" class="headerlink" title="二级标题"></a>二级标题</h2><h3 id="三级标题"><a href="#三级标题" class="headerlink" title="三级标题"></a>三级标题</h3><h4 id="四级标题"><a href="#四级标题" class="headerlink" title="四级标题"></a>四级标题</h4><h5 id="五级标题"><a href="#五级标题" class="headerlink" title="五级标题"></a>五级标题</h5><h6 id="六级标题"><a href="#六级标题" class="headerlink" title="六级标题"></a>六级标题</h6><h2 id="二-无序列表"><a href="#二-无序列表" class="headerlink" title="二.无序列表"></a>二.无序列表</h2><ul>
 <li>我的</li>
@@ -583,7 +637,7 @@
     <link href="http://lyroger.github.io/2015/09/08/iOS/"/>
     <id>http://lyroger.github.io/2015/09/08/iOS/</id>
     <published>2015-09-08T06:18:00.000Z</published>
-    <updated>2016-09-19T07:59:34.000Z</updated>
+    <updated>2016-09-26T08:32:58.000Z</updated>
     
     <content type="html"><![CDATA[<p>f## 一.LLDB的使用</p>
 <ol>
@@ -627,29 +681,6 @@
 &lt;li&gt;po: 对一个对象的打印，即“print-object”.&lt;/li&gt;
 &lt;li&gt;p: 对一个简单类型的打印.&lt;/li&gt;
 &lt;li&gt;recursiveDescription: UIView私有方法，可以打印更具体更详细的布局结
-    
-    </summary>
-    
-      <category term="基础篇" scheme="http://lyroger.github.io/categories/%E5%9F%BA%E7%A1%80%E7%AF%87/"/>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>关于做ipod library开发的体验</title>
-    <link href="http://lyroger.github.io/2013/06/08/%E5%85%B3%E4%BA%8E%E5%81%9Aipod-library%E5%BC%80%E5%8F%91%E7%9A%84%E4%BD%93%E9%AA%8C/"/>
-    <id>http://lyroger.github.io/2013/06/08/关于做ipod-library开发的体验/</id>
-    <published>2013-06-08T08:56:48.000Z</published>
-    <updated>2016-09-19T09:07:46.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>最近在忙着做一个文件传输的软件，刚开始也没去想项目实现的困难度，可不可行。怎么说呢，因为有类似的软件都已经上线了，别人都已经实现了，就算在可行性上面做再多的分析，也是多余的了。做这个项目也是我换工作后的第一个项目，以前做ios开发时间并不是很长，对ios开发的经验也是有限的。也没想过会遇到什么困难，既来之则安之了吧。</p>
-<p>　　项目分下来后，我被安排做音视频模块和图片模块，主要做UI和媒体文件的获取任务和播放。看起来并不是很多事情，我按照以前的工作思维，拿到需求，找到解决方案，考虑工作周期，计划工作量，恭恭敬敬的做起来。一般我的做法都是先把自己没把握的问题先去找个解决方案，要是有了这些方案后，工作起来就不会感觉到压力，就只是工作量的问题了。所以看了需求后，我第一个就是去找怎么获取ipod里面的文件，以及它们的基本属性，比如音乐文件，它们的专辑名称、歌手、封面等。当时在博客园上找到了一篇关于获取ipod音乐文件基本信息的博客，很兴奋的看完了，同时也转载到了自己的博客中，供自己以后随时翻阅，在我的博客中叫<a href="http://www.cnblogs.com/lyanet/archive/2013/03/27/2985019.html" target="_blank" rel="external">《ios获取音乐库信息（转）》</a>，当时看的也不是原文，所以我也不知道原文在哪，就只是在标题上加了个“转”字，以表非自己著作。然后我便按照此篇文章将ipod里的操作都完成了，播放音乐，音乐列表，音乐文件的封面，歌手等。其实仅仅只是做到这些，并不是很难，因为你只需要使用MPMediaQuery就可以获取ipod里的所有音乐文件，然后循环他的item就可以拿到每个音乐文件对象，根据音乐文件对象的valueForProperty：方法可以拿到你想要的东西。小说明一下：并不是你想要的所有都能拿到。正因为这个，我才遇到了些问题，也是我在此项目中遇到最困难最难解决的问题。也开始了解ios系统的基本原理。文章开始就说了，我是要做一个文件传输的软件，所以并不是只将自己程序中的文件传输，既然要提到ipod，也意味着要对ipod里面的文件进行操作，需要播放，传输等。我想：做ios开发的人都知道ios是一个比较封闭的，这也是此系统的高安全性所在。他基于沙盒原理，想要对其他程序的文件进行操作，不是系统给出的接口，你是没办法去实现你想要的需求的。所以当时我一直对ipod文件导出困惑不解，查阅了很多资料，发过很多贴，问过一些同事，但都没能解决问题。所以这个问题也拖了很久。问题不主要在于怎么导出，关键在于导出后还能提供给其他平台的系统使用，比如android系统。这就是文件的格式问题了。因为在ios系统中，提供的接口导出的文件基本上是m4a、caf等的格式。这些格式在android系统上播放不了。所以要想在其他系统中也能播放，也就只能是mp3格式了。想要导出成mp3格式的文件，我想很多人都想要这个需求吧，这是我在很多贴上看到的，但基本上没人能把这个导出成mp3格式的解决方案贴的很详细。后来我能想到的办法就是使用网上说的lame库，首先将ipod里面的文件导出成caf格式的，再通过lame库将其转换成mp3格式的。我试了，成功了，让我兴奋了一把，但导出的结果却不尽人意。有两个最严重的缺点，一个是转换的时间比较长，10M的文件转换花了一分钟，我想：对于一个文件传输的软件是接受不了这个现实的；二就是它转换后音质变底了，文件大小也明显变小了。我想这是mp3格式的问题，mp3本身就是有损的转换。做到这里了，我实在是绝望了，不知道怎么去解决这个问题了。但别的软件有是怎么解决这个问题的呢？我自己都不知道怎么去说服自己，难道别人是自己做的格式转换？还是花了钱给了苹果找了接口直接导出mp3文件？这些困惑我无法证实。突然感觉到绝望了。我也开始转移了注意，着手做了其他项目。也就在做其他项目不久，终于看到希望了，有个同事在网上找到了一个demo，导出mp3文件就在一秒之内解决。很神奇，让我有惊讶有兴奋。没有音质的损失，文件大小基本没变化，但还是丢失了一些基本元素，比如歌曲的封面、歌手等属性。要想做到属性也不丢失，还得自己加上这些属性，我想我们已经做的更好了，能导出mp3文件已经实在是让我很兴奋了。这些小问题也就先不看吧。</p>
-<p>　　导出mp3格式的文件了，问题也就解决了。我心情也平复了许多。如果有朋友也有此方面的需求，可以到这里下载<a href="https://github.com/lyroger/TSLibraryImport" target="_blank" rel="external">demo</a></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;最近在忙着做一个文件传输的软件，刚开始也没去想项目实现的困难度，可不可行。怎么说呢，因为有类似的软件都已经上线了，别人都已经实现了，就算在可行性上面做再多的分析，也是多余的了。做这个项目也是我换工作后的第一个项目，以前做ios开发时间并不是很长，对ios开发的经验也是有限的
     
     </summary>
     
