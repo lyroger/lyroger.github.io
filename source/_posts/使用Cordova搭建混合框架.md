@@ -10,7 +10,7 @@ category: 框架
   入职公司不久，花了一个多月开发了一个原生APP，这也只是个开始，首先强调的是，我们公司并不是外包公司，但需要开发的项目其实还挺多的，为了解决这个问题，我们需要周期短，响应快，来满足公司的需求，我们只能抛弃纯原生APP的开发方案，选择目前市场比较热门的技术方案：*Hybrid App*。使用*Hybrid App*的技术框架其实有很多开源的技术方案，比如使用[Cordova](http://cordova.apache.org)，[React Native](http://reactnative.cn)，等。这两个技术方案其实都还不错，由于我们公司有人以前有使用*Cordova*框架的经验，所以我们选择了*Cordova*,这个理由听起来感觉有些过不去，但有时候领导就是喜欢听取有经验的方案。不过走到现在确实觉得*Cordova*也很不错,没出什么问题，也都能满足项目上的需求。
   
 ## 搭建框架
- 接下来我们来搭建一个*Hybrid App*试试手吧，创建一个`MyHybridDemo`，使用`Pod`来管理*Cordova*框架，可以通过命令`pod 'Cordova'`从Github上下载*Cordova*，集成*Cordova*到工程中后，还缺html5与原生代码交互的桥梁，需要一些js的支撑，你可以查看[官网](http://cordova.apache.org/docs/en/latest/guide/cli/index.html)的文档，一步一步创建相应文件。也可以直接从我的[MyHybridDemo]()中拷贝www文件夹和config.xml文件集成到你的工程中。到这里集成框架算是ok了，接下来就是写业务代码了。在写业务代码之前首先来介绍一下www目录下的文件和config.xml文件的作用。
+ 接下来我们来搭建一个*Hybrid App*试试手吧，创建一个`MyHybridDemo`，使用`Pod`来管理*Cordova*框架，可以通过命令`pod 'Cordova'`从Github上下载*Cordova*，集成*Cordova*到工程中后，还缺html5与原生代码交互的桥梁，需要一些js的支撑，你可以查看[官网](http://cordova.apache.org/docs/en/latest/guide/cli/index.html)的文档，一步一步创建相应文件。也可以直接从我的[MyHybridDemo](https://github.com/lyroger/MyHybridDemo)中拷贝www文件夹和config.xml文件集成到你的工程中。到这里集成框架算是ok了，接下来就是写业务代码了。在写业务代码之前首先来介绍一下www目录下的文件和config.xml文件的作用。
  使用终端cd到www目录下，使用`tree -L 4`（需安装tree工具）命令查看www目录：
  ```js
 .
