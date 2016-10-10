@@ -1,0 +1,500 @@
+
+ <!DOCTYPE HTML>
+<html >
+<head>
+  <meta charset="UTF-8">
+  
+    <title>动态添加需求(动态库) | 罗琰的技术博客</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="luoyan">
+    
+
+    
+    <meta name="description" content="前言前些天，公司提出需要动态添加一些需求给线上App，当时觉得有点不太好办，因为当时还没有头绪，后来上网查了些资料，如这篇文章，不过他这只是将写好的动态库拷贝到本地的沙盒中，也就是有这个方法然后我有了头绪，我只需将写好的动态库压缩上传到服务器，提供线上APP下载，解压后加载动态库执行代码即可实现其功能。接下来还是来看看具体操作和过程中遇到的一些问题和注意点吧。整个需求我写了一个demo,你可以先下">
+<meta property="og:type" content="article">
+<meta property="og:title" content="动态添加需求(动态库)">
+<meta property="og:url" content="http://lyroger.github.io/2016/01/21/线上APP使用动态库添加需求方式/index.html">
+<meta property="og:site_name" content="罗琰的技术博客">
+<meta property="og:description" content="前言前些天，公司提出需要动态添加一些需求给线上App，当时觉得有点不太好办，因为当时还没有头绪，后来上网查了些资料，如这篇文章，不过他这只是将写好的动态库拷贝到本地的沙盒中，也就是有这个方法然后我有了头绪，我只需将写好的动态库压缩上传到服务器，提供线上APP下载，解压后加载动态库执行代码即可实现其功能。接下来还是来看看具体操作和过程中遇到的一些问题和注意点吧。整个需求我写了一个demo,你可以先下">
+<meta property="og:image" content="http://lyroger.github.io/images/9E729546-8D22-48A6-A3D7-88FBDD787DD9.png">
+<meta property="og:updated_time" content="2016-10-09T01:39:25.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="动态添加需求(动态库)">
+<meta name="twitter:description" content="前言前些天，公司提出需要动态添加一些需求给线上App，当时觉得有点不太好办，因为当时还没有头绪，后来上网查了些资料，如这篇文章，不过他这只是将写好的动态库拷贝到本地的沙盒中，也就是有这个方法然后我有了头绪，我只需将写好的动态库压缩上传到服务器，提供线上APP下载，解压后加载动态库执行代码即可实现其功能。接下来还是来看看具体操作和过程中遇到的一些问题和注意点吧。整个需求我写了一个demo,你可以先下">
+<meta name="twitter:image" content="http://lyroger.github.io/images/9E729546-8D22-48A6-A3D7-88FBDD787DD9.png">
+
+    
+    <link rel="alternative" href="/atom.xml" title="罗琰的技术博客" type="application/atom+xml">
+    
+    
+    
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="罗琰的技术博客">罗琰的技术博客</a></h1>
+				<h2 class="blog-motto">积累与分享成长的技术经验</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+						<li><a href="/about">About</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:lyroger.github.io">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2016/01/21/线上APP使用动态库添加需求方式/" title="动态添加需求(动态库)" itemprop="url">动态添加需求(动态库)</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="luoyan" target="_blank" itemprop="author">luoyan</a>
+		
+  <p class="article-time">
+    <time datetime="2016-01-21T06:26:00.000Z" itemprop="datePublished"> 发表于 2016-01-21</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#一、生成动态库"><span class="toc-number">1.1.</span> <span class="toc-text">一、生成动态库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#二、加载动态库"><span class="toc-number">1.2.</span> <span class="toc-text">二、加载动态库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#三、调用动态库"><span class="toc-number">1.3.</span> <span class="toc-text">三、调用动态库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#四、总结"><span class="toc-number">1.4.</span> <span class="toc-text">四、总结</span></a></li></ol></li></ol>
+		
+		</div>
+		
+		<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>前些天，公司提出需要动态添加一些需求给线上App，当时觉得有点不太好办，因为当时还没有头绪，后来上网查了些资料，如<a href="http://blog.csdn.net/like7xiaoben/article/details/44081257" target="_blank" rel="external">这篇文章</a>，不过他这只是将写好的动态库拷贝到本地的沙盒中，也就是有这个方法然后我有了头绪，我只需将写好的动态库压缩上传到服务器，提供线上APP下载，解压后加载动态库执行代码即可实现其功能。接下来还是来看看具体操作和过程中遇到的一些问题和注意点吧。整个需求我写了一个<a href="https://github.com/lyroger/DynamicDemo" target="_blank" rel="external">demo</a>,你可以先下载这个<a href="https://github.com/lyroger/DynamicDemo" target="_blank" rel="external">demo</a>,对照此文章来理解。</p>
+<h3 id="一、生成动态库"><a href="#一、生成动态库" class="headerlink" title="一、生成动态库"></a>一、生成动态库</h3><p>Xcode6就支持动态库了，所以只要使用XCode6及更高版本的XCode便可以生成动态库。<br><img src="/images/9E729546-8D22-48A6-A3D7-88FBDD787DD9.png" alt=""><br>此demo中满足需求的动态库我取名叫DynamicFramework.framework。在这个动态库中我实现了弹出一个UIViewController和在这个UIViewController中加载了动态库中的资源文件。并在这个动态库中引用了其他的动态库（此的demo中引用的是CommonFramework.framework），并调用其他库中的方法。这样就可以满足灵活调用和灵活添加需求的要求了。如果你需要给线上app提供动态库，你可以将写好的动态库压缩上传到服务器提供下载。</p>
+<h3 id="二、加载动态库"><a href="#二、加载动态库" class="headerlink" title="二、加载动态库"></a>二、加载动态库</h3><p>在主工程中我们来加载写好的动态库，从网络下载的过程我在demo就没实现了，只做了将下下来的zip文件解压的操作，加载动态库步骤很简单，先将服务器上的DynamicFramework.framework.zip文件下载到沙盒的document中（当然，如果只是写Demo，你完全可以手动拷贝到document中），找到该zip文件，解压到同一个目录下，然后将动态库复制到程序中，即可使用，具体代码如下:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line">- (void)loadDynamicFrameworkModel</div><div class="line">&#123;</div><div class="line">    NSArray* paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask,YES);</div><div class="line">    NSString *documentDirectory = nil;</div><div class="line">    if ([paths count] != 0)</div><div class="line">        documentDirectory = [paths objectAtIndex:0];</div><div class="line">    </div><div class="line">    //本地动态库文件</div><div class="line">    NSString *libName = @&quot;DynamicFramework.framework&quot;;</div><div class="line">    NSString *destLibPath = [documentDirectory stringByAppendingPathComponent:libName];</div><div class="line">    </div><div class="line">    //第一步，判断是否存在动态库文件</div><div class="line">    NSFileManager *manager = [NSFileManager defaultManager];</div><div class="line">    if (![manager fileExistsAtPath:destLibPath]) &#123;</div><div class="line">        NSLog(@&quot;没有动态库文件&quot;);</div><div class="line">        return;</div><div class="line">    &#125;</div><div class="line">    //第三步，复制到程序中</div><div class="line">    NSBundle *frameworkBundle = [NSBundle bundleWithPath:destLibPath];</div><div class="line">    if (frameworkBundle &amp;&amp; [frameworkBundle load]) &#123;</div><div class="line">        NSLog(@&quot;load Bundle success&quot;);</div><div class="line">    &#125; else &#123;</div><div class="line">        NSLog(@&quot;load Bundle failed&quot;);</div><div class="line">        return;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>注意:如果出问题了，是不是跟如下类似的错误。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Error loading ...... no suitable image found.  Did find: ...</div></pre></td></tr></table></figure></p>
+<p>其实这个错误就是我当初最当心的问题，这个就是由于写动态库时打包的签名和主工程打包的签名不一致导致主工程加载下载下来的动态库失败产生的错误。解决这个错误的办法就是保证你后续写的动态库打包时签名一定要跟线上发布的APP签名一致，否则App并不会执行你的动态库。</p>
+<h3 id="三、调用动态库"><a href="#三、调用动态库" class="headerlink" title="三、调用动态库"></a>三、调用动态库</h3><p>将动态库加载到程序中后，接下来就是调用动态库中的代码了。<br>1.首先我们用运行时来加载动态库中的类，窥探是否有该类，以防使用报错奔溃。<br>2.如果有动态库入口的方法类，我们则使用NSObject类 “- (id)performSelector:(SEL)aSelector withObject:(id)object1 withObject:(id)object2”来执行。<br>这一步我们可以将主工程中的一些变量传入动态库中，供动态库使用，完成新需求。特别是资源信息，以下将frameworkBundle信息传入动态库中供期获取资源。<br>调用代码如下:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">//第四步，获取动态库中入口类</div><div class="line">Class pacteraClass = NSClassFromString(@&quot;DynamaicEnterance&quot;);</div><div class="line">if (!pacteraClass) &#123;</div><div class="line">    NSLog(@&quot;Unable to get DynamicFramework class&quot;);</div><div class="line">    return;</div><div class="line">&#125;</div><div class="line">//第五步，执行动态库中入口类的方法</div><div class="line">NSObject *pacteraObject = [pacteraClass new];</div><div class="line">[pacteraObject performSelector:@selector(showViewOnController:withBundle:) withObject:self withObject:frameworkBundle];</div></pre></td></tr></table></figure></p>
+<p>动态库中DynamaicEnterance类只要实现showViewOnController:withBundle:方法就可以了。<br>在此方法中你可以做你想做的事情，这个桥接过程就已经完成了。此demo中就实现弹出一个UIViewcontroller并加载动态库中的图片资源和调用其他库中的函数。</p>
+<h3 id="四、总结"><a href="#四、总结" class="headerlink" title="四、总结"></a>四、总结</h3><p>总而言之，自从苹果支持动态库后，确实方便了许多。</p>
+<ol>
+<li>如果你跟我的需求一致，使用方式一致，请一定记住，你的动态库的签名需跟你的主App的签名一致，否则你的动态库将无法加载到主工程中，你的代码也将无法执行。</li>
+<li>生成动态库只在iOS8及更高版本支持，但并不影响低版本使用。</li>
+<li>使用动态库实现动态新增需求我并没有在线上APP中实现过，只实现与自己写的Demo。理论上在线下能实现这些功能，上传到Appstore的App也应该没问题。如有朋友遇到问题，欢迎随时留言。</li>
+</ol>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/高效篇/">高效篇</a>
+</div>
+
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://lyroger.github.io/2016/01/21/线上APP使用动态库添加需求方式/" data-title="动态添加需求(动态库) | 罗琰的技术博客" data-tsina="null" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2016/02/24/关于字符串的分割/" title="关于字符串的分割">
+  <strong>上一篇：</strong><br/>
+  <span>
+  关于字符串的分割</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2016/01/07/动态修复线上bug/"  title="动态修复线上bug">
+ <strong>下一篇：</strong><br/> 
+ <span>动态修复线上bug
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section id="comments" class="comment">
+	<div class="ds-thread" data-thread-key="2016/01/21/线上APP使用动态库添加需求方式/" data-title="动态添加需求(动态库)" data-url="http://lyroger.github.io/2016/01/21/线上APP使用动态库添加需求方式/"></div>
+</section>
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#一、生成动态库"><span class="toc-number">1.1.</span> <span class="toc-text">一、生成动态库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#二、加载动态库"><span class="toc-number">1.2.</span> <span class="toc-text">二、加载动态库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#三、调用动态库"><span class="toc-number">1.3.</span> <span class="toc-text">三、调用动态库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#四、总结"><span class="toc-number">1.4.</span> <span class="toc-text">四、总结</span></a></li></ol></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+		  
+			<li><a href="/categories/swift/" title="swift">swift<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/动画/" title="动画">动画<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/基础篇/" title="基础篇">基础篇<sup>6</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/工具/" title="工具">工具<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/框架/" title="框架">框架<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/设计模式/" title="设计模式">设计模式<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/高效篇/" title="高效篇">高效篇<sup>4</sup></a></li>
+		  
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/runtime/" title="runtime">runtime<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/swift/" title="swift">swift<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Hybrid-App/" title="Hybrid App">Hybrid App<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="aboutinfo">
+  	<p class="asidetitle">微信公众号</p>
+    <div>欢迎关注我的微信公众号</div>
+    <img src="/images/qrcode.jpg" alt="微信公众号">
+</div>
+
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I&#39;m luoyan Page in Google. <br/>
+			This is my blog,believe it or not.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		<a href="http://weibo.com/3314058724" target="_blank" class="icon-weibo" title="微博"></a>
+		
+		
+		<a href="https://github.com/lyroger" target="_blank" class="icon-github" title="github"></a>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		<a href="mailto:yan1079@126.com" target="_blank" class="icon-email" title="Email Me"></a>
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2016 
+		
+		<a href="/about" target="_blank" title="luoyan">luoyan</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"lyroger"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+<script>
+(function(){
+    var bp = document.createElement('script');
+    bp.src = '//push.zhanzhang.baidu.com/push.js';
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+<!-- Analytics Begin -->
+
+
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>

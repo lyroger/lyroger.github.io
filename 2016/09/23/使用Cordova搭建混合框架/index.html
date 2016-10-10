@@ -1,0 +1,517 @@
+
+ <!DOCTYPE HTML>
+<html >
+<head>
+  <meta charset="UTF-8">
+  
+    <title>使用Cordova搭建混合框架 | 罗琰的技术博客</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="luoyan">
+    
+
+    
+    <meta name="description" content="前言  入职公司不久，花了一个多月开发了一个原生APP，这也只是个开始，首先强调的是，我们公司并不是外包公司，但需要开发的项目其实还挺多的，为了解决这个问题，我们需要周期短，响应快，来满足公司的需求，我们只能抛弃纯原生APP的开发方案，选择目前市场比较热门的技术方案：Hybrid App。使用Hybrid App的技术框架其实有很多开源的技术方案，比如使用Cordova，React Native，">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用Cordova搭建混合框架">
+<meta property="og:url" content="http://lyroger.github.io/2016/09/23/使用Cordova搭建混合框架/index.html">
+<meta property="og:site_name" content="罗琰的技术博客">
+<meta property="og:description" content="前言  入职公司不久，花了一个多月开发了一个原生APP，这也只是个开始，首先强调的是，我们公司并不是外包公司，但需要开发的项目其实还挺多的，为了解决这个问题，我们需要周期短，响应快，来满足公司的需求，我们只能抛弃纯原生APP的开发方案，选择目前市场比较热门的技术方案：Hybrid App。使用Hybrid App的技术框架其实有很多开源的技术方案，比如使用Cordova，React Native，">
+<meta property="og:updated_time" content="2016-10-09T01:40:38.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="使用Cordova搭建混合框架">
+<meta name="twitter:description" content="前言  入职公司不久，花了一个多月开发了一个原生APP，这也只是个开始，首先强调的是，我们公司并不是外包公司，但需要开发的项目其实还挺多的，为了解决这个问题，我们需要周期短，响应快，来满足公司的需求，我们只能抛弃纯原生APP的开发方案，选择目前市场比较热门的技术方案：Hybrid App。使用Hybrid App的技术框架其实有很多开源的技术方案，比如使用Cordova，React Native，">
+
+    
+    <link rel="alternative" href="/atom.xml" title="罗琰的技术博客" type="application/atom+xml">
+    
+    
+    
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="罗琰的技术博客">罗琰的技术博客</a></h1>
+				<h2 class="blog-motto">积累与分享成长的技术经验</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+						<li><a href="/about">About</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:lyroger.github.io">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2016/09/23/使用Cordova搭建混合框架/" title="使用Cordova搭建混合框架" itemprop="url">使用Cordova搭建混合框架</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="luoyan" target="_blank" itemprop="author">luoyan</a>
+		
+  <p class="article-time">
+    <time datetime="2016-09-23T06:22:31.000Z" itemprop="datePublished"> 发表于 2016-09-23</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#搭建框架"><span class="toc-number">2.</span> <span class="toc-text">搭建框架</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#插件的配置和定义"><span class="toc-number">3.</span> <span class="toc-text">插件的配置和定义</span></a></li></ol>
+		
+		</div>
+		
+		<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>  入职公司不久，花了一个多月开发了一个原生APP，这也只是个开始，首先强调的是，我们公司并不是外包公司，但需要开发的项目其实还挺多的，为了解决这个问题，我们需要周期短，响应快，来满足公司的需求，我们只能抛弃纯原生APP的开发方案，选择目前市场比较热门的技术方案：<em>Hybrid App</em>。使用<em>Hybrid App</em>的技术框架其实有很多开源的技术方案，比如使用<a href="http://cordova.apache.org" target="_blank" rel="external">Cordova</a>，<a href="http://reactnative.cn" target="_blank" rel="external">React Native</a>，等。这两个技术方案其实都还不错，由于我们公司有人以前有使用<em>Cordova</em>框架的经验，所以我们选择了<em>Cordova</em>,这个理由听起来感觉有些过不去，但有时候领导就是喜欢听取有经验的方案。不过走到现在确实觉得<em>Cordova</em>也很不错,没出什么问题，也都能满足项目上的需求。</p>
+<h2 id="搭建框架"><a href="#搭建框架" class="headerlink" title="搭建框架"></a>搭建框架</h2><p> 接下来我们来搭建一个<em>Hybrid App</em>试试手吧，创建一个<code>MyHybridDemo</code>，使用<code>Pod</code>来管理<em>Cordova</em>框架，可以通过命令<code>pod &#39;Cordova&#39;</code>从Github上下载<em>Cordova</em>，集成<em>Cordova</em>到工程中后，还缺html5与原生代码交互的桥梁，需要一些js的支撑，你可以查看<a href="http://cordova.apache.org/docs/en/latest/guide/cli/index.html" target="_blank" rel="external">官网</a>的文档，一步一步创建相应文件。也可以直接从我的<a href="https://github.com/lyroger/MyHybridDemo" target="_blank" rel="external">MyHybridDemo</a>中拷贝www文件夹和config.xml文件集成到你的工程中。到这里集成框架算是ok了，接下来就是写业务代码了。在写业务代码之前首先来介绍一下www目录下的文件和config.xml文件的作用。<br> 使用终端cd到www目录下，使用<code>tree -L 4</code>（需安装tree工具）命令查看www目录：<br> <figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">.</div><div class="line">├── assets</div><div class="line">│   ├── images</div><div class="line">│   ├── js</div><div class="line">│   └── style</div><div class="line">├── cordova-js-src</div><div class="line">│   ├── exec.js</div><div class="line">│   └── platform.js</div><div class="line">├── cordova.js</div><div class="line">├── cordova_plugins.js</div><div class="line">├── index.html</div><div class="line">└── plugins</div><div class="line">    ├── com.exmind.photopickerplugin</div></pre></td></tr></table></figure></p>
+<ul>
+<li><code>assets</code>:该目录是用来放资源文件的，比如h5相关的业务图片，视频等资源文件。</li>
+<li><code>cordova-js-src</code>:该目录是存放cordova的js框架代码，这个你直接拷贝过来就ok了，不用多管。</li>
+<li><code>cordova.js</code>:该文件是cordova的js框架代码。直接拷贝。</li>
+<li><code>cordova_plugins.js</code>:该js文件是cordova来定义js插件文件，他包含定义插件的文件的路径，插件ID，以及插件名称。最终获取一个插件集合。</li>
+<li><code>plugins</code>:该文件夹是js调用原生插件的入口，所有插件可以放到此文件夹中。比如拍照，定位，分享等插件js。</li>
+<li>最后还有一个config.xml文件,该xml文件主要是用作配置属性的。可以配置h5入口，也可以配置UIWebView的属性等。</li>
+</ul>
+<h2 id="插件的配置和定义"><a href="#插件的配置和定义" class="headerlink" title="插件的配置和定义"></a>插件的配置和定义</h2><p>  了解了框架后，来实战一下，用例就拿web端调用APP的系统相机和相册吧。</p>
+<p>  一. 首先我们用<code>Objective-C</code>原生代码写好调用系统相机和相册的方法。具体实现我就不写了，需要注意的一点就是该类需要继承Cordova的<code>CDVPlugin</code>类，调用的插件方法需要传一个<code>CDVInvokedUrlCommand</code>类型的参数，以便回调。<br>  <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">@interface PhotoPickerPlugin : CDVPlugin</div><div class="line">// 获取图片</div><div class="line">- (void)getPictures:(CDVInvokedUrlCommand *)command;</div><div class="line">// 删除图片文件</div><div class="line">- (void)deleteFile:(CDVInvokedUrlCommand *)command;</div><div class="line">@end</div></pre></td></tr></table></figure></p>
+<p>  二. 写完原生代码后，如何让web端调起我们的代码呢？框架搭建好后，其实只要稍作配置就ok了，你只需要动动四个文件。</p>
+<ol>
+<li>第一个就是config.xml，这个是配置你的插件名称，告诉Cordova你定义了这么个插件类（这里我们定义的是：<code>PhotoPickerPlugin</code>）。  </li>
+<li><p>第二个文件:添加一个<code>PhotoPickerPlugin.js</code>插件类，供web端调用的。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">cordova.define(<span class="string">"com.exmind.photopickerplugin.PhotoPickerPlugin"</span>, <span class="function"><span class="keyword">function</span>(<span class="params">require, exports, module</span>) </span>&#123;</div><div class="line">           </div><div class="line">   <span class="keyword">var</span> argscheck = <span class="built_in">require</span>(<span class="string">'cordova/argscheck'</span>);</div><div class="line">   <span class="keyword">var</span> exec = <span class="built_in">require</span>(<span class="string">'cordova/exec'</span>);</div><div class="line">   <span class="keyword">var</span> PhotoPickerPlugin = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">   </div><div class="line">   &#125;;</div><div class="line">   <span class="comment">// 获取系统相册图片</span></div><div class="line">   PhotoPickerPlugin.prototype.getPictures = <span class="function"><span class="keyword">function</span>(<span class="params">success, fail, maxCount</span>) </span>&#123;</div><div class="line">       exec(success, fail, <span class="string">"PhotoPickerPlugin"</span>, <span class="string">"getPictures"</span>, [maxCount]);</div><div class="line">   &#125;;</div><div class="line">   <span class="comment">// 删除图片</span></div><div class="line">   PhotoPickerPlugin.prototype.deleteFile = <span class="function"><span class="keyword">function</span>(<span class="params">success, fail, filePaths</span>) </span>&#123;</div><div class="line">       exec(success, fail, <span class="string">"PhotoPickerPlugin"</span>, <span class="string">"deleteFile"</span>, filePaths);</div><div class="line">   &#125;;</div><div class="line">   </div><div class="line">   <span class="keyword">var</span> me = <span class="keyword">new</span> PhotoPickerPlugin();</div><div class="line">   <span class="built_in">module</span>.exports = me;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+</li>
+<li><p>第三个文件：<code>cordova_plugins.js</code>，在这个文件中你需要定义插件js插件类以及他的路径和唯一标示。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">  <span class="string">"file"</span>: <span class="string">"plugins/com.exmind.photopickerplugin/www/PhotoPickerPlugin.js"</span>,</div><div class="line">  <span class="string">"id"</span>: <span class="string">"com.exmind.photopickerplugin.PhotoPickerPlugin"</span>,</div><div class="line">  <span class="string">"clobbers"</span>: [</div><div class="line">               <span class="string">"PhotoPickerPlugin"</span></div><div class="line">               ]</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>最后一个文件就是在使用该插件的地方引用<code>cordova_plugins.js</code> 和 <code>cordova.js</code>。</p>
+</li>
+</ol>
+<p>修改好这四个文件后，js代码就可以直接调用<code>PhotoPickerPlugin</code>的<code>getPictures:</code>,<code>deleteFile:</code>方法了。<br>调用方式:<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">PhotoPickerPlugin. getPictures(<span class="function"><span class="keyword">function</span> (<span class="params">success</span>) </span>&#123;&#125;, <span class="function"><span class="keyword">function</span> (<span class="params">fail</span>) </span>&#123;&#125;,<span class="number">6</span>);</div></pre></td></tr></table></figure></p>
+<p>如何让原生代码返回数据给web端呢？web端拿到success，和fail回调，原生代码如何将数据组织到这个回调用呢？我们回到<code>PhotoPickerPlugin.m</code>类中，来看看实现。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">- (void)imagePickerController:(TZImagePickerController *)picker didFinishPickingPhotos:(NSArray&lt;UIImage *&gt; *)photos sourceAssets:(NSArray *)assets isSelectOriginalPhoto:(BOOL)isSelectOriginalPhoto</div><div class="line">&#123;</div><div class="line">    CDVPluginResult* result = nil;</div><div class="line">    NSMutableArray *resultStrings = [[NSMutableArray alloc] init];</div><div class="line">    NSData* data = nil;</div><div class="line">    NSError* err = nil;</div><div class="line">    NSFileManager* fileMgr = [[NSFileManager alloc] init];</div><div class="line">    NSString* filePath;</div><div class="line">    </div><div class="line">    for (UIImage *image in photos) &#123;</div><div class="line">        int i = 1;</div><div class="line">        do &#123;</div><div class="line">            filePath = [NSString stringWithFormat:@&quot;%@/%@%04d.%@&quot;, [self getFileDocPath], @&quot;cdv_photo_&quot;, i++, @&quot;jpg&quot;];</div><div class="line">        &#125; while ([fileMgr fileExistsAtPath:filePath]);</div><div class="line">        </div><div class="line">        @autoreleasepool &#123;</div><div class="line">            data = UIImageJPEGRepresentation(image,0.5);</div><div class="line">            if (![data writeToFile:filePath options:NSAtomicWrite error:&amp;err]) &#123;</div><div class="line">                result = [CDVPluginResult resultWithStatus:CDVCommandStatus_IO_EXCEPTION messageAsString:[err localizedDescription]];</div><div class="line">                break;</div><div class="line">            &#125; else &#123;</div><div class="line">                [resultStrings addObject:[[NSURL fileURLWithPath:filePath] absoluteString]];</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsArray:resultStrings];</div><div class="line">    [self.commandDelegate sendPluginResult:result callbackId:self.pCommand.callbackId];</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>看最后一句代码，便是将结果通过<code>CDVPluginResult</code>类发送给对应的command。<br>到此我们应该掌握了如何从web端调用App端的代码了。在其他场景，其实还需要App端调用web端的方法，那如何调用呢？熟悉UIWebView的同学应该都知道UIWebView中有一个<code>stringByEvaluatingJavaScriptFromString:</code>方法。对，你可以使用该方法调用js方法，不过cordova也封装了一个方法供你使用，你可以通过<code>CDVCommandDelegateImpl</code>类的<code>evalJs:</code>方法实现调用js代码。</p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/框架/">框架</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Hybrid-App/">Hybrid App</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://lyroger.github.io/2016/09/23/使用Cordova搭建混合框架/" data-title="使用Cordova搭建混合框架 | 罗琰的技术博客" data-tsina="null" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2016/10/09/hello-hexo/" title="Hello Hexo">
+  <strong>上一篇：</strong><br/>
+  <span>
+  Hello Hexo</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2016/08/25/Jenkins+Git自动构建/"  title="Jenkins+Git自动构建">
+ <strong>下一篇：</strong><br/> 
+ <span>Jenkins+Git自动构建
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section id="comments" class="comment">
+	<div class="ds-thread" data-thread-key="2016/09/23/使用Cordova搭建混合框架/" data-title="使用Cordova搭建混合框架" data-url="http://lyroger.github.io/2016/09/23/使用Cordova搭建混合框架/"></div>
+</section>
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#搭建框架"><span class="toc-number">2.</span> <span class="toc-text">搭建框架</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#插件的配置和定义"><span class="toc-number">3.</span> <span class="toc-text">插件的配置和定义</span></a></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+		  
+			<li><a href="/categories/swift/" title="swift">swift<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/动画/" title="动画">动画<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/基础篇/" title="基础篇">基础篇<sup>6</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/工具/" title="工具">工具<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/框架/" title="框架">框架<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/设计模式/" title="设计模式">设计模式<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/高效篇/" title="高效篇">高效篇<sup>4</sup></a></li>
+		  
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/runtime/" title="runtime">runtime<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/swift/" title="swift">swift<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Hybrid-App/" title="Hybrid App">Hybrid App<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="aboutinfo">
+  	<p class="asidetitle">微信公众号</p>
+    <div>欢迎关注我的微信公众号</div>
+    <img src="/images/qrcode.jpg" alt="微信公众号">
+</div>
+
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I&#39;m luoyan Page in Google. <br/>
+			This is my blog,believe it or not.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		<a href="http://weibo.com/3314058724" target="_blank" class="icon-weibo" title="微博"></a>
+		
+		
+		<a href="https://github.com/lyroger" target="_blank" class="icon-github" title="github"></a>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		<a href="mailto:yan1079@126.com" target="_blank" class="icon-email" title="Email Me"></a>
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2016 
+		
+		<a href="/about" target="_blank" title="luoyan">luoyan</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"lyroger"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+<script>
+(function(){
+    var bp = document.createElement('script');
+    bp.src = '//push.zhanzhang.baidu.com/push.js';
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+<!-- Analytics Begin -->
+
+
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>
