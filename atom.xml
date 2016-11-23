@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://lyroger.github.io/"/>
-  <updated>2016-11-23T02:29:12.000Z</updated>
+  <updated>2016-11-23T02:47:11.000Z</updated>
   <id>http://lyroger.github.io/</id>
   
   <author>
@@ -16,13 +16,13 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title></title>
+    <title>NSURL通过URLWithString:创建为nil的问题</title>
     <link href="http://lyroger.github.io/2016/11/16/NSURL%E7%9B%B8%E5%85%B3%E9%97%AE%E9%A2%98/"/>
     <id>http://lyroger.github.io/2016/11/16/NSURL相关问题/</id>
-    <published>2016-11-16T09:48:24.000Z</published>
-    <updated>2016-11-23T02:29:12.000Z</updated>
+    <published>2016-11-16T09:16:00.000Z</published>
+    <updated>2016-11-23T02:47:11.000Z</updated>
     
-    <content type="html"><![CDATA[<h3 id="NSURL通过URLWithString-创建为nil的问题"><a href="#NSURL通过URLWithString-创建为nil的问题" class="headerlink" title="NSURL通过URLWithString:创建为nil的问题"></a>NSURL通过URLWithString:创建为nil的问题</h3><p>  最近有使用NSURL请求连接时发现一些小问题，服务端给一个网页链接字符串，如<code>NSURL *linkURL = [NSURL URLWithString:@&quot;http://192.168.12.28:8000/#/faq?xt=123&quot;];</code>这样生成的url没问题，可以访问，但将请求变成<code>NSURL *linkURL = [NSURL URLWithString:[NSString stringWithFormat:@&quot;http://192.168.12.28:8000/#/faq?xt=%@&quot;,[[SHMUserInfo shareUserInfo].token urlEncode]]];</code>,xt的参数值是变化的，有可能会是任何一种字符，如果该值中为非普通的字符，如带有中文或<code>#</code>等之类的字符，创建的url竟然是nil。不太明白NSURL里面是如何创建对象的，想要解决这个问题，只能将参数的值通过UTF-8编码，传进去，服务端接受该值时再解码就好了。</p>
+    <content type="html"><![CDATA[<h3 id="NSURL通过URLWithString-创建为nil的问题"><a href="#NSURL通过URLWithString-创建为nil的问题" class="headerlink" title="NSURL通过URLWithString:创建为nil的问题"></a>NSURL通过URLWithString:创建为nil的问题</h3><p>  最近有使用NSURL请求连接时发现一些小问题，服务端给一个网页链接字符串，如<code>NSURL *linkURL = [NSURL URLWithString:@&quot;http://192.168.12.28:8000/#/faq?xt=123&quot;];</code>这样生成的url没问题，可以访问，但将请求变成<code>NSURL *linkURL = [NSURL URLWithString:[NSString stringWithFormat:@&quot;http://192.168.12.28:8000/#/faq?xt=%@&quot;,[value urlEncode]]];</code>,xt的参数值是变化的，有可能会是任何一种字符，如果该值中为非普通的字符，如带有中文或<code>#</code>等之类的字符，创建的url竟然是nil。不太明白NSURL里面是如何创建对象的，想要解决这个问题，只能将参数的值通过UTF-8编码，传进去，服务端接受该值时再解码就好了。</p>
 ]]></content>
     
     <summary type="html">
@@ -30,6 +30,8 @@
       &lt;h3 id=&quot;NSURL通过URLWithString-创建为nil的问题&quot;&gt;&lt;a href=&quot;#NSURL通过URLWithString-创建为nil的问题&quot; class=&quot;headerlink&quot; title=&quot;NSURL通过URLWithString:创建为nil的问题&quot;&gt;
     
     </summary>
+    
+      <category term="基础篇" scheme="http://lyroger.github.io/categories/%E5%9F%BA%E7%A1%80%E7%AF%87/"/>
     
     
   </entry>

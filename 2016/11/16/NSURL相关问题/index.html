@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>罗琰的技术博客</title>
+    <title>NSURL通过URLWithString:创建为nil的问题 | 罗琰的技术博客</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="luoyan">
@@ -13,13 +13,13 @@
     
     <meta name="description" content="NSURL通过URLWithString:创建为nil的问题  最近有使用NSURL请求连接时发现一些小问题，服务端给一个网页链接字符串，如NSURL *linkURL = [NSURL URLWithString:@&amp;quot;http://192.168.12.28:8000/#/faq?xt=123&amp;quot;];这样生成的url没问题，可以访问，但将请求变成NSURL *linkURL =">
 <meta property="og:type" content="article">
-<meta property="og:title" content="罗琰的技术博客">
+<meta property="og:title" content="NSURL通过URLWithString:创建为nil的问题">
 <meta property="og:url" content="http://lyroger.github.io/2016/11/16/NSURL相关问题/index.html">
 <meta property="og:site_name" content="罗琰的技术博客">
 <meta property="og:description" content="NSURL通过URLWithString:创建为nil的问题  最近有使用NSURL请求连接时发现一些小问题，服务端给一个网页链接字符串，如NSURL *linkURL = [NSURL URLWithString:@&amp;quot;http://192.168.12.28:8000/#/faq?xt=123&amp;quot;];这样生成的url没问题，可以访问，但将请求变成NSURL *linkURL =">
-<meta property="og:updated_time" content="2016-11-23T02:29:12.000Z">
+<meta property="og:updated_time" content="2016-11-23T02:47:11.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="罗琰的技术博客">
+<meta name="twitter:title" content="NSURL通过URLWithString:创建为nil的问题">
 <meta name="twitter:description" content="NSURL通过URLWithString:创建为nil的问题  最近有使用NSURL请求连接时发现一些小问题，服务端给一个网页链接字符串，如NSURL *linkURL = [NSURL URLWithString:@&amp;quot;http://192.168.12.28:8000/#/faq?xt=123&amp;quot;];这样生成的url没问题，可以访问，但将请求变成NSURL *linkURL =">
 
     
@@ -71,14 +71,14 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2016/11/16/NSURL相关问题/" title="" itemprop="url"></a>
+      <a href="/2016/11/16/NSURL相关问题/" title="NSURL通过URLWithString:创建为nil的问题" itemprop="url">NSURL通过URLWithString:创建为nil的问题</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/about" title="luoyan" target="_blank" itemprop="author">luoyan</a>
 		
   <p class="article-time">
-    <time datetime="2016-11-16T09:48:24.000Z" itemprop="datePublished"> Published 2016-11-16</time>
+    <time datetime="2016-11-16T09:16:00.000Z" itemprop="datePublished"> Published 2016-11-16</time>
     
   </p>
 </header>
@@ -91,11 +91,16 @@
 		
 		</div>
 		
-		<h3 id="NSURL通过URLWithString-创建为nil的问题"><a href="#NSURL通过URLWithString-创建为nil的问题" class="headerlink" title="NSURL通过URLWithString:创建为nil的问题"></a>NSURL通过URLWithString:创建为nil的问题</h3><p>  最近有使用NSURL请求连接时发现一些小问题，服务端给一个网页链接字符串，如<code>NSURL *linkURL = [NSURL URLWithString:@&quot;http://192.168.12.28:8000/#/faq?xt=123&quot;];</code>这样生成的url没问题，可以访问，但将请求变成<code>NSURL *linkURL = [NSURL URLWithString:[NSString stringWithFormat:@&quot;http://192.168.12.28:8000/#/faq?xt=%@&quot;,[[SHMUserInfo shareUserInfo].token urlEncode]]];</code>,xt的参数值是变化的，有可能会是任何一种字符，如果该值中为非普通的字符，如带有中文或<code>#</code>等之类的字符，创建的url竟然是nil。不太明白NSURL里面是如何创建对象的，想要解决这个问题，只能将参数的值通过UTF-8编码，传进去，服务端接受该值时再解码就好了。</p>
+		<h3 id="NSURL通过URLWithString-创建为nil的问题"><a href="#NSURL通过URLWithString-创建为nil的问题" class="headerlink" title="NSURL通过URLWithString:创建为nil的问题"></a>NSURL通过URLWithString:创建为nil的问题</h3><p>  最近有使用NSURL请求连接时发现一些小问题，服务端给一个网页链接字符串，如<code>NSURL *linkURL = [NSURL URLWithString:@&quot;http://192.168.12.28:8000/#/faq?xt=123&quot;];</code>这样生成的url没问题，可以访问，但将请求变成<code>NSURL *linkURL = [NSURL URLWithString:[NSString stringWithFormat:@&quot;http://192.168.12.28:8000/#/faq?xt=%@&quot;,[value urlEncode]]];</code>,xt的参数值是变化的，有可能会是任何一种字符，如果该值中为非普通的字符，如带有中文或<code>#</code>等之类的字符，创建的url竟然是nil。不太明白NSURL里面是如何创建对象的，想要解决这个问题，只能将参数的值通过UTF-8编码，传进去，服务端接受该值时再解码就好了。</p>
   
 	</div>
 		<footer class="article-footer clearfix">
 <div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/基础篇/">基础篇</a>
+</div>
 
 
 </div>
@@ -104,7 +109,7 @@
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://lyroger.github.io/2016/11/16/NSURL相关问题/" data-title="罗琰的技术博客" data-tsina="null" class="share clearfix">
+	  <div data-url="http://lyroger.github.io/2016/11/16/NSURL相关问题/" data-title="NSURL通过URLWithString:创建为nil的问题 | 罗琰的技术博客" data-tsina="null" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -130,7 +135,7 @@
 
 	
 <section id="comments" class="comment">
-	<div class="ds-thread" data-thread-key="2016/11/16/NSURL相关问题/" data-title="" data-url="http://lyroger.github.io/2016/11/16/NSURL相关问题/"></div>
+	<div class="ds-thread" data-thread-key="2016/11/16/NSURL相关问题/" data-title="NSURL通过URLWithString:创建为nil的问题" data-url="http://lyroger.github.io/2016/11/16/NSURL相关问题/"></div>
 </section>
 
 
@@ -162,7 +167,7 @@
 		  
 		
 		  
-			<li><a href="/categories/基础篇/" title="基础篇">基础篇<sup>6</sup></a></li>
+			<li><a href="/categories/基础篇/" title="基础篇">基础篇<sup>7</sup></a></li>
 		  
 		
 		  
@@ -191,11 +196,11 @@
 		<ul class="clearfix">
 		
 			
-				<li><a href="/tags/swift/" title="swift">swift<sup>1</sup></a></li>
+				<li><a href="/tags/runtime/" title="runtime">runtime<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/runtime/" title="runtime">runtime<sup>1</sup></a></li>
+				<li><a href="/tags/swift/" title="swift">swift<sup>1</sup></a></li>
 			
 		
 			
