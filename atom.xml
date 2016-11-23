@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://lyroger.github.io/"/>
-  <updated>2016-10-09T01:39:25.000Z</updated>
+  <updated>2016-11-23T02:29:12.000Z</updated>
   <id>http://lyroger.github.io/</id>
   
   <author>
@@ -14,6 +14,25 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title></title>
+    <link href="http://lyroger.github.io/2016/11/16/NSURL%E7%9B%B8%E5%85%B3%E9%97%AE%E9%A2%98/"/>
+    <id>http://lyroger.github.io/2016/11/16/NSURL相关问题/</id>
+    <published>2016-11-16T09:48:24.000Z</published>
+    <updated>2016-11-23T02:29:12.000Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="NSURL通过URLWithString-创建为nil的问题"><a href="#NSURL通过URLWithString-创建为nil的问题" class="headerlink" title="NSURL通过URLWithString:创建为nil的问题"></a>NSURL通过URLWithString:创建为nil的问题</h3><p>  最近有使用NSURL请求连接时发现一些小问题，服务端给一个网页链接字符串，如<code>NSURL *linkURL = [NSURL URLWithString:@&quot;http://192.168.12.28:8000/#/faq?xt=123&quot;];</code>这样生成的url没问题，可以访问，但将请求变成<code>NSURL *linkURL = [NSURL URLWithString:[NSString stringWithFormat:@&quot;http://192.168.12.28:8000/#/faq?xt=%@&quot;,[[SHMUserInfo shareUserInfo].token urlEncode]]];</code>,xt的参数值是变化的，有可能会是任何一种字符，如果该值中为非普通的字符，如带有中文或<code>#</code>等之类的字符，创建的url竟然是nil。不太明白NSURL里面是如何创建对象的，想要解决这个问题，只能将参数的值通过UTF-8编码，传进去，服务端接受该值时再解码就好了。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;NSURL通过URLWithString-创建为nil的问题&quot;&gt;&lt;a href=&quot;#NSURL通过URLWithString-创建为nil的问题&quot; class=&quot;headerlink&quot; title=&quot;NSURL通过URLWithString:创建为nil的问题&quot;&gt;
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>Hello Hexo</title>
@@ -624,63 +643,6 @@
     <summary type="html">
     
       &lt;h2 id=&quot;一-标题&quot;&gt;&lt;a href=&quot;#一-标题&quot; class=&quot;headerlink&quot; title=&quot;一.标题&quot;&gt;&lt;/a&gt;一.标题&lt;/h2&gt;&lt;h1 id=&quot;一级标题&quot;&gt;&lt;a href=&quot;#一级标题&quot; class=&quot;headerlink&quot; title=&quot;一级标题&quot;&gt;&lt;/a
-    
-    </summary>
-    
-      <category term="基础篇" scheme="http://lyroger.github.io/categories/%E5%9F%BA%E7%A1%80%E7%AF%87/"/>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>iOS学习笔记</title>
-    <link href="http://lyroger.github.io/2015/09/08/iOS/"/>
-    <id>http://lyroger.github.io/2015/09/08/iOS/</id>
-    <published>2015-09-08T06:18:00.000Z</published>
-    <updated>2016-10-09T01:39:25.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>f## 一.LLDB的使用</p>
-<ol>
-<li>po: 对一个对象的打印，即“print-object”.</li>
-<li>p: 对一个简单类型的打印.</li>
-<li>recursiveDescription: UIView私有方法，可以打印更具体更详细的布局结构.比如 :<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">po [view recursiveDescription]</div><div class="line">&lt;UIView: 0x178199640; frame = (0 64; 320 568); userInteractionEnabled = NO; tag = 99; layer = &lt;CALayer: 0x178421480&gt;&gt;</div><div class="line">   | &lt;UILabel: 0x13ce20170; frame = (90 50; 140 23.86); text = &apos;搜索更多的内容&apos;; userInteractionEnabled = NO; layer = &lt;_UILabelLayer: 0x17008f190&gt;&gt;</div><div class="line">   | &lt;CALayer: 0x170034e60&gt; (layer)</div></pre></td></tr></table></figure>
-</li>
-</ol>
-<p>这样你能更清晰的知道view的布局结构，它下面包含了一个UILabel和一个CALayer。利用这个私有方法，有时候确实能解决一些难题，曾经在做一个搜索功能的时候，遇到一些瓶颈，使用这个方法让我找到了解决问题的地方。在<a href="http://lyboy.farbox.com/post/uisearchbarde-shi-yong" target="_blank" rel="external">这篇文章</a>中有相关提到。<a href="https://github.com/lyroger/SearchBarPro" title="SearchBarPro" target="_blank" rel="external">源代码</a></p>
-<h2 id="二-数据库相关"><a href="#二-数据库相关" class="headerlink" title="二.数据库相关"></a>二.数据库相关</h2><ol>
-<li>当你有多条数据插入的时候，但又不清楚数据库是否已经存在该记录，怕导致重复添加数据，你首先想到的可能就是先查询一次，然后判断是否存在相同记录，如果不存在则添加，存在则更新。但这样的操作并不适用于数据量稍微多一点的场合，现在有一种方法可以有效的解决这个问题适用,如下代码:<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">replace into table (a,b) values (&apos;1&apos;,&apos;2&apos;)</div></pre></td></tr></table></figure>
-</li>
-</ol>
-<p>使用这条sql语句的有效性的前提是table中必须必须有唯一标示 UNIQUE，<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">CREATE TABLE IF NOT EXISTS TestTable (&apos;a&apos; VARCHAR PRIMARY KEY NOT NULL UNIQUE, &apos;b&apos; VARCHAR)</div></pre></td></tr></table></figure></p>
-<p>定义好a为唯一标示后，上面的replace into 才会起效。<br>如果我的数据中一个字段并不能确定唯一性，那需要加约束；<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">CREATE TABLE IF NOT EXISTS TestTable (&apos;a&apos; VARCHAR PRIMARY KEY NOT NULL UNIQUE, &apos;b&apos; VARCHAR,&apos;c&apos;VARCHAR,UNIQUE(b,c) ON CONFLICT REPLACE)</div></pre></td></tr></table></figure></p>
-<p>这个时候，如果你插入的数据b，c有跟以前记录中都相同的话，那么他只会做更新操作，并不会做插入操作。这便是replace into 语句的好处。避免重复。</p>
-<h2 id="三-Auto-Layout"><a href="#三-Auto-Layout" class="headerlink" title="三.Auto Layout"></a>三.Auto Layout</h2><blockquote>
-<p>Auto Layout + UITableView-FDTemplateLayoutCell + Masonry</p>
-<h2 id="四-时间差"><a href="#四-时间差" class="headerlink" title="四.时间差"></a>四.时间差</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">mach_timebase_info_data_t info;</div><div class="line">if (mach_timebase_info(&amp;info) != KERN_SUCCESS) return -1.0;</div><div class="line">uint64_t start = mach_absolute_time ();</div><div class="line">// 这里写入需要统计时间的执行代码</div><div class="line">// ......</div><div class="line">uint64_t end = mach_absolute_time ();</div><div class="line">uint64_t elapsed = end - start;</div><div class="line">uint64_t nanos = elapsed * info.numer / info.denom;</div><div class="line">return (CGFloat)nanos / NSEC_PER_SEC;</div></pre></td></tr></table></figure>
-</blockquote>
-<h2 id="五-pod使用提高篇"><a href="#五-pod使用提高篇" class="headerlink" title="五.pod使用提高篇"></a>五.pod使用提高篇</h2><h4 id="pod更新"><a href="#pod更新" class="headerlink" title="pod更新:"></a>pod更新:</h4><p>更新新的依赖库时，使用pod update 命令很多时候都卡在了Analyzing dependencies不动，使用这个命令会升级CocoaPods的spec仓库，所以跟新非常慢，要等很久。<br>在网上搜索解决此方法的命令<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pod update --verbose --no-repo-update</div></pre></td></tr></table></figure></p>
-<h4 id="通过vim命令创建文件"><a href="#通过vim命令创建文件" class="headerlink" title="通过vim命令创建文件"></a>通过vim命令创建文件</h4><p>1：cd到相应文件夹<br>2：输入vim Podfile<br>3:这时已经创建了文件，可以在dos中输入文件内容，<br>platform :ios, ‘7.0’<br>pod ‘Masonry’<br>4:按Esc键，然后输入”:”，然后输入”wq”,Podfile文件及内容创建完毕</p>
-<h2 id="六-iOS中使用的锁"><a href="#六-iOS中使用的锁" class="headerlink" title="六.iOS中使用的锁"></a>六.iOS中使用的锁</h2><ol>
-<li>@synchronized 关键字加锁</li>
-<li>NSLock 对象锁</li>
-<li>NSCondition</li>
-<li>NSConditionLock 条件锁</li>
-<li>NSRecursiveLock 递归锁</li>
-<li>pthread_mutex 互斥锁（C语言）</li>
-<li>dispatch_semaphore 信号量实现加锁（GCD）</li>
-<li>OSSpinLock</li>
-</ol>
-<h2 id="七-UIViewController页面内容适配"><a href="#七-UIViewController页面内容适配" class="headerlink" title="七.UIViewController页面内容适配"></a>七.UIViewController页面内容适配</h2><p>在滚动视图中 设置<br>automaticallyAdjustsScrollViewInsets属性可以控制滚动内容是否会在bar下方显示。</p>
-<h2 id="八-使用终端统计项目代码总行数"><a href="#八-使用终端统计项目代码总行数" class="headerlink" title="八.使用终端统计项目代码总行数"></a>八.使用终端统计项目代码总行数</h2><p>1、打开终端<br>2、cd 进入项目根目录<br>3、输入命令 find . “(“ -name “<em>.m” -or -name “</em>.mm” -or -name “<em>.cpp” -or -name “</em>.h” -or -name “*.rss” “)” -print | xargs wc -l<br>4、回车</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;f## 一.LLDB的使用&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;po: 对一个对象的打印，即“print-object”.&lt;/li&gt;
-&lt;li&gt;p: 对一个简单类型的打印.&lt;/li&gt;
-&lt;li&gt;recursiveDescription: UIView私有方法，可以打印更具体更详细的布局结
     
     </summary>
     
