@@ -4,23 +4,23 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>动态修复线上bug | 罗琰的技术博客</title>
+    <title>JS与OC交互 | 罗琰的技术博客</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="luoyan">
     
 
     
-    <meta name="description" content="前言这个主题是在QQ空间终端开发团队公众号的一篇文章看到的(链接地址)，平时开发中确实没有使用过，为了以后派上用途，在这写这篇文章记录一下。QQ空间终端开发团队公众号一文中提到的使用TPatch来动态修复补丁，我找了很久确没找到TPatch的下载地址，而且他还不开源，但通过他我却了解到其他比较好用的动态修复补丁的框架，比如JSPatch,这篇文章我就JSPatch来记录如何使用JSPatch修复线">
+    <meta name="description" content="###">
 <meta property="og:type" content="article">
-<meta property="og:title" content="动态修复线上bug">
-<meta property="og:url" content="http://lyroger.github.io/2016/01/07/动态修复线上bug/index.html">
+<meta property="og:title" content="JS与OC交互">
+<meta property="og:url" content="http://lyroger.github.io/2016/11/29/test/index.html">
 <meta property="og:site_name" content="罗琰的技术博客">
-<meta property="og:description" content="前言这个主题是在QQ空间终端开发团队公众号的一篇文章看到的(链接地址)，平时开发中确实没有使用过，为了以后派上用途，在这写这篇文章记录一下。QQ空间终端开发团队公众号一文中提到的使用TPatch来动态修复补丁，我找了很久确没找到TPatch的下载地址，而且他还不开源，但通过他我却了解到其他比较好用的动态修复补丁的框架，比如JSPatch,这篇文章我就JSPatch来记录如何使用JSPatch修复线">
-<meta property="og:updated_time" content="2016-10-09T01:39:25.000Z">
+<meta property="og:description" content="###">
+<meta property="og:updated_time" content="2016-11-29T02:13:04.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="动态修复线上bug">
-<meta name="twitter:description" content="前言这个主题是在QQ空间终端开发团队公众号的一篇文章看到的(链接地址)，平时开发中确实没有使用过，为了以后派上用途，在这写这篇文章记录一下。QQ空间终端开发团队公众号一文中提到的使用TPatch来动态修复补丁，我找了很久确没找到TPatch的下载地址，而且他还不开源，但通过他我却了解到其他比较好用的动态修复补丁的框架，比如JSPatch,这篇文章我就JSPatch来记录如何使用JSPatch修复线">
+<meta name="twitter:title" content="JS与OC交互">
+<meta name="twitter:description" content="###">
 
     
     <link rel="alternative" href="/atom.xml" title="罗琰的技术博客" type="application/atom+xml">
@@ -71,14 +71,14 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2016/01/07/动态修复线上bug/" title="动态修复线上bug" itemprop="url">动态修复线上bug</a>
+      <a href="/2016/11/29/test/" title="JS与OC交互" itemprop="url">JS与OC交互</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/about" title="luoyan" target="_blank" itemprop="author">luoyan</a>
 		
   <p class="article-time">
-    <time datetime="2016-01-07T06:23:00.000Z" itemprop="datePublished"> 发表于 2016-01-07</time>
+    <time datetime="2016-11-29T02:02:51.000Z" itemprop="datePublished"> 发表于 2016-11-29</time>
     
   </p>
 </header>
@@ -87,29 +87,11 @@
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#修复的基本原理"><span class="toc-number">2.</span> <span class="toc-text">修复的基本原理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#JSPatch的使用"><span class="toc-number">3.</span> <span class="toc-text">JSPatch的使用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#补丁版本支持"><span class="toc-number">4.</span> <span class="toc-text">补丁版本支持</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#总结"><span class="toc-number">5.</span> <span class="toc-text">总结</span></a></li></ol>
+			
 		
 		</div>
 		
-		<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>这个主题是在QQ空间终端开发团队公众号的一篇文章看到的(<a href="http://zhuanlan.zhihu.com/magilu/20288657" target="_blank" rel="external">链接地址</a>)，平时开发中确实没有使用过，为了以后派上用途，在这写这篇文章记录一下。QQ空间终端开发团队公众号一文中提到的使用TPatch来动态修复补丁，我找了很久确没找到TPatch的下载地址，而且他还不开源，但通过他我却了解到其他比较好用的动态修复补丁的框架，比如<a href="http://jspatch.com" target="_blank" rel="external">JSPatch</a>,这篇文章我就JSPatch来记录如何使用JSPatch修复线上APP的bug。</p>
-<h3 id="修复的基本原理"><a href="#修复的基本原理" class="headerlink" title="修复的基本原理"></a>修复的基本原理</h3><p>能实现线上修复bug的最根本的原理是因为 Objective-C 是一门动态语言，OC上所有方法的调用/类的生成都通过 Objective-C Runtime 在运行时进行，所以我们可以通过类名/方法名反射得到相应的类和方法，也可以替换某个类的方法为新的实现，还可以新注册一个类，为类添加方法。</p>
-<h3 id="JSPatch的使用"><a href="#JSPatch的使用" class="headerlink" title="JSPatch的使用"></a>JSPatch的使用</h3><ol>
-<li>获得AppKey<br>首先你得先去<a href="http://jspatch.com/Index/invite" target="_blank" rel="external">JSPatch申请账号</a>，获得AppKey，每个App都有对应的一个唯一AppKey。</li>
-<li>下载SDK并导入工程<br>下载 SDK 后解压，将 JSPatch.framework 导入到工程中，并添加两个系统库文件：libz.dylib 和 JavaScriptCore.framework。</li>
-<li>添加代码<br>在 AppDelegate.m 里载入文件，并调用 +startWithAppKey: 方法，参数为第一步获得的 AppKey。例子：<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">#import &lt;JSPatch/JSPatch.h&gt;</div><div class="line">@implementation AppDelegate</div><div class="line">- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions &#123;</div><div class="line">    [JSPatch startWithAppKey:@&quot;你申请的AppKey&quot;];</div><div class="line">    // your code</div><div class="line">&#125;</div><div class="line">@end</div></pre></td></tr></table></figure>
-</li>
-</ol>
-<p>至此 JSPatch 接入完毕，接着你就可以在后台为这个 APP 添加JS补丁了。<br>4.JS补丁代码如何写<br>写到这里，其实自己也并不太熟悉 JS 补丁代码的基本语法，不过还好他提供了<a href="https://github.com/bang590/JSPatch/wiki/基础用法" target="_blank" rel="external">文档</a>，更好的是提供了机器人帮你将OC代码转换成JS代码，<a href="http://bang590.github.io/JSPatchConvertor/" target="_blank" rel="external">转换地址</a>，不过提供转换的功能实现简单的OC代码还行，比较复杂的还需人工修复，所以：如果有使用到动态修复线上 APP Bug，并且选择使用了 JSPatch，那么你就不的不好好学习一下 JS 补丁代码的语法了。</p>
-<h3 id="补丁版本支持"><a href="#补丁版本支持" class="headerlink" title="补丁版本支持"></a>补丁版本支持</h3><ol>
-<li>可针对APP中对应的版本发布补丁代码。</li>
-<li>可修改已经发布的补丁脚本代码，既重新上传该版本的脚本代码，APP重新启动时，会请求判断是否已经更新，若更新了会下载最新脚本代码覆盖原来的脚本代码，启动后并执行。</li>
-<li>可移除已经发布的补丁脚本代码，只要在后台页面删除该版本的APP，客户端APP请求是发现该版本已经被删除，则会自动删除本地的补丁脚本代码。</li>
-</ol>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>既然有这么好用的东西，记录下来并不是一件坏事，说不定以后能排上用场。另外，估计大家也会想到，既然这么强大，那为啥还要发布新版本，直接都通过 JS 脚本代码来实现新需求，这不避免了重新上线中一大堆麻烦的事情了吗？其实解决一些小问题还是可以，如果有大批需求需要上线，估计使用这种方式还是不太妥当，毕竟通过脚本代码转换到OC是需要消耗一定的性能的。</p>
-<hr>
-<blockquote>
-<p>参考文献:<br><a href="http://blog.cnbang.net/tech/2808/" target="_blank" rel="external">JSPatch实现原理详解</a><br><a href="http://jspatch.com" target="_blank" rel="external">JSPatch</a></p>
-</blockquote>
+		<p>###</p>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -117,7 +99,7 @@
 
 <div class="article-categories">
   <span></span>
-  <a class="article-category-link" href="/categories/高效篇/">高效篇</a>
+  <a class="article-category-link" href="/categories/基础篇/">基础篇</a>
 </div>
 
 
@@ -127,7 +109,7 @@
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://lyroger.github.io/2016/01/07/动态修复线上bug/" data-title="动态修复线上bug | 罗琰的技术博客" data-tsina="null" class="share clearfix">
+	  <div data-url="http://lyroger.github.io/2016/11/29/test/" data-title="JS与OC交互 | 罗琰的技术博客" data-tsina="null" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -140,19 +122,11 @@
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2016/01/21/线上APP使用动态库添加需求方式/" title="动态添加需求(动态库)">
-  <strong>上一篇：</strong><br/>
-  <span>
-  动态添加需求(动态库)</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2015/12/31/runtime那些事（一）/"  title="runtime那些事（一）">
+<a href="/2016/11/16/NSURL相关问题/"  title="NSURL通过URLWithString:创建为nil的问题">
  <strong>下一篇：</strong><br/> 
- <span>runtime那些事（一）
+ <span>NSURL通过URLWithString:创建为nil的问题
 </span>
 </a>
 </div>
@@ -161,7 +135,7 @@
 
 	
 <section id="comments" class="comment">
-	<div class="ds-thread" data-thread-key="2016/01/07/动态修复线上bug/" data-title="动态修复线上bug" data-url="http://lyroger.github.io/2016/01/07/动态修复线上bug/"></div>
+	<div class="ds-thread" data-thread-key="2016/11/29/test/" data-title="JS与OC交互" data-url="http://lyroger.github.io/2016/11/29/test/"></div>
 </section>
 
 
@@ -171,7 +145,7 @@
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
  
- <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#修复的基本原理"><span class="toc-number">2.</span> <span class="toc-text">修复的基本原理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#JSPatch的使用"><span class="toc-number">3.</span> <span class="toc-text">JSPatch的使用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#补丁版本支持"><span class="toc-number">4.</span> <span class="toc-text">补丁版本支持</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#总结"><span class="toc-number">5.</span> <span class="toc-text">总结</span></a></li></ol>
+ 
  
   </div>
 

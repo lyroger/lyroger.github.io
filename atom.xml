@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://lyroger.github.io/"/>
-  <updated>2016-11-23T02:47:11.000Z</updated>
+  <updated>2016-11-29T02:13:04.000Z</updated>
   <id>http://lyroger.github.io/</id>
   
   <author>
@@ -14,6 +14,28 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>JS与OC交互</title>
+    <link href="http://lyroger.github.io/2016/11/29/test/"/>
+    <id>http://lyroger.github.io/2016/11/29/test/</id>
+    <published>2016-11-29T02:02:51.000Z</published>
+    <updated>2016-11-29T02:13:04.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>###</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;###&lt;/p&gt;
+
+    
+    </summary>
+    
+      <category term="基础篇" scheme="http://lyroger.github.io/categories/%E5%9F%BA%E7%A1%80%E7%AF%87/"/>
+    
+    
+  </entry>
   
   <entry>
     <title>NSURL通过URLWithString:创建为nil的问题</title>
@@ -578,73 +600,6 @@
     
       &lt;p&gt;最近在项目中写搜索比较多，然而UI设计对页面的效果和布局都有所严谨，发布测试版本后设计或多或少会拿着app跑到面前来说这些差那些，作为开发人员，这些都习以为常了。&lt;/p&gt;
 &lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td clas
-    
-    </summary>
-    
-      <category term="基础篇" scheme="http://lyroger.github.io/categories/%E5%9F%BA%E7%A1%80%E7%AF%87/"/>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>Markdown学习</title>
-    <link href="http://lyroger.github.io/2015/10/14/Markdown%E5%AD%A6%E4%B9%A0/"/>
-    <id>http://lyroger.github.io/2015/10/14/Markdown学习/</id>
-    <published>2015-10-14T05:16:00.000Z</published>
-    <updated>2016-10-09T01:39:25.000Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="一-标题"><a href="#一-标题" class="headerlink" title="一.标题"></a>一.标题</h2><h1 id="一级标题"><a href="#一级标题" class="headerlink" title="一级标题"></a>一级标题</h1><h2 id="二级标题"><a href="#二级标题" class="headerlink" title="二级标题"></a>二级标题</h2><h3 id="三级标题"><a href="#三级标题" class="headerlink" title="三级标题"></a>三级标题</h3><h4 id="四级标题"><a href="#四级标题" class="headerlink" title="四级标题"></a>四级标题</h4><h5 id="五级标题"><a href="#五级标题" class="headerlink" title="五级标题"></a>五级标题</h5><h6 id="六级标题"><a href="#六级标题" class="headerlink" title="六级标题"></a>六级标题</h6><h2 id="二-无序列表"><a href="#二-无序列表" class="headerlink" title="二.无序列表"></a>二.无序列表</h2><ul>
-<li>我的</li>
-<li>你的</li>
-<li>他的</li>
-</ul>
-<h2 id="三-有序列表"><a href="#三-有序列表" class="headerlink" title="三.有序列表"></a>三.有序列表</h2><ol>
-<li>我的</li>
-<li>你的</li>
-<li>她的</li>
-</ol>
-<h2 id="四-引用"><a href="#四-引用" class="headerlink" title="四.引用"></a>四.引用</h2><blockquote>
-<p>这里是引用</p>
-</blockquote>
-<h2 id="五-图片与链接"><a href="#五-图片与链接" class="headerlink" title="五.图片与链接"></a>五.图片与链接</h2><ol>
-<li><img src="http://mouapp.com/Mou_128.png" alt="Mou的icon"></li>
-<li><a href="http://www.jianshu.com/p/1e402922ee32/" target="_blank" rel="external">Markdown学习链接</a></li>
-<li>建议您参考<a href="http://www.jianshu.com/p/1e402922ee32/" title="Markdown——入门指南" target="_blank" rel="external">Markdown——入门指南</a>或者参考<a href="http://wowubuntu.com/markdown/" title="Markdown语法说明(简体中文版)" target="_blank" rel="external">Markdown语法说明(简体中文版)</a></li>
-</ol>
-<p><img src="/images/jiafei.gif" alt=""></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">链接内容定义的形式为：</div><div class="line">1.方括号（前面可以选择性地加上至多三个空格来缩进），里面输入链接文字</div><div class="line">接着一个冒号</div><div class="line">接着一个以上的空格或制表符</div><div class="line">接着链接的网址</div><div class="line">选择性地接着 title 内容，可以用单引号、双引号或是括弧包着</div><div class="line">下面这三种链接的定义都是相同：</div><div class="line">1. [foo]: http://example.com/  &quot;Optional Title Here&quot;</div><div class="line">2. [foo]: http://example.com/  &apos;Optional Title Here&apos;</div><div class="line">3. [foo]: http://example.com/  (Optional Title Here)</div><div class="line">请注意：有一个已知的问题是 Markdown.pl 1.0.1 会忽略单引号包起来的链接 title。</div><div class="line">链接网址也可以用尖括号包起来：</div><div class="line">* [id]: &lt;http://example.com/&gt;  &quot;Optional Title Here&quot;</div></pre></td></tr></table></figure>
-<h2 id="六-粗体与斜体"><a href="#六-粗体与斜体" class="headerlink" title="六.粗体与斜体"></a>六.粗体与斜体</h2><ol>
-<li>这是 <strong>粗体</strong></li>
-<li>这是 <em>斜体</em></li>
-<li>这是 常态</li>
-</ol>
-<h2 id="七-表格"><a href="#七-表格" class="headerlink" title="七.表格"></a>七.表格</h2><table>
-<thead>
-<tr>
-<th>name(巨左对齐)</th>
-<th style="text-align:center">age(居中对齐)</th>
-<th style="text-align:right">sex(居右对齐)</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>ly</td>
-<td style="text-align:center">28</td>
-<td style="text-align:right">男</td>
-</tr>
-</tbody>
-</table>
-<h2 id="八-代码框"><a href="#八-代码框" class="headerlink" title="八.代码框"></a>八.代码框</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">- (UIImage *)imageFromColor:(UIColor *)color frame:(CGRect)rect</div><div class="line">&#123;</div><div class="line">    UIGraphicsBeginImageContext(rect.size);</div><div class="line">    CGContextRef context = UIGraphicsGetCurrentContext();</div><div class="line">    CGContextSetFillColorWithColor(context, [color CGColor]);</div><div class="line">    CGContextFillRect(context, rect);</div><div class="line">    UIImage *img = UIGraphicsGetImageFromCurrentImageContext();</div><div class="line">    UIGraphicsEndImageContext();</div><div class="line">    return img;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"># 标题一</div><div class="line">## 标题二</div><div class="line">### 标题三</div></pre></td></tr></table></figure>
-<h2 id="九-分割线"><a href="#九-分割线" class="headerlink" title="九.分割线"></a>九.分割线</h2><h2 id=""><a href="#" class="headerlink" title="*"></a><strong><strong><strong><em>*</em></strong></strong></strong></h2><h2 id="十-区域引用"><a href="#十-区域引用" class="headerlink" title="十.区域引用"></a>十.区域引用</h2><blockquote>
-<p>This is a blockquote with two paragraphs. Lorem ipsum dolor sit amet,<br>consectetuer adipiscing elit. Aliquam hendrerit mi posuere lectus.<br>Vestibulum enim wisi, viverra nec, fringilla in, laoreet vitae, risus.</p>
-<p>Donec sit amet nisl. Aliquam semper ipsum sit amet velit. Suspendisse<br>id sem consectetuer libero luctus adipiscing.</p>
-</blockquote>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;一-标题&quot;&gt;&lt;a href=&quot;#一-标题&quot; class=&quot;headerlink&quot; title=&quot;一.标题&quot;&gt;&lt;/a&gt;一.标题&lt;/h2&gt;&lt;h1 id=&quot;一级标题&quot;&gt;&lt;a href=&quot;#一级标题&quot; class=&quot;headerlink&quot; title=&quot;一级标题&quot;&gt;&lt;/a
     
     </summary>
     
