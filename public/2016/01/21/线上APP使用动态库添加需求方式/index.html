@@ -18,7 +18,7 @@
 <meta property="og:site_name" content="罗琰的技术博客">
 <meta property="og:description" content="前言前些天，公司提出需要动态添加一些需求给线上App，当时觉得有点不太好办，因为当时还没有头绪，后来上网查了些资料，如这篇文章，不过他这只是将写好的动态库拷贝到本地的沙盒中，也就是有这个方法然后我有了头绪，我只需将写好的动态库压缩上传到服务器，提供线上APP下载，解压后加载动态库执行代码即可实现其功能。接下来还是来看看具体操作和过程中遇到的一些问题和注意点吧。整个需求我写了一个demo,你可以先下">
 <meta property="og:image" content="http://lyroger.github.io/images/9E729546-8D22-48A6-A3D7-88FBDD787DD9.png">
-<meta property="og:updated_time" content="2016-09-26T08:32:58.000Z">
+<meta property="og:updated_time" content="2016-10-09T01:39:25.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="动态添加需求(动态库)">
 <meta name="twitter:description" content="前言前些天，公司提出需要动态添加一些需求给线上App，当时觉得有点不太好办，因为当时还没有头绪，后来上网查了些资料，如这篇文章，不过他这只是将写好的动态库拷贝到本地的沙盒中，也就是有这个方法然后我有了头绪，我只需将写好的动态库压缩上传到服务器，提供线上APP下载，解压后加载动态库执行代码即可实现其功能。接下来还是来看看具体操作和过程中遇到的一些问题和注意点吧。整个需求我写了一个demo,你可以先下">
@@ -29,6 +29,9 @@
     
     
     
+    <link rel="apple-touch-icon" href="/img/author.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/author.jpg">
+    
     <link rel="stylesheet" href="/css/style.css">
 </head>
 
@@ -37,6 +40,10 @@
       
 <div>
 		
+			<div id="imglogo">
+				<a href="/"><img src="/img/author.jpg" alt="罗琰的技术博客" title="罗琰的技术博客"/></a>
+			</div>
+			
 			<div id="textlogo">
 				<h1 class="site-name"><a href="/" title="罗琰的技术博客">罗琰的技术博客</a></h1>
 				<h2 class="blog-motto">积累与分享成长的技术经验</h2>
@@ -79,9 +86,9 @@
        
 		<a href="/about" title="luoyan" target="_blank" itemprop="author">luoyan</a>
 		
+    <span id="busuanzi_container_page_pv">阅读<span id="busuanzi_value_page_pv"></span></span>
   <p class="article-time">
     <time datetime="2016-01-21T06:26:00.000Z" itemprop="datePublished"> Published 2016-01-21</time>
-    
   </p>
 </header>
 	<div class="article-content">
@@ -189,7 +196,7 @@
 		  
 		
 		  
-			<li><a href="/categories/基础篇/" title="基础篇">基础篇<sup>6</sup></a></li>
+			<li><a href="/categories/基础篇/" title="基础篇">基础篇<sup>8</sup></a></li>
 		  
 		
 		  
@@ -218,15 +225,15 @@
 		<ul class="clearfix">
 		
 			
-				<li><a href="/tags/Hybrid-App/" title="Hybrid App">Hybrid App<sup>1</sup></a></li>
-			
-		
-			
 				<li><a href="/tags/runtime/" title="runtime">runtime<sup>1</sup></a></li>
 			
 		
 			
 				<li><a href="/tags/swift/" title="swift">swift<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Hybrid-App/" title="Hybrid App">Hybrid App<sup>1</sup></a></li>
 			
 		
 		</ul>
@@ -286,8 +293,12 @@
 		
 		<a href="/about" target="_blank" title="luoyan">luoyan</a>
 		
+		<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 		
+			<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1260972836'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s11.cnzz.com/z_stat.php%3Fid%3D1260972836%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script>
+			
 		</p>
+		
 </div>
 </footer>
     <script src="/js/jquery-2.0.3.min.js"></script>
@@ -472,6 +483,10 @@ $(document).ready(function(){
 <!-- Analytics Begin -->
 
 
+
+
+
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1260972836'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s11.cnzz.com/z_stat.php%3Fid%3D1260972836%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script>
 
 
 

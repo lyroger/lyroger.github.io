@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://lyroger.github.io/"/>
-  <updated>2016-09-26T08:32:58.000Z</updated>
+  <updated>2016-12-12T02:40:50.000Z</updated>
   <id>http://lyroger.github.io/</id>
   
   <author>
@@ -16,11 +16,69 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>JS与OC交互</title>
+    <link href="http://lyroger.github.io/2016/11/29/JS%E4%B8%8EOC%E4%BA%A4%E4%BA%92/"/>
+    <id>http://lyroger.github.io/2016/11/29/JS与OC交互/</id>
+    <published>2016-11-29T02:02:51.000Z</published>
+    <updated>2016-12-12T02:40:50.000Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>  平时开发中，很多页面并非全由原生代码来编写，需求求快，求可扩展性，往往希望页面能够很轻松替换或更改，所以有些页面在不追求体验之下由web来展示是一个比较好的方案。web页面在app端展示其实也有两种方案，一种是把web页面放在服务器端，一种是把web页面等资源一起打包放在App端，这两种方案的各自好处就不在这里详解，第二种方案在我的<a href="http://blog.devyan.cn/2016/09/23/使用Cordova搭建混合框架/" target="_blank" rel="external">使用Cordova搭建混合框架</a>文章中有提到，H5与原生代码直接的交互都有详解。这篇文章主要讲讲H5跟原生代码之间的交互。</p>
+<h3 id="原生代码调用H5"><a href="#原生代码调用H5" class="headerlink" title="原生代码调用H5"></a>原生代码调用H5</h3><p>  这个方案估计很多人都熟悉，也调用的比较频繁。比如现在在我们最近的一个项目中，我们把一个Web页面封装成一个BaseWebController页面了，所有基于远程web页面来展示的页面都通过这个封装好了的BaseWebController页面展示，那么在这个封装好了的页面中我们做了些什么事情呢？想想平时我们在这些web页面中都会做些什么，右上角更多按钮，右上角分享按钮，Web页面的title，下拉web页面时，能看到该页面由谁提供的，等等这些小功能，我们都可以在<code>- (void)webViewDidFinishLoad:(UIWebView *)webView</code>方法执行后，通过<code>stringByEvaluatingJavaScriptFromString:</code>方法去获取该页面中的配置，这个配置信息其实也是于H5有个协议，我们与H5端先定好一个协议，比如<code>msg_can_share</code>字段值为true时，表示可以分享，那么就会接着配置分享相关信息字段，比如分享的title，分享的url，分享的描述等等信息，这些信息都可以直接通过<code>stringByEvaluatingJavaScriptFromString:</code>去获取。</p>
+<h3 id="H5调用原生代码"><a href="#H5调用原生代码" class="headerlink" title="H5调用原生代码"></a>H5调用原生代码</h3><p>  原生代码调用H5用一个方法就可以搞定，很简单，那么H5调用原生的又怎么来实现呢，又有什么场景呢？驱使我想用实现这种方案的动力来自一个问题，由于H5端查看文章详情时，footer下还有一个查看下一篇文章，点击查看下一篇文章时，需改变我们BaseWebController的title，问题来了，点击查看下一篇文章是，H5是由异步调用服务器数据，所以不会再次进入<code>- (void)webViewDidFinishLoad:(UIWebView *)webView</code>，因此我们无法通过<code>stringByEvaluatingJavaScriptFromString:</code>去拿到最新的title，我们也不知道数据时什么时候来的，这时候我们就只好通过H5来调用原生代码，当H5那边数据已更新后，再调用原生代码来更新title。相信还有更多如此的场景，那么如何来实现这种方案呢？在iOS7之后，我想，大家应该都了解了一些JavaScriptCore.framework的框架吧，对，我们就用这个来实现这个方案，我们看看下面几步，很简单：</p>
+<ol>
+<li><p>首先我们定义一个代理：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">@protocol JSObjcDelegate &lt;JSExport&gt;</div><div class="line">- (void)webViewJSAction:(NSString*)action :(NSString*)arg;</div><div class="line">@end</div></pre></td></tr></table></figure>
+</li>
+<li><p>然后在BaseWebController中定义一个<code>@property (nonatomic, strong) JSContext  *jsContext;</code>属性。</p>
+</li>
+<li><p>然后再在恰当的时候（建议写到<code>- (void)webViewDidFinishLoad:(UIWebView *)webView</code>中）去获取H5的上下文，将刚刚写好的代理赋值给到H5。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">_jsContext = [webView valueForKeyPath:@&quot;documentView.webView.mainFrame.javaScriptContext&quot;];</div><div class="line">  _jsContext[@&quot;WebViewObject&quot;] = self;</div><div class="line">  _jsContext.exceptionHandler = ^(JSContext *context, JSValue *exceptionValue) &#123;</div><div class="line">      context.exception = exceptionValue;</div><div class="line">      NSLog(@&quot;异常信息：%@&quot;, exceptionValue);</div><div class="line">  &#125;;</div></pre></td></tr></table></figure>
+</li>
+<li><p>最后在BaseWebController中实现代理就ok了。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">- (void)webViewJSAction:(NSString*)action :(NSString*)arg</div><div class="line">&#123;</div><div class="line">    if ([action isEqualToString:@&quot;UpdateWebViewTitle&quot;]) &#123;</div><div class="line">        self.title = arg;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>写到这里，我们都是站在原生代码的角度去考虑，实现。那么H5端需要什么做呢？很简单，只需要通过<code>window.WebViewObject.webViewJSAction(&#39;UpdateWebViewTitle&#39;,&#39;title&#39;)</code>就可以将需要的值传过来。调用原生的方法。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h3&gt;&lt;p&gt;  平时开发中，很多页面并非全由原生代码来编写，需求求快，求可扩展性，往往希望页面能够很轻松替换或更改，所以有些页面在不追求体验之下由web
+    
+    </summary>
+    
+      <category term="基础篇" scheme="http://lyroger.github.io/categories/%E5%9F%BA%E7%A1%80%E7%AF%87/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>NSURL通过URLWithString:创建为nil的问题</title>
+    <link href="http://lyroger.github.io/2016/11/16/NSURL%E7%9B%B8%E5%85%B3%E9%97%AE%E9%A2%98/"/>
+    <id>http://lyroger.github.io/2016/11/16/NSURL相关问题/</id>
+    <published>2016-11-16T09:16:00.000Z</published>
+    <updated>2016-11-23T02:47:11.000Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="NSURL通过URLWithString-创建为nil的问题"><a href="#NSURL通过URLWithString-创建为nil的问题" class="headerlink" title="NSURL通过URLWithString:创建为nil的问题"></a>NSURL通过URLWithString:创建为nil的问题</h3><p>  最近有使用NSURL请求连接时发现一些小问题，服务端给一个网页链接字符串，如<code>NSURL *linkURL = [NSURL URLWithString:@&quot;http://192.168.12.28:8000/#/faq?xt=123&quot;];</code>这样生成的url没问题，可以访问，但将请求变成<code>NSURL *linkURL = [NSURL URLWithString:[NSString stringWithFormat:@&quot;http://192.168.12.28:8000/#/faq?xt=%@&quot;,[value urlEncode]]];</code>,xt的参数值是变化的，有可能会是任何一种字符，如果该值中为非普通的字符，如带有中文或<code>#</code>等之类的字符，创建的url竟然是nil。不太明白NSURL里面是如何创建对象的，想要解决这个问题，只能将参数的值通过UTF-8编码，传进去，服务端接受该值时再解码就好了。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;NSURL通过URLWithString-创建为nil的问题&quot;&gt;&lt;a href=&quot;#NSURL通过URLWithString-创建为nil的问题&quot; class=&quot;headerlink&quot; title=&quot;NSURL通过URLWithString:创建为nil的问题&quot;&gt;
+    
+    </summary>
+    
+      <category term="基础篇" scheme="http://lyroger.github.io/categories/%E5%9F%BA%E7%A1%80%E7%AF%87/"/>
+    
+    
+  </entry>
+  
+  <entry>
     <title>Hello Hexo</title>
-    <link href="http://lyroger.github.io/2016/09/26/hello-hexo/"/>
-    <id>http://lyroger.github.io/2016/09/26/hello-hexo/</id>
-    <published>2016-09-26T08:32:58.000Z</published>
-    <updated>2016-09-26T08:32:58.000Z</updated>
+    <link href="http://lyroger.github.io/2016/10/09/hello-hexo/"/>
+    <id>http://lyroger.github.io/2016/10/09/hello-hexo/</id>
+    <published>2016-10-09T01:39:25.000Z</published>
+    <updated>2016-10-09T01:39:25.000Z</updated>
     
     <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
 <h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>
@@ -47,10 +105,10 @@
     <link href="http://lyroger.github.io/2016/09/23/%E4%BD%BF%E7%94%A8Cordova%E6%90%AD%E5%BB%BA%E6%B7%B7%E5%90%88%E6%A1%86%E6%9E%B6/"/>
     <id>http://lyroger.github.io/2016/09/23/使用Cordova搭建混合框架/</id>
     <published>2016-09-23T06:22:31.000Z</published>
-    <updated>2016-10-08T10:02:00.000Z</updated>
+    <updated>2016-10-09T01:40:38.000Z</updated>
     
     <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>  入职公司不久，花了一个多月开发了一个原生APP，这也只是个开始，首先强调的是，我们公司并不是外包公司，但需要开发的项目其实还挺多的，为了解决这个问题，我们需要周期短，响应快，来满足公司的需求，我们只能抛弃纯原生APP的开发方案，选择目前市场比较热门的技术方案：<em>Hybrid App</em>。使用<em>Hybrid App</em>的技术框架其实有很多开源的技术方案，比如使用<a href="http://cordova.apache.org" target="_blank" rel="external">Cordova</a>，<a href="http://reactnative.cn" target="_blank" rel="external">React Native</a>，等。这两个技术方案其实都还不错，由于我们公司有人以前有使用<em>Cordova</em>框架的经验，所以我们选择了<em>Cordova</em>,这个理由听起来感觉有些过不去，但有时候领导就是喜欢听取有经验的方案。不过走到现在确实觉得<em>Cordova</em>也很不错,没出什么问题，也都能满足项目上的需求。</p>
-<h2 id="搭建框架"><a href="#搭建框架" class="headerlink" title="搭建框架"></a>搭建框架</h2><p> 接下来我们来搭建一个<em>Hybrid App</em>试试手吧，创建一个<code>MyHybridDemo</code>，使用<code>Pod</code>来管理<em>Cordova</em>框架，可以通过命令<code>pod &#39;Cordova&#39;</code>从Github上下载<em>Cordova</em>，集成<em>Cordova</em>到工程中后，还缺html5与原生代码交互的桥梁，需要一些js的支撑，你可以查看<a href="http://cordova.apache.org/docs/en/latest/guide/cli/index.html" target="_blank" rel="external">官网</a>的文档，一步一步创建相应文件。也可以直接从我的<a href="">MyHybridDemo</a>中拷贝www文件夹和config.xml文件集成到你的工程中。到这里集成框架算是ok了，接下来就是写业务代码了。在写业务代码之前首先来介绍一下www目录下的文件和config.xml文件的作用。<br> 使用终端cd到www目录下，使用<code>tree -L 4</code>（需安装tree工具）命令查看www目录：<br> <figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">.</div><div class="line">├── assets</div><div class="line">│   ├── images</div><div class="line">│   ├── js</div><div class="line">│   └── style</div><div class="line">├── cordova-js-src</div><div class="line">│   ├── exec.js</div><div class="line">│   └── platform.js</div><div class="line">├── cordova.js</div><div class="line">├── cordova_plugins.js</div><div class="line">├── index.html</div><div class="line">└── plugins</div><div class="line">    ├── com.exmind.photopickerplugin</div></pre></td></tr></table></figure></p>
+<h2 id="搭建框架"><a href="#搭建框架" class="headerlink" title="搭建框架"></a>搭建框架</h2><p> 接下来我们来搭建一个<em>Hybrid App</em>试试手吧，创建一个<code>MyHybridDemo</code>，使用<code>Pod</code>来管理<em>Cordova</em>框架，可以通过命令<code>pod &#39;Cordova&#39;</code>从Github上下载<em>Cordova</em>，集成<em>Cordova</em>到工程中后，还缺html5与原生代码交互的桥梁，需要一些js的支撑，你可以查看<a href="http://cordova.apache.org/docs/en/latest/guide/cli/index.html" target="_blank" rel="external">官网</a>的文档，一步一步创建相应文件。也可以直接从我的<a href="https://github.com/lyroger/MyHybridDemo" target="_blank" rel="external">MyHybridDemo</a>中拷贝www文件夹和config.xml文件集成到你的工程中。到这里集成框架算是ok了，接下来就是写业务代码了。在写业务代码之前首先来介绍一下www目录下的文件和config.xml文件的作用。<br> 使用终端cd到www目录下，使用<code>tree -L 4</code>（需安装tree工具）命令查看www目录：<br> <figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">.</div><div class="line">├── assets</div><div class="line">│   ├── images</div><div class="line">│   ├── js</div><div class="line">│   └── style</div><div class="line">├── cordova-js-src</div><div class="line">│   ├── exec.js</div><div class="line">│   └── platform.js</div><div class="line">├── cordova.js</div><div class="line">├── cordova_plugins.js</div><div class="line">├── index.html</div><div class="line">└── plugins</div><div class="line">    ├── com.exmind.photopickerplugin</div></pre></td></tr></table></figure></p>
 <ul>
 <li><code>assets</code>:该目录是用来放资源文件的，比如h5相关的业务图片，视频等资源文件。</li>
 <li><code>cordova-js-src</code>:该目录是存放cordova的js框架代码，这个你直接拷贝过来就ok了，不用多管。</li>
@@ -96,7 +154,7 @@
     <link href="http://lyroger.github.io/2016/08/25/Jenkins+Git%E8%87%AA%E5%8A%A8%E6%9E%84%E5%BB%BA/"/>
     <id>http://lyroger.github.io/2016/08/25/Jenkins+Git自动构建/</id>
     <published>2016-08-25T09:52:00.000Z</published>
-    <updated>2016-09-26T08:32:58.000Z</updated>
+    <updated>2016-10-09T01:39:25.000Z</updated>
     
     <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>   想想以前，发给测试的测试包都是通过手动使用XCode来打包，如果项目工程比较大，Archive过程时间还是比较长的，打多了觉得特没劲，非常浪费时间，特别是使用了敏捷开发流程的，要是还用手动打包，估计你在打包上耗得时间都够你解决几个bug了。敏捷开发也是强调使用自动化的，所以也少不了自动构建的环节，那么接下来说说如何使用Jenkins+Git来自动构建我们的项目，从而方便测试，也让开发有更多的经历投入到编码和业务中而不是浪费在这些无用的流程中。</p>
 <h2 id="一-Jenkins安装"><a href="#一-Jenkins安装" class="headerlink" title="一.Jenkins安装"></a>一.Jenkins安装</h2><p>1.下载最新的版本（一个 WAR 文件）。<a href="http://Jenkins-ci.org/" target="_blank" rel="external">Jenkins官方网址</a><br>2.运行 Java -jar jenkins.war 。<br>如果你的java环节低于java7 它会提示你升级java环节，你可以到<a href="https://www.java.com/en/download/" target="_blank" rel="external">这里下载</a>，安装最新的java环境。<br>如果一切顺利，那么只要在你本机浏览器中输入<a href="http://127.0.0.1:8080" target="_blank" rel="external">127.0.0.1:8080</a>即可看到Jenkins的主页面。<br><img src="/images/jenins首页.png" alt=""></p>
@@ -129,7 +187,7 @@
     <link href="http://lyroger.github.io/2016/07/18/swift%E5%AE%9E%E6%88%98/"/>
     <id>http://lyroger.github.io/2016/07/18/swift实战/</id>
     <published>2016-07-18T03:26:00.000Z</published>
-    <updated>2016-09-26T08:32:58.000Z</updated>
+    <updated>2016-10-09T01:39:25.000Z</updated>
     
     <content type="html"><![CDATA[<h2 id="OC调用swift方式"><a href="#OC调用swift方式" class="headerlink" title="OC调用swift方式"></a>OC调用swift方式</h2><p>在OC代码中引入头文件 #import “项目名称-swift.h”<br>即可用OC语法调用swift写的代码了。</p>
 <h2 id="swift中如何写Block"><a href="#swift中如何写Block" class="headerlink" title="swift中如何写Block"></a>swift中如何写Block</h2><p>在swift中定义一个闭包的关键词为 <code>typealias</code><br>在A类中定义一个闭包<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//定义一个闭包</span></div><div class="line"><span class="keyword">typealias</span> <span class="type">LoginSuceesedBlock</span> = (successed:<span class="type">Bool</span>)-&gt;<span class="type">Void</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">LoginViewController</span>:<span class="title">UIViewController</span></span>&#123;</div><div class="line">    <span class="comment">//将函数指针赋值给loginActionBlock闭包</span></div><div class="line">    <span class="function"><span class="keyword">func</span> <span class="title">initWithBlock</span><span class="params">(closure:LoginSuceesedBlock?)</span></span>&#123;</div><div class="line">        loginActionBlock = closure</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">private</span> <span class="function"><span class="keyword">func</span> <span class="title">loginAction</span><span class="params">(sender:AnyObject?)</span></span> &#123;</div><div class="line">        <span class="keyword">let</span> loginSuccessed:<span class="type">Bool</span> = loginViewModel.loginRequestAction(textUserName.text!,passWord: textPwd.text!)</div><div class="line">        <span class="keyword">if</span> loginSuccessed &#123;</div><div class="line">            <span class="comment">//block 回调</span></div><div class="line">            <span class="keyword">if</span> (loginActionBlock != <span class="literal">nil</span>) &#123;</div><div class="line">                <span class="keyword">self</span>.loginActionBlock!(successed: <span class="literal">true</span>)</div><div class="line">            &#125;</div><div class="line">        &#125; <span class="keyword">else</span> &#123;</div><div class="line">            <span class="keyword">let</span> alert:<span class="type">UIAlertView</span> =  <span class="type">UIAlertView</span>()</div><div class="line">            alert.title = <span class="string">"提示"</span></div><div class="line">            alert.message = <span class="string">"登录失败"</span></div><div class="line">            alert.addButtonWithTitle(<span class="string">"OK"</span>)</div><div class="line">            alert.show()</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
@@ -154,7 +212,7 @@
     <link href="http://lyroger.github.io/2016/07/08/MVVM%E6%A8%A1%E5%BC%8F%E7%9A%84%E5%AD%A6%E4%B9%A0/"/>
     <id>http://lyroger.github.io/2016/07/08/MVVM模式的学习/</id>
     <published>2016-07-08T03:15:00.000Z</published>
-    <updated>2016-09-26T08:32:58.000Z</updated>
+    <updated>2016-10-09T01:39:25.000Z</updated>
     
     <content type="html"><![CDATA[<h2 id="一-前言"><a href="#一-前言" class="headerlink" title="一 前言"></a>一 前言</h2><p>这里就不多说为什么要学习MVVM模式了，新东西当然需要有一颗进步的心态去接纳它，不管他是否真的能在实际开发中帮到你，我想至少会在某种场景中用到。好吧，我们先来理解一下什么是MVVM模式吧。</p>
 <h2 id="MVVM的理解"><a href="#MVVM的理解" class="headerlink" title="MVVM的理解"></a>MVVM的理解</h2><p>MVVM这种模式其实是来自<a href="https://msdn.microsoft.com/en-us/library/hh848246.aspx" target="_blank" rel="external">微软</a>的，我们用一张视图来概括一下MVVM吧</p>
@@ -180,7 +238,7 @@
     <link href="http://lyroger.github.io/2016/07/07/Mac%E4%B8%8A%E7%9A%84%E5%B0%8F%E6%8A%80%E5%B7%A7/"/>
     <id>http://lyroger.github.io/2016/07/07/Mac上的小技巧/</id>
     <published>2016-07-07T09:16:00.000Z</published>
-    <updated>2016-09-26T09:03:04.000Z</updated>
+    <updated>2016-10-09T01:39:25.000Z</updated>
     
     <content type="html"><![CDATA[<h3 id="1-制作SSH秘钥"><a href="#1-制作SSH秘钥" class="headerlink" title="1.制作SSH秘钥"></a>1.制作SSH秘钥</h3><p>打开终端，$ ssh-keygen 一路enter下。<br>生成  在当前用户名下 会有一个.sh文件。<br>查看 .ssh<br>$ ls -a ~/.ssh  通过搜索目录<br>id_rsa<br>id_rsa.pub<br>打开  id_rsa.pub文件 里面就有需要的ssh key。<br>或者使用文本编辑工具打开该文件，命令是：<code>vim ~/.ssh/id_rsa.pub</code></p>
 <h3 id="2-显示或隐藏mac下的隐藏文件"><a href="#2-显示或隐藏mac下的隐藏文件" class="headerlink" title="2.显示或隐藏mac下的隐藏文件"></a>2.显示或隐藏mac下的隐藏文件</h3><ol>
@@ -206,7 +264,7 @@
     <link href="http://lyroger.github.io/2016/07/06/ReactiveCocoa%E5%AD%A6%E4%B9%A0/"/>
     <id>http://lyroger.github.io/2016/07/06/ReactiveCocoa学习/</id>
     <published>2016-07-06T01:39:00.000Z</published>
-    <updated>2016-09-26T08:32:58.000Z</updated>
+    <updated>2016-10-09T01:39:25.000Z</updated>
     
     <content type="html"><![CDATA[<h2 id="一、signal的释放问题"><a href="#一、signal的释放问题" class="headerlink" title="一、signal的释放问题"></a>一、signal的释放问题</h2><p>当signal作为local变量时，如果没有被subscribe，那么方法执行完后，该变量会被dealloc。但如果signal有被subscribe，那么subscriber会持有该signal，直到signal sendCompleted或sendError时，才会解除持有关系，signal才会被dealloc。</p>
 ]]></content>
@@ -227,7 +285,7 @@
     <link href="http://lyroger.github.io/2016/02/25/iOS%E5%9F%BA%E7%A1%80%E6%B7%B1%E7%A9%B6/"/>
     <id>http://lyroger.github.io/2016/02/25/iOS基础深究/</id>
     <published>2016-02-25T01:37:00.000Z</published>
-    <updated>2016-09-26T08:32:58.000Z</updated>
+    <updated>2016-10-09T01:39:25.000Z</updated>
     
     <content type="html"><![CDATA[<h2 id="一、assign与weak的区别"><a href="#一、assign与weak的区别" class="headerlink" title="一、assign与weak的区别"></a>一、assign与weak的区别</h2><p>assign适用于基本数据类型，weak是适用于NSObject对象，并且是一个弱引用。<br>assign其实也可以用来修饰对象，那么我们为什么不用它呢？因为被assign修饰的对象在释放之后，指针的地址还是存在的，也就是说指针并没有被置为nil。如果在后续的内存分配中，刚好分到了这块地址，程序就会崩溃掉。<br>而weak修饰的对象在释放之后，指针地址会被置为nil。所以现在一般弱引用就是用weak。<br>所以在使用assign修饰对象，就有可能会导致程序EXC_BAD_ACCESS异常，也就是所谓的野指针错误！</p>
 <h2 id="二、nonatomic与atomic"><a href="#二、nonatomic与atomic" class="headerlink" title="二、nonatomic与atomic"></a>二、nonatomic与atomic</h2><p>nonatomic: 非原子性访问，对属性赋值的时候不加锁，多线程并发访问会提高性能。若不加此属性，则默认是两个访问方法都为原子型事务访问。<br>atomic:是Objc使用的一种线程保护技术，基本上来讲，是防止在写未完成的时候被另外一个线程读取，造成数据错误。而这种机制是耗费系统资源的，所以在iPhone这种小型设备上，如果没有使用多线程间的通讯编程，那么nonatomic是一个非常好的选择。</p>
@@ -256,7 +314,7 @@
     <link href="http://lyroger.github.io/2016/02/24/%E5%85%B3%E4%BA%8E%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9A%84%E5%88%86%E5%89%B2/"/>
     <id>http://lyroger.github.io/2016/02/24/关于字符串的分割/</id>
     <published>2016-02-24T02:47:00.000Z</published>
-    <updated>2016-09-26T08:32:58.000Z</updated>
+    <updated>2016-10-09T01:39:25.000Z</updated>
     
     <content type="html"><![CDATA[<p>今天在字符串分割上遇到一个坑，一不小心便踩了，问题是这样的：我接收到服务端传过来的一个包含多个图片地址的字符串，使用“,”分割，我使用”componentsSeparatedByString:”来分割，将多个图片地址存入数组，并根据数组的个数来加载默认图片，等图片下载完成后替换对应的默认图片。现在服务端给我返回了一个@””字符串，我的代码如下:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">NSArray *descImages = [descImage componentsSeparatedByString:@&quot;,&quot;];</div></pre></td></tr></table></figure></p>
 <p>其实这个时候descImage等于””，但使用”componentsSeparatedByString:”分割返回的数组是有一个对象的，就是一个空字符串，这个可能我并没想到，导致服务端返回空字符串时，我这边也多加载了一个图片，这个图片还一直下载不下来。这个也让我明白：”componentsSeparatedByString:”的意思，有分割字符就根据字符分割返回数组，没分割字符则返回被分割的字符串，@””也是一个字符串，它也是有内存地址的，跟nil并不一样。看看下面的代码就明白了:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">- (void)testComponentSeparatedByString</div><div class="line">&#123;</div><div class="line">    NSString *descImage = @&quot;&quot;;</div><div class="line">    NSArray *descImages = [descImage componentsSeparatedByString:@&quot;,&quot;];</div><div class="line">    NSLog(@&quot;descImages = %@,descImages.count=%zd,descImage = %p,nil= %p&quot;,descImages,descImages.count,descImage,nil);</div><div class="line">&#125;</div><div class="line">打印出来的</div><div class="line">descImages = (</div><div class="line">    &quot;&quot;</div><div class="line">),descImages.count=1,descImage = 0x1001d5690,nil= 0x0</div></pre></td></tr></table></figure></p>
@@ -280,7 +338,7 @@
     <link href="http://lyroger.github.io/2016/01/21/%E7%BA%BF%E4%B8%8AAPP%E4%BD%BF%E7%94%A8%E5%8A%A8%E6%80%81%E5%BA%93%E6%B7%BB%E5%8A%A0%E9%9C%80%E6%B1%82%E6%96%B9%E5%BC%8F/"/>
     <id>http://lyroger.github.io/2016/01/21/线上APP使用动态库添加需求方式/</id>
     <published>2016-01-21T06:26:00.000Z</published>
-    <updated>2016-09-26T08:32:58.000Z</updated>
+    <updated>2016-10-09T01:39:25.000Z</updated>
     
     <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>前些天，公司提出需要动态添加一些需求给线上App，当时觉得有点不太好办，因为当时还没有头绪，后来上网查了些资料，如<a href="http://blog.csdn.net/like7xiaoben/article/details/44081257" target="_blank" rel="external">这篇文章</a>，不过他这只是将写好的动态库拷贝到本地的沙盒中，也就是有这个方法然后我有了头绪，我只需将写好的动态库压缩上传到服务器，提供线上APP下载，解压后加载动态库执行代码即可实现其功能。接下来还是来看看具体操作和过程中遇到的一些问题和注意点吧。整个需求我写了一个<a href="https://github.com/lyroger/DynamicDemo" target="_blank" rel="external">demo</a>,你可以先下载这个<a href="https://github.com/lyroger/DynamicDemo" target="_blank" rel="external">demo</a>,对照此文章来理解。</p>
 <h3 id="一、生成动态库"><a href="#一、生成动态库" class="headerlink" title="一、生成动态库"></a>一、生成动态库</h3><p>Xcode6就支持动态库了，所以只要使用XCode6及更高版本的XCode便可以生成动态库。<br><img src="/images/9E729546-8D22-48A6-A3D7-88FBDD787DD9.png" alt=""><br>此demo中满足需求的动态库我取名叫DynamicFramework.framework。在这个动态库中我实现了弹出一个UIViewController和在这个UIViewController中加载了动态库中的资源文件。并在这个动态库中引用了其他的动态库（此的demo中引用的是CommonFramework.framework），并调用其他库中的方法。这样就可以满足灵活调用和灵活添加需求的要求了。如果你需要给线上app提供动态库，你可以将写好的动态库压缩上传到服务器提供下载。</p>
@@ -313,7 +371,7 @@
     <link href="http://lyroger.github.io/2016/01/07/%E5%8A%A8%E6%80%81%E4%BF%AE%E5%A4%8D%E7%BA%BF%E4%B8%8Abug/"/>
     <id>http://lyroger.github.io/2016/01/07/动态修复线上bug/</id>
     <published>2016-01-07T06:23:00.000Z</published>
-    <updated>2016-09-26T08:32:58.000Z</updated>
+    <updated>2016-10-09T01:39:25.000Z</updated>
     
     <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>这个主题是在QQ空间终端开发团队公众号的一篇文章看到的(<a href="http://zhuanlan.zhihu.com/magilu/20288657" target="_blank" rel="external">链接地址</a>)，平时开发中确实没有使用过，为了以后派上用途，在这写这篇文章记录一下。QQ空间终端开发团队公众号一文中提到的使用TPatch来动态修复补丁，我找了很久确没找到TPatch的下载地址，而且他还不开源，但通过他我却了解到其他比较好用的动态修复补丁的框架，比如<a href="http://jspatch.com" target="_blank" rel="external">JSPatch</a>,这篇文章我就JSPatch来记录如何使用JSPatch修复线上APP的bug。</p>
 <h3 id="修复的基本原理"><a href="#修复的基本原理" class="headerlink" title="修复的基本原理"></a>修复的基本原理</h3><p>能实现线上修复bug的最根本的原理是因为 Objective-C 是一门动态语言，OC上所有方法的调用/类的生成都通过 Objective-C Runtime 在运行时进行，所以我们可以通过类名/方法名反射得到相应的类和方法，也可以替换某个类的方法为新的实现，还可以新注册一个类，为类添加方法。</p>
@@ -352,7 +410,7 @@
     <link href="http://lyroger.github.io/2015/12/31/runtime%E9%82%A3%E4%BA%9B%E4%BA%8B%EF%BC%88%E4%B8%80%EF%BC%89/"/>
     <id>http://lyroger.github.io/2015/12/31/runtime那些事（一）/</id>
     <published>2015-12-31T08:48:00.000Z</published>
-    <updated>2016-09-26T08:32:58.000Z</updated>
+    <updated>2016-10-09T01:39:25.000Z</updated>
     
     <content type="html"><![CDATA[<blockquote>
 <p>工作中，确实没有刻意去使用runtime机制，作为一种实用的机制，我们不得不去累积这些知识，然后灵活使用。为了为runtime的知识累积，准备写一些关于runtime系列的文章。</p>
@@ -381,7 +439,7 @@
     <link href="http://lyroger.github.io/2015/12/25/Objective-C%E4%BB%A3%E7%A0%81%E6%B7%B7%E6%B7%86/"/>
     <id>http://lyroger.github.io/2015/12/25/Objective-C代码混淆/</id>
     <published>2015-12-25T07:41:00.000Z</published>
-    <updated>2016-09-26T08:32:58.000Z</updated>
+    <updated>2016-10-09T01:39:25.000Z</updated>
     
     <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>本方法参考CSDN博主 念茜<a href="http://blog.csdn.net/yiyaaixuexi/article/details/29201699" target="_blank" rel="external">iOS安全攻防（二十三）：Objective-C代码混淆</a>,为深度理解，自己按照步骤做了一遍。并写下收获和体会。</p>
 <h4 id="一、为什么需要对工程代码进行混淆"><a href="#一、为什么需要对工程代码进行混淆" class="headerlink" title="一、为什么需要对工程代码进行混淆"></a>一、为什么需要对工程代码进行混淆</h4><p>这里我不多说了，可以参考<a href="http://my.csdn.net/yiyaaixuexi" target="_blank" rel="external">念茜</a>的iOS安全攻防系列博客。</p>
@@ -414,7 +472,7 @@
     <link href="http://lyroger.github.io/2015/12/23/FMDB%E6%95%B0%E6%8D%AE%E5%BA%93%E5%8A%A0%E5%AF%86/"/>
     <id>http://lyroger.github.io/2015/12/23/FMDB数据库加密/</id>
     <published>2015-12-23T09:33:00.000Z</published>
-    <updated>2016-09-26T08:32:58.000Z</updated>
+    <updated>2016-10-09T01:39:25.000Z</updated>
     
     <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>数据库数据加密的必要性就不多说了，直接进入主题，如何使用FMDB对数据加密。<br>这里我建议使用cocospod来管理第三方库，如果没有安装可以参考<a href="http://blog.devtang.com/blog/2014/05/25/use-cocoapod-to-manage-ios-lib-dependency/" target="_blank" rel="external">这里</a>来安装.</p>
 <h4 id="1-首先，我们的下载SQLCipher依赖库"><a href="#1-首先，我们的下载SQLCipher依赖库" class="headerlink" title="1.首先，我们的下载SQLCipher依赖库"></a>1.首先，我们的下载SQLCipher依赖库</h4><p>1.1 <figure class="highlight plain"><figcaption><span>'SQLCipher', '~> 3.1.0'```</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">#### 2.其次，我们需要一个具有加密功能的FMDB版本；</div><div class="line">加密的FMDB其实是一个分支，也就是说，如果你的FMDB版本不支持SQLCipher加密，那么你就需要替换FMDB。Github上关于该分支的安装只提供了cocospod的安装方式。Github上FMDB的[地址](https://github.com/ccgus/fmdb);</div><div class="line">使用cocospod来跟新具有加密功能的FMDB</div><div class="line">2.1 将以前```pod &apos;FMDB&apos;``` 改成```pod &apos;FMDB/SQLCipher&apos;</div></pre></td></tr></table></figure></p>
@@ -437,7 +495,7 @@
     <link href="http://lyroger.github.io/2015/12/14/swift%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E5%9F%BA%E7%A1%80%E7%AF%87%EF%BC%89/"/>
     <id>http://lyroger.github.io/2015/12/14/swift学习笔记（基础篇）/</id>
     <published>2015-12-14T06:35:00.000Z</published>
-    <updated>2016-09-26T08:32:58.000Z</updated>
+    <updated>2016-10-09T01:39:25.000Z</updated>
     
     <content type="html"><![CDATA[<p>####一数值型字面量</p>
 <ul>
@@ -475,7 +533,7 @@
     <link href="http://lyroger.github.io/2015/10/22/%E5%8D%87%E7%BA%A7XCode7%E5%92%8CiOS9%E7%9B%B8%E5%85%B3%E9%97%AE%E9%A2%98/"/>
     <id>http://lyroger.github.io/2015/10/22/升级XCode7和iOS9相关问题/</id>
     <published>2015-10-22T06:29:00.000Z</published>
-    <updated>2016-09-26T08:32:58.000Z</updated>
+    <updated>2016-10-09T01:39:25.000Z</updated>
     
     <content type="html"><![CDATA[<h2 id="一-报Bitcode相关错误。"><a href="#一-报Bitcode相关错误。" class="headerlink" title="一.报Bitcode相关错误。"></a>一.报Bitcode相关错误。</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Framework/libraries/extends/QQSDK/TencentOpenAPI.framework/TencentOpenAPI(WeiyunAPI.o)&apos; does not contain bitcode. You must rebuild it with bitcode enabled (Xcode setting ENABLE_BITCODE), obtain an updated library from the vendor, or disable bitcode for this target. for architecture arm64</div><div class="line">clang: error: linker command failed with exit code 1 (use -v to see invocation)</div></pre></td></tr></table></figure>
 <p>1.解决方案<br>工程文件中找到target-&gt;Build Settings-&gt;搜索bitcode，然后出现Enablecode选项，设置为NO即可。如图：</p>
@@ -500,7 +558,7 @@
     <link href="http://lyroger.github.io/2015/10/16/%E5%8A%A8%E7%94%BB%E5%AD%A6%E4%B9%A0%E7%AF%87%E4%B8%80/"/>
     <id>http://lyroger.github.io/2015/10/16/动画学习篇一/</id>
     <published>2015-10-16T03:06:00.000Z</published>
-    <updated>2016-09-26T08:32:58.000Z</updated>
+    <updated>2016-10-09T01:39:25.000Z</updated>
     
     <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>  最近玩手游比较多，看到了GameCenter中个人中心有一些气泡效果特别好，于是想想怎么实现的，要是能放到自己写的程序中，也是一种不错的感觉，能感觉到应用有一种活力.</p>
 <h2 id="进入正题"><a href="#进入正题" class="headerlink" title="进入正题"></a>进入正题</h2><p>先看看gamecenter中的效果是怎样的，然后我们在着步分析：</p>
@@ -528,7 +586,7 @@
     <link href="http://lyroger.github.io/2015/10/14/UISearchBar%E7%9A%84%E4%BD%BF%E7%94%A8/"/>
     <id>http://lyroger.github.io/2015/10/14/UISearchBar的使用/</id>
     <published>2015-10-14T05:18:00.000Z</published>
-    <updated>2016-09-26T08:32:58.000Z</updated>
+    <updated>2016-10-09T01:39:25.000Z</updated>
     
     <content type="html"><![CDATA[<p>最近在项目中写搜索比较多，然而UI设计对页面的效果和布局都有所严谨，发布测试版本后设计或多或少会拿着app跑到面前来说这些差那些，作为开发人员，这些都习以为常了。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">简介的介绍一下，此文主要想要介绍的内容：在搜索框激活时，出现的并不是遮罩层，而是想利用遮罩层做些其他事情，比如提示语、历史搜索记录等需求。</div></pre></td></tr></table></figure>
@@ -557,130 +615,6 @@
     
       &lt;p&gt;最近在项目中写搜索比较多，然而UI设计对页面的效果和布局都有所严谨，发布测试版本后设计或多或少会拿着app跑到面前来说这些差那些，作为开发人员，这些都习以为常了。&lt;/p&gt;
 &lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td clas
-    
-    </summary>
-    
-      <category term="基础篇" scheme="http://lyroger.github.io/categories/%E5%9F%BA%E7%A1%80%E7%AF%87/"/>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>Markdown学习</title>
-    <link href="http://lyroger.github.io/2015/10/14/Markdown%E5%AD%A6%E4%B9%A0/"/>
-    <id>http://lyroger.github.io/2015/10/14/Markdown学习/</id>
-    <published>2015-10-14T05:16:00.000Z</published>
-    <updated>2016-09-26T08:32:58.000Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="一-标题"><a href="#一-标题" class="headerlink" title="一.标题"></a>一.标题</h2><h1 id="一级标题"><a href="#一级标题" class="headerlink" title="一级标题"></a>一级标题</h1><h2 id="二级标题"><a href="#二级标题" class="headerlink" title="二级标题"></a>二级标题</h2><h3 id="三级标题"><a href="#三级标题" class="headerlink" title="三级标题"></a>三级标题</h3><h4 id="四级标题"><a href="#四级标题" class="headerlink" title="四级标题"></a>四级标题</h4><h5 id="五级标题"><a href="#五级标题" class="headerlink" title="五级标题"></a>五级标题</h5><h6 id="六级标题"><a href="#六级标题" class="headerlink" title="六级标题"></a>六级标题</h6><h2 id="二-无序列表"><a href="#二-无序列表" class="headerlink" title="二.无序列表"></a>二.无序列表</h2><ul>
-<li>我的</li>
-<li>你的</li>
-<li>他的</li>
-</ul>
-<h2 id="三-有序列表"><a href="#三-有序列表" class="headerlink" title="三.有序列表"></a>三.有序列表</h2><ol>
-<li>我的</li>
-<li>你的</li>
-<li>她的</li>
-</ol>
-<h2 id="四-引用"><a href="#四-引用" class="headerlink" title="四.引用"></a>四.引用</h2><blockquote>
-<p>这里是引用</p>
-</blockquote>
-<h2 id="五-图片与链接"><a href="#五-图片与链接" class="headerlink" title="五.图片与链接"></a>五.图片与链接</h2><ol>
-<li><img src="http://mouapp.com/Mou_128.png" alt="Mou的icon"></li>
-<li><a href="http://www.jianshu.com/p/1e402922ee32/" target="_blank" rel="external">Markdown学习链接</a></li>
-<li>建议您参考<a href="http://www.jianshu.com/p/1e402922ee32/" title="Markdown——入门指南" target="_blank" rel="external">Markdown——入门指南</a>或者参考<a href="http://wowubuntu.com/markdown/" title="Markdown语法说明(简体中文版)" target="_blank" rel="external">Markdown语法说明(简体中文版)</a></li>
-</ol>
-<p><img src="/images/jiafei.gif" alt=""></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">链接内容定义的形式为：</div><div class="line">1.方括号（前面可以选择性地加上至多三个空格来缩进），里面输入链接文字</div><div class="line">接着一个冒号</div><div class="line">接着一个以上的空格或制表符</div><div class="line">接着链接的网址</div><div class="line">选择性地接着 title 内容，可以用单引号、双引号或是括弧包着</div><div class="line">下面这三种链接的定义都是相同：</div><div class="line">1. [foo]: http://example.com/  &quot;Optional Title Here&quot;</div><div class="line">2. [foo]: http://example.com/  &apos;Optional Title Here&apos;</div><div class="line">3. [foo]: http://example.com/  (Optional Title Here)</div><div class="line">请注意：有一个已知的问题是 Markdown.pl 1.0.1 会忽略单引号包起来的链接 title。</div><div class="line">链接网址也可以用尖括号包起来：</div><div class="line">* [id]: &lt;http://example.com/&gt;  &quot;Optional Title Here&quot;</div></pre></td></tr></table></figure>
-<h2 id="六-粗体与斜体"><a href="#六-粗体与斜体" class="headerlink" title="六.粗体与斜体"></a>六.粗体与斜体</h2><ol>
-<li>这是 <strong>粗体</strong></li>
-<li>这是 <em>斜体</em></li>
-<li>这是 常态</li>
-</ol>
-<h2 id="七-表格"><a href="#七-表格" class="headerlink" title="七.表格"></a>七.表格</h2><table>
-<thead>
-<tr>
-<th>name(巨左对齐)</th>
-<th style="text-align:center">age(居中对齐)</th>
-<th style="text-align:right">sex(居右对齐)</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>ly</td>
-<td style="text-align:center">28</td>
-<td style="text-align:right">男</td>
-</tr>
-</tbody>
-</table>
-<h2 id="八-代码框"><a href="#八-代码框" class="headerlink" title="八.代码框"></a>八.代码框</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">- (UIImage *)imageFromColor:(UIColor *)color frame:(CGRect)rect</div><div class="line">&#123;</div><div class="line">    UIGraphicsBeginImageContext(rect.size);</div><div class="line">    CGContextRef context = UIGraphicsGetCurrentContext();</div><div class="line">    CGContextSetFillColorWithColor(context, [color CGColor]);</div><div class="line">    CGContextFillRect(context, rect);</div><div class="line">    UIImage *img = UIGraphicsGetImageFromCurrentImageContext();</div><div class="line">    UIGraphicsEndImageContext();</div><div class="line">    return img;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"># 标题一</div><div class="line">## 标题二</div><div class="line">### 标题三</div></pre></td></tr></table></figure>
-<h2 id="九-分割线"><a href="#九-分割线" class="headerlink" title="九.分割线"></a>九.分割线</h2><h2 id=""><a href="#" class="headerlink" title="*"></a><strong><strong><strong><em>*</em></strong></strong></strong></h2><h2 id="十-区域引用"><a href="#十-区域引用" class="headerlink" title="十.区域引用"></a>十.区域引用</h2><blockquote>
-<p>This is a blockquote with two paragraphs. Lorem ipsum dolor sit amet,<br>consectetuer adipiscing elit. Aliquam hendrerit mi posuere lectus.<br>Vestibulum enim wisi, viverra nec, fringilla in, laoreet vitae, risus.</p>
-<p>Donec sit amet nisl. Aliquam semper ipsum sit amet velit. Suspendisse<br>id sem consectetuer libero luctus adipiscing.</p>
-</blockquote>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;一-标题&quot;&gt;&lt;a href=&quot;#一-标题&quot; class=&quot;headerlink&quot; title=&quot;一.标题&quot;&gt;&lt;/a&gt;一.标题&lt;/h2&gt;&lt;h1 id=&quot;一级标题&quot;&gt;&lt;a href=&quot;#一级标题&quot; class=&quot;headerlink&quot; title=&quot;一级标题&quot;&gt;&lt;/a
-    
-    </summary>
-    
-      <category term="基础篇" scheme="http://lyroger.github.io/categories/%E5%9F%BA%E7%A1%80%E7%AF%87/"/>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>iOS学习笔记</title>
-    <link href="http://lyroger.github.io/2015/09/08/iOS/"/>
-    <id>http://lyroger.github.io/2015/09/08/iOS/</id>
-    <published>2015-09-08T06:18:00.000Z</published>
-    <updated>2016-09-26T08:32:58.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>f## 一.LLDB的使用</p>
-<ol>
-<li>po: 对一个对象的打印，即“print-object”.</li>
-<li>p: 对一个简单类型的打印.</li>
-<li>recursiveDescription: UIView私有方法，可以打印更具体更详细的布局结构.比如 :<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">po [view recursiveDescription]</div><div class="line">&lt;UIView: 0x178199640; frame = (0 64; 320 568); userInteractionEnabled = NO; tag = 99; layer = &lt;CALayer: 0x178421480&gt;&gt;</div><div class="line">   | &lt;UILabel: 0x13ce20170; frame = (90 50; 140 23.86); text = &apos;搜索更多的内容&apos;; userInteractionEnabled = NO; layer = &lt;_UILabelLayer: 0x17008f190&gt;&gt;</div><div class="line">   | &lt;CALayer: 0x170034e60&gt; (layer)</div></pre></td></tr></table></figure>
-</li>
-</ol>
-<p>这样你能更清晰的知道view的布局结构，它下面包含了一个UILabel和一个CALayer。利用这个私有方法，有时候确实能解决一些难题，曾经在做一个搜索功能的时候，遇到一些瓶颈，使用这个方法让我找到了解决问题的地方。在<a href="http://lyboy.farbox.com/post/uisearchbarde-shi-yong" target="_blank" rel="external">这篇文章</a>中有相关提到。<a href="https://github.com/lyroger/SearchBarPro" title="SearchBarPro" target="_blank" rel="external">源代码</a></p>
-<h2 id="二-数据库相关"><a href="#二-数据库相关" class="headerlink" title="二.数据库相关"></a>二.数据库相关</h2><ol>
-<li>当你有多条数据插入的时候，但又不清楚数据库是否已经存在该记录，怕导致重复添加数据，你首先想到的可能就是先查询一次，然后判断是否存在相同记录，如果不存在则添加，存在则更新。但这样的操作并不适用于数据量稍微多一点的场合，现在有一种方法可以有效的解决这个问题适用,如下代码:<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">replace into table (a,b) values (&apos;1&apos;,&apos;2&apos;)</div></pre></td></tr></table></figure>
-</li>
-</ol>
-<p>使用这条sql语句的有效性的前提是table中必须必须有唯一标示 UNIQUE，<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">CREATE TABLE IF NOT EXISTS TestTable (&apos;a&apos; VARCHAR PRIMARY KEY NOT NULL UNIQUE, &apos;b&apos; VARCHAR)</div></pre></td></tr></table></figure></p>
-<p>定义好a为唯一标示后，上面的replace into 才会起效。<br>如果我的数据中一个字段并不能确定唯一性，那需要加约束；<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">CREATE TABLE IF NOT EXISTS TestTable (&apos;a&apos; VARCHAR PRIMARY KEY NOT NULL UNIQUE, &apos;b&apos; VARCHAR,&apos;c&apos;VARCHAR,UNIQUE(b,c) ON CONFLICT REPLACE)</div></pre></td></tr></table></figure></p>
-<p>这个时候，如果你插入的数据b，c有跟以前记录中都相同的话，那么他只会做更新操作，并不会做插入操作。这便是replace into 语句的好处。避免重复。</p>
-<h2 id="三-Auto-Layout"><a href="#三-Auto-Layout" class="headerlink" title="三.Auto Layout"></a>三.Auto Layout</h2><blockquote>
-<p>Auto Layout + UITableView-FDTemplateLayoutCell + Masonry</p>
-<h2 id="四-时间差"><a href="#四-时间差" class="headerlink" title="四.时间差"></a>四.时间差</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">mach_timebase_info_data_t info;</div><div class="line">if (mach_timebase_info(&amp;info) != KERN_SUCCESS) return -1.0;</div><div class="line">uint64_t start = mach_absolute_time ();</div><div class="line">// 这里写入需要统计时间的执行代码</div><div class="line">// ......</div><div class="line">uint64_t end = mach_absolute_time ();</div><div class="line">uint64_t elapsed = end - start;</div><div class="line">uint64_t nanos = elapsed * info.numer / info.denom;</div><div class="line">return (CGFloat)nanos / NSEC_PER_SEC;</div></pre></td></tr></table></figure>
-</blockquote>
-<h2 id="五-pod使用提高篇"><a href="#五-pod使用提高篇" class="headerlink" title="五.pod使用提高篇"></a>五.pod使用提高篇</h2><h4 id="pod更新"><a href="#pod更新" class="headerlink" title="pod更新:"></a>pod更新:</h4><p>更新新的依赖库时，使用pod update 命令很多时候都卡在了Analyzing dependencies不动，使用这个命令会升级CocoaPods的spec仓库，所以跟新非常慢，要等很久。<br>在网上搜索解决此方法的命令<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pod update --verbose --no-repo-update</div></pre></td></tr></table></figure></p>
-<h4 id="通过vim命令创建文件"><a href="#通过vim命令创建文件" class="headerlink" title="通过vim命令创建文件"></a>通过vim命令创建文件</h4><p>1：cd到相应文件夹<br>2：输入vim Podfile<br>3:这时已经创建了文件，可以在dos中输入文件内容，<br>platform :ios, ‘7.0’<br>pod ‘Masonry’<br>4:按Esc键，然后输入”:”，然后输入”wq”,Podfile文件及内容创建完毕</p>
-<h2 id="六-iOS中使用的锁"><a href="#六-iOS中使用的锁" class="headerlink" title="六.iOS中使用的锁"></a>六.iOS中使用的锁</h2><ol>
-<li>@synchronized 关键字加锁</li>
-<li>NSLock 对象锁</li>
-<li>NSCondition</li>
-<li>NSConditionLock 条件锁</li>
-<li>NSRecursiveLock 递归锁</li>
-<li>pthread_mutex 互斥锁（C语言）</li>
-<li>dispatch_semaphore 信号量实现加锁（GCD）</li>
-<li>OSSpinLock</li>
-</ol>
-<h2 id="七-UIViewController页面内容适配"><a href="#七-UIViewController页面内容适配" class="headerlink" title="七.UIViewController页面内容适配"></a>七.UIViewController页面内容适配</h2><p>在滚动视图中 设置<br>automaticallyAdjustsScrollViewInsets属性可以控制滚动内容是否会在bar下方显示。</p>
-<h2 id="八-使用终端统计项目代码总行数"><a href="#八-使用终端统计项目代码总行数" class="headerlink" title="八.使用终端统计项目代码总行数"></a>八.使用终端统计项目代码总行数</h2><p>1、打开终端<br>2、cd 进入项目根目录<br>3、输入命令 find . “(“ -name “<em>.m” -or -name “</em>.mm” -or -name “<em>.cpp” -or -name “</em>.h” -or -name “*.rss” “)” -print | xargs wc -l<br>4、回车</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;f## 一.LLDB的使用&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;po: 对一个对象的打印，即“print-object”.&lt;/li&gt;
-&lt;li&gt;p: 对一个简单类型的打印.&lt;/li&gt;
-&lt;li&gt;recursiveDescription: UIView私有方法，可以打印更具体更详细的布局结
     
     </summary>
     

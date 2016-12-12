@@ -17,7 +17,7 @@
 <meta property="og:url" content="http://lyroger.github.io/2016/09/23/使用Cordova搭建混合框架/index.html">
 <meta property="og:site_name" content="罗琰的技术博客">
 <meta property="og:description" content="前言  入职公司不久，花了一个多月开发了一个原生APP，这也只是个开始，首先强调的是，我们公司并不是外包公司，但需要开发的项目其实还挺多的，为了解决这个问题，我们需要周期短，响应快，来满足公司的需求，我们只能抛弃纯原生APP的开发方案，选择目前市场比较热门的技术方案：Hybrid App。使用Hybrid App的技术框架其实有很多开源的技术方案，比如使用Cordova，React Native，">
-<meta property="og:updated_time" content="2016-10-08T10:02:00.000Z">
+<meta property="og:updated_time" content="2016-10-09T01:40:38.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="使用Cordova搭建混合框架">
 <meta name="twitter:description" content="前言  入职公司不久，花了一个多月开发了一个原生APP，这也只是个开始，首先强调的是，我们公司并不是外包公司，但需要开发的项目其实还挺多的，为了解决这个问题，我们需要周期短，响应快，来满足公司的需求，我们只能抛弃纯原生APP的开发方案，选择目前市场比较热门的技术方案：Hybrid App。使用Hybrid App的技术框架其实有很多开源的技术方案，比如使用Cordova，React Native，">
@@ -27,6 +27,9 @@
     
     
     
+    <link rel="apple-touch-icon" href="/img/author.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/author.jpg">
+    
     <link rel="stylesheet" href="/css/style.css">
 </head>
 
@@ -35,6 +38,10 @@
       
 <div>
 		
+			<div id="imglogo">
+				<a href="/"><img src="/img/author.jpg" alt="罗琰的技术博客" title="罗琰的技术博客"/></a>
+			</div>
+			
 			<div id="textlogo">
 				<h1 class="site-name"><a href="/" title="罗琰的技术博客">罗琰的技术博客</a></h1>
 				<h2 class="blog-motto">积累与分享成长的技术经验</h2>
@@ -77,9 +84,9 @@
        
 		<a href="/about" title="luoyan" target="_blank" itemprop="author">luoyan</a>
 		
+    <span id="busuanzi_container_page_pv">阅读<span id="busuanzi_value_page_pv"></span></span>
   <p class="article-time">
     <time datetime="2016-09-23T06:22:31.000Z" itemprop="datePublished"> Published 2016-09-23</time>
-    
   </p>
 </header>
 	<div class="article-content">
@@ -92,7 +99,7 @@
 		</div>
 		
 		<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>  入职公司不久，花了一个多月开发了一个原生APP，这也只是个开始，首先强调的是，我们公司并不是外包公司，但需要开发的项目其实还挺多的，为了解决这个问题，我们需要周期短，响应快，来满足公司的需求，我们只能抛弃纯原生APP的开发方案，选择目前市场比较热门的技术方案：<em>Hybrid App</em>。使用<em>Hybrid App</em>的技术框架其实有很多开源的技术方案，比如使用<a href="http://cordova.apache.org" target="_blank" rel="external">Cordova</a>，<a href="http://reactnative.cn" target="_blank" rel="external">React Native</a>，等。这两个技术方案其实都还不错，由于我们公司有人以前有使用<em>Cordova</em>框架的经验，所以我们选择了<em>Cordova</em>,这个理由听起来感觉有些过不去，但有时候领导就是喜欢听取有经验的方案。不过走到现在确实觉得<em>Cordova</em>也很不错,没出什么问题，也都能满足项目上的需求。</p>
-<h2 id="搭建框架"><a href="#搭建框架" class="headerlink" title="搭建框架"></a>搭建框架</h2><p> 接下来我们来搭建一个<em>Hybrid App</em>试试手吧，创建一个<code>MyHybridDemo</code>，使用<code>Pod</code>来管理<em>Cordova</em>框架，可以通过命令<code>pod &#39;Cordova&#39;</code>从Github上下载<em>Cordova</em>，集成<em>Cordova</em>到工程中后，还缺html5与原生代码交互的桥梁，需要一些js的支撑，你可以查看<a href="http://cordova.apache.org/docs/en/latest/guide/cli/index.html" target="_blank" rel="external">官网</a>的文档，一步一步创建相应文件。也可以直接从我的<a href="">MyHybridDemo</a>中拷贝www文件夹和config.xml文件集成到你的工程中。到这里集成框架算是ok了，接下来就是写业务代码了。在写业务代码之前首先来介绍一下www目录下的文件和config.xml文件的作用。<br> 使用终端cd到www目录下，使用<code>tree -L 4</code>（需安装tree工具）命令查看www目录：<br> <figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">.</div><div class="line">├── assets</div><div class="line">│   ├── images</div><div class="line">│   ├── js</div><div class="line">│   └── style</div><div class="line">├── cordova-js-src</div><div class="line">│   ├── exec.js</div><div class="line">│   └── platform.js</div><div class="line">├── cordova.js</div><div class="line">├── cordova_plugins.js</div><div class="line">├── index.html</div><div class="line">└── plugins</div><div class="line">    ├── com.exmind.photopickerplugin</div></pre></td></tr></table></figure></p>
+<h2 id="搭建框架"><a href="#搭建框架" class="headerlink" title="搭建框架"></a>搭建框架</h2><p> 接下来我们来搭建一个<em>Hybrid App</em>试试手吧，创建一个<code>MyHybridDemo</code>，使用<code>Pod</code>来管理<em>Cordova</em>框架，可以通过命令<code>pod &#39;Cordova&#39;</code>从Github上下载<em>Cordova</em>，集成<em>Cordova</em>到工程中后，还缺html5与原生代码交互的桥梁，需要一些js的支撑，你可以查看<a href="http://cordova.apache.org/docs/en/latest/guide/cli/index.html" target="_blank" rel="external">官网</a>的文档，一步一步创建相应文件。也可以直接从我的<a href="https://github.com/lyroger/MyHybridDemo" target="_blank" rel="external">MyHybridDemo</a>中拷贝www文件夹和config.xml文件集成到你的工程中。到这里集成框架算是ok了，接下来就是写业务代码了。在写业务代码之前首先来介绍一下www目录下的文件和config.xml文件的作用。<br> 使用终端cd到www目录下，使用<code>tree -L 4</code>（需安装tree工具）命令查看www目录：<br> <figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">.</div><div class="line">├── assets</div><div class="line">│   ├── images</div><div class="line">│   ├── js</div><div class="line">│   └── style</div><div class="line">├── cordova-js-src</div><div class="line">│   ├── exec.js</div><div class="line">│   └── platform.js</div><div class="line">├── cordova.js</div><div class="line">├── cordova_plugins.js</div><div class="line">├── index.html</div><div class="line">└── plugins</div><div class="line">    ├── com.exmind.photopickerplugin</div></pre></td></tr></table></figure></p>
 <ul>
 <li><code>assets</code>:该目录是用来放资源文件的，比如h5相关的业务图片，视频等资源文件。</li>
 <li><code>cordova-js-src</code>:该目录是存放cordova的js框架代码，这个你直接拷贝过来就ok了，不用多管。</li>
@@ -154,7 +161,7 @@
 <nav class="article-nav clearfix">
  
  <div class="prev" >
- <a href="/2016/09/26/hello-hexo/" title="Hello Hexo">
+ <a href="/2016/10/09/hello-hexo/" title="Hello Hexo">
   <strong>上一篇：</strong><br/>
   <span>
   Hello Hexo</span>
@@ -206,7 +213,7 @@
 		  
 		
 		  
-			<li><a href="/categories/基础篇/" title="基础篇">基础篇<sup>6</sup></a></li>
+			<li><a href="/categories/基础篇/" title="基础篇">基础篇<sup>8</sup></a></li>
 		  
 		
 		  
@@ -235,15 +242,15 @@
 		<ul class="clearfix">
 		
 			
-				<li><a href="/tags/Hybrid-App/" title="Hybrid App">Hybrid App<sup>1</sup></a></li>
-			
-		
-			
 				<li><a href="/tags/runtime/" title="runtime">runtime<sup>1</sup></a></li>
 			
 		
 			
 				<li><a href="/tags/swift/" title="swift">swift<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Hybrid-App/" title="Hybrid App">Hybrid App<sup>1</sup></a></li>
 			
 		
 		</ul>
@@ -303,8 +310,12 @@
 		
 		<a href="/about" target="_blank" title="luoyan">luoyan</a>
 		
+		<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 		
+			<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1260972836'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s11.cnzz.com/z_stat.php%3Fid%3D1260972836%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script>
+			
 		</p>
+		
 </div>
 </footer>
     <script src="/js/jquery-2.0.3.min.js"></script>
@@ -489,6 +500,10 @@ $(document).ready(function(){
 <!-- Analytics Begin -->
 
 
+
+
+
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1260972836'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s11.cnzz.com/z_stat.php%3Fid%3D1260972836%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script>
 
 
 

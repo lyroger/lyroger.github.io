@@ -1,0 +1,509 @@
+
+ <!DOCTYPE HTML>
+<html >
+<head>
+  <meta charset="UTF-8">
+  
+    <title>JS与OC交互 | 罗琰的技术博客</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="luoyan">
+    
+
+    
+    <meta name="description" content="前言  平时开发中，很多页面并非全由原生代码来编写，需求求快，求可扩展性，往往希望页面能够很轻松替换或更改，所以有些页面在不追求体验之下由web来展示是一个比较好的方案。web页面在app端展示其实也有两种方案，一种是把web页面放在服务器端，一种是把web页面等资源一起打包放在App端，这两种方案的各自好处就不在这里详解，第二种方案在我的使用Cordova搭建混合框架文章中有提到，H5与原生代码">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JS与OC交互">
+<meta property="og:url" content="http://lyroger.github.io/2016/11/29/JS与OC交互/index.html">
+<meta property="og:site_name" content="罗琰的技术博客">
+<meta property="og:description" content="前言  平时开发中，很多页面并非全由原生代码来编写，需求求快，求可扩展性，往往希望页面能够很轻松替换或更改，所以有些页面在不追求体验之下由web来展示是一个比较好的方案。web页面在app端展示其实也有两种方案，一种是把web页面放在服务器端，一种是把web页面等资源一起打包放在App端，这两种方案的各自好处就不在这里详解，第二种方案在我的使用Cordova搭建混合框架文章中有提到，H5与原生代码">
+<meta property="og:updated_time" content="2016-12-12T02:40:50.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JS与OC交互">
+<meta name="twitter:description" content="前言  平时开发中，很多页面并非全由原生代码来编写，需求求快，求可扩展性，往往希望页面能够很轻松替换或更改，所以有些页面在不追求体验之下由web来展示是一个比较好的方案。web页面在app端展示其实也有两种方案，一种是把web页面放在服务器端，一种是把web页面等资源一起打包放在App端，这两种方案的各自好处就不在这里详解，第二种方案在我的使用Cordova搭建混合框架文章中有提到，H5与原生代码">
+
+    
+    <link rel="alternative" href="/atom.xml" title="罗琰的技术博客" type="application/atom+xml">
+    
+    
+    
+    <link rel="apple-touch-icon" href="/img/author.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/author.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/author.jpg" alt="罗琰的技术博客" title="罗琰的技术博客"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="罗琰的技术博客">罗琰的技术博客</a></h1>
+				<h2 class="blog-motto">积累与分享成长的技术经验</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+						<li><a href="/about">About</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
+						<input type="hidden" name="q" value="site:lyroger.github.io">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2016/11/29/JS与OC交互/" title="JS与OC交互" itemprop="url">JS与OC交互</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="luoyan" target="_blank" itemprop="author">luoyan</a>
+		
+    <span id="busuanzi_container_page_pv">阅读<span id="busuanzi_value_page_pv"></span></span>
+  <p class="article-time">
+    <time datetime="2016-11-29T02:02:51.000Z" itemprop="datePublished"> Published 2016-11-29</time>
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">Contents</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#原生代码调用H5"><span class="toc-number">2.</span> <span class="toc-text">原生代码调用H5</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#H5调用原生代码"><span class="toc-number">3.</span> <span class="toc-text">H5调用原生代码</span></a></li></ol>
+		
+		</div>
+		
+		<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>  平时开发中，很多页面并非全由原生代码来编写，需求求快，求可扩展性，往往希望页面能够很轻松替换或更改，所以有些页面在不追求体验之下由web来展示是一个比较好的方案。web页面在app端展示其实也有两种方案，一种是把web页面放在服务器端，一种是把web页面等资源一起打包放在App端，这两种方案的各自好处就不在这里详解，第二种方案在我的<a href="http://blog.devyan.cn/2016/09/23/使用Cordova搭建混合框架/" target="_blank" rel="external">使用Cordova搭建混合框架</a>文章中有提到，H5与原生代码直接的交互都有详解。这篇文章主要讲讲H5跟原生代码之间的交互。</p>
+<h3 id="原生代码调用H5"><a href="#原生代码调用H5" class="headerlink" title="原生代码调用H5"></a>原生代码调用H5</h3><p>  这个方案估计很多人都熟悉，也调用的比较频繁。比如现在在我们最近的一个项目中，我们把一个Web页面封装成一个BaseWebController页面了，所有基于远程web页面来展示的页面都通过这个封装好了的BaseWebController页面展示，那么在这个封装好了的页面中我们做了些什么事情呢？想想平时我们在这些web页面中都会做些什么，右上角更多按钮，右上角分享按钮，Web页面的title，下拉web页面时，能看到该页面由谁提供的，等等这些小功能，我们都可以在<code>- (void)webViewDidFinishLoad:(UIWebView *)webView</code>方法执行后，通过<code>stringByEvaluatingJavaScriptFromString:</code>方法去获取该页面中的配置，这个配置信息其实也是于H5有个协议，我们与H5端先定好一个协议，比如<code>msg_can_share</code>字段值为true时，表示可以分享，那么就会接着配置分享相关信息字段，比如分享的title，分享的url，分享的描述等等信息，这些信息都可以直接通过<code>stringByEvaluatingJavaScriptFromString:</code>去获取。</p>
+<h3 id="H5调用原生代码"><a href="#H5调用原生代码" class="headerlink" title="H5调用原生代码"></a>H5调用原生代码</h3><p>  原生代码调用H5用一个方法就可以搞定，很简单，那么H5调用原生的又怎么来实现呢，又有什么场景呢？驱使我想用实现这种方案的动力来自一个问题，由于H5端查看文章详情时，footer下还有一个查看下一篇文章，点击查看下一篇文章时，需改变我们BaseWebController的title，问题来了，点击查看下一篇文章是，H5是由异步调用服务器数据，所以不会再次进入<code>- (void)webViewDidFinishLoad:(UIWebView *)webView</code>，因此我们无法通过<code>stringByEvaluatingJavaScriptFromString:</code>去拿到最新的title，我们也不知道数据时什么时候来的，这时候我们就只好通过H5来调用原生代码，当H5那边数据已更新后，再调用原生代码来更新title。相信还有更多如此的场景，那么如何来实现这种方案呢？在iOS7之后，我想，大家应该都了解了一些JavaScriptCore.framework的框架吧，对，我们就用这个来实现这个方案，我们看看下面几步，很简单：</p>
+<ol>
+<li><p>首先我们定义一个代理：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">@protocol JSObjcDelegate &lt;JSExport&gt;</div><div class="line">- (void)webViewJSAction:(NSString*)action :(NSString*)arg;</div><div class="line">@end</div></pre></td></tr></table></figure>
+</li>
+<li><p>然后在BaseWebController中定义一个<code>@property (nonatomic, strong) JSContext  *jsContext;</code>属性。</p>
+</li>
+<li><p>然后再在恰当的时候（建议写到<code>- (void)webViewDidFinishLoad:(UIWebView *)webView</code>中）去获取H5的上下文，将刚刚写好的代理赋值给到H5。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">_jsContext = [webView valueForKeyPath:@&quot;documentView.webView.mainFrame.javaScriptContext&quot;];</div><div class="line">  _jsContext[@&quot;WebViewObject&quot;] = self;</div><div class="line">  _jsContext.exceptionHandler = ^(JSContext *context, JSValue *exceptionValue) &#123;</div><div class="line">      context.exception = exceptionValue;</div><div class="line">      NSLog(@&quot;异常信息：%@&quot;, exceptionValue);</div><div class="line">  &#125;;</div></pre></td></tr></table></figure>
+</li>
+<li><p>最后在BaseWebController中实现代理就ok了。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">- (void)webViewJSAction:(NSString*)action :(NSString*)arg</div><div class="line">&#123;</div><div class="line">    if ([action isEqualToString:@&quot;UpdateWebViewTitle&quot;]) &#123;</div><div class="line">        self.title = arg;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>写到这里，我们都是站在原生代码的角度去考虑，实现。那么H5端需要什么做呢？很简单，只需要通过<code>window.WebViewObject.webViewJSAction(&#39;UpdateWebViewTitle&#39;,&#39;title&#39;)</code>就可以将需要的值传过来。调用原生的方法。</p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/基础篇/">基础篇</a>
+</div>
+
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://lyroger.github.io/2016/11/29/JS与OC交互/" data-title="JS与OC交互 | 罗琰的技术博客" data-tsina="null" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+
+<div class="next">
+<a href="/2016/11/16/NSURL相关问题/"  title="NSURL通过URLWithString:创建为nil的问题">
+ <strong>下一篇：</strong><br/> 
+ <span>NSURL通过URLWithString:创建为nil的问题
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section id="comments" class="comment">
+	<div class="ds-thread" data-thread-key="2016/11/29/JS与OC交互/" data-title="JS与OC交互" data-url="http://lyroger.github.io/2016/11/29/JS与OC交互/"></div>
+</section>
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">Contents</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#原生代码调用H5"><span class="toc-number">2.</span> <span class="toc-text">原生代码调用H5</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#H5调用原生代码"><span class="toc-number">3.</span> <span class="toc-text">H5调用原生代码</span></a></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
+<aside class="clearfix">
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">Categories</p>
+		<ul>
+		
+		  
+			<li><a href="/categories/swift/" title="swift">swift<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/动画/" title="动画">动画<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/基础篇/" title="基础篇">基础篇<sup>8</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/工具/" title="工具">工具<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/框架/" title="框架">框架<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/设计模式/" title="设计模式">设计模式<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/高效篇/" title="高效篇">高效篇<sup>4</sup></a></li>
+		  
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">Tags</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/runtime/" title="runtime">runtime<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/swift/" title="swift">swift<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Hybrid-App/" title="Hybrid App">Hybrid App<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="aboutinfo">
+  	<p class="asidetitle">微信公众号</p>
+    <div>欢迎关注我的微信公众号</div>
+    <img src="/images/qrcode.jpg" alt="微信公众号">
+</div>
+
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I&#39;m luoyan Page in Google. <br/>
+			This is my blog,believe it or not.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		<a href="http://weibo.com/3314058724" target="_blank" class="icon-weibo" title="微博"></a>
+		
+		
+		<a href="https://github.com/lyroger" target="_blank" class="icon-github" title="github"></a>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		<a href="mailto:yan1079@126.com" target="_blank" class="icon-email" title="Email Me"></a>
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2016 
+		
+		<a href="/about" target="_blank" title="luoyan">luoyan</a>
+		
+		<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+		
+			<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1260972836'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s11.cnzz.com/z_stat.php%3Fid%3D1260972836%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script>
+			
+		</p>
+		
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"lyroger"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+<script>
+(function(){
+    var bp = document.createElement('script');
+    bp.src = '//push.zhanzhang.baidu.com/push.js';
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+<!-- Analytics Begin -->
+
+
+
+
+
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1260972836'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s11.cnzz.com/z_stat.php%3Fid%3D1260972836%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script>
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="Back to Top"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>

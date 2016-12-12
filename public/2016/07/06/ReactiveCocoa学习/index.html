@@ -17,7 +17,7 @@
 <meta property="og:url" content="http://lyroger.github.io/2016/07/06/ReactiveCocoa学习/index.html">
 <meta property="og:site_name" content="罗琰的技术博客">
 <meta property="og:description" content="一、signal的释放问题当signal作为local变量时，如果没有被subscribe，那么方法执行完后，该变量会被dealloc。但如果signal有被subscribe，那么subscriber会持有该signal，直到signal sendCompleted或sendError时，才会解除持有关系，signal才会被dealloc。">
-<meta property="og:updated_time" content="2016-09-26T08:32:58.000Z">
+<meta property="og:updated_time" content="2016-10-09T01:39:25.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ReactiveCocoa学习">
 <meta name="twitter:description" content="一、signal的释放问题当signal作为local变量时，如果没有被subscribe，那么方法执行完后，该变量会被dealloc。但如果signal有被subscribe，那么subscriber会持有该signal，直到signal sendCompleted或sendError时，才会解除持有关系，signal才会被dealloc。">
@@ -27,6 +27,9 @@
     
     
     
+    <link rel="apple-touch-icon" href="/img/author.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/author.jpg">
+    
     <link rel="stylesheet" href="/css/style.css">
 </head>
 
@@ -35,6 +38,10 @@
       
 <div>
 		
+			<div id="imglogo">
+				<a href="/"><img src="/img/author.jpg" alt="罗琰的技术博客" title="罗琰的技术博客"/></a>
+			</div>
+			
 			<div id="textlogo">
 				<h1 class="site-name"><a href="/" title="罗琰的技术博客">罗琰的技术博客</a></h1>
 				<h2 class="blog-motto">积累与分享成长的技术经验</h2>
@@ -77,9 +84,9 @@
        
 		<a href="/about" title="luoyan" target="_blank" itemprop="author">luoyan</a>
 		
+    <span id="busuanzi_container_page_pv">阅读<span id="busuanzi_value_page_pv"></span></span>
   <p class="article-time">
     <time datetime="2016-07-06T01:39:00.000Z" itemprop="datePublished"> Published 2016-07-06</time>
-    
   </p>
 </header>
 	<div class="article-content">
@@ -175,7 +182,7 @@
 		  
 		
 		  
-			<li><a href="/categories/基础篇/" title="基础篇">基础篇<sup>6</sup></a></li>
+			<li><a href="/categories/基础篇/" title="基础篇">基础篇<sup>8</sup></a></li>
 		  
 		
 		  
@@ -204,15 +211,15 @@
 		<ul class="clearfix">
 		
 			
-				<li><a href="/tags/Hybrid-App/" title="Hybrid App">Hybrid App<sup>1</sup></a></li>
-			
-		
-			
 				<li><a href="/tags/runtime/" title="runtime">runtime<sup>1</sup></a></li>
 			
 		
 			
 				<li><a href="/tags/swift/" title="swift">swift<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Hybrid-App/" title="Hybrid App">Hybrid App<sup>1</sup></a></li>
 			
 		
 		</ul>
@@ -272,8 +279,12 @@
 		
 		<a href="/about" target="_blank" title="luoyan">luoyan</a>
 		
+		<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 		
+			<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1260972836'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s11.cnzz.com/z_stat.php%3Fid%3D1260972836%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script>
+			
 		</p>
+		
 </div>
 </footer>
     <script src="/js/jquery-2.0.3.min.js"></script>
@@ -458,6 +469,10 @@ $(document).ready(function(){
 <!-- Analytics Begin -->
 
 
+
+
+
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1260972836'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s11.cnzz.com/z_stat.php%3Fid%3D1260972836%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script>
 
 
 
