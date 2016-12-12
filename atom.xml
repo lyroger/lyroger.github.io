@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://lyroger.github.io/"/>
-  <updated>2016-11-29T02:13:04.000Z</updated>
+  <updated>2016-12-12T02:40:50.000Z</updated>
   <id>http://lyroger.github.io/</id>
   
   <author>
@@ -17,18 +17,33 @@
   
   <entry>
     <title>JS与OC交互</title>
-    <link href="http://lyroger.github.io/2016/11/29/test/"/>
-    <id>http://lyroger.github.io/2016/11/29/test/</id>
+    <link href="http://lyroger.github.io/2016/11/29/JS%E4%B8%8EOC%E4%BA%A4%E4%BA%92/"/>
+    <id>http://lyroger.github.io/2016/11/29/JS与OC交互/</id>
     <published>2016-11-29T02:02:51.000Z</published>
-    <updated>2016-11-29T02:13:04.000Z</updated>
+    <updated>2016-12-12T02:40:50.000Z</updated>
     
-    <content type="html"><![CDATA[<p>###</p>
+    <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>  平时开发中，很多页面并非全由原生代码来编写，需求求快，求可扩展性，往往希望页面能够很轻松替换或更改，所以有些页面在不追求体验之下由web来展示是一个比较好的方案。web页面在app端展示其实也有两种方案，一种是把web页面放在服务器端，一种是把web页面等资源一起打包放在App端，这两种方案的各自好处就不在这里详解，第二种方案在我的<a href="http://blog.devyan.cn/2016/09/23/使用Cordova搭建混合框架/" target="_blank" rel="external">使用Cordova搭建混合框架</a>文章中有提到，H5与原生代码直接的交互都有详解。这篇文章主要讲讲H5跟原生代码之间的交互。</p>
+<h3 id="原生代码调用H5"><a href="#原生代码调用H5" class="headerlink" title="原生代码调用H5"></a>原生代码调用H5</h3><p>  这个方案估计很多人都熟悉，也调用的比较频繁。比如现在在我们最近的一个项目中，我们把一个Web页面封装成一个BaseWebController页面了，所有基于远程web页面来展示的页面都通过这个封装好了的BaseWebController页面展示，那么在这个封装好了的页面中我们做了些什么事情呢？想想平时我们在这些web页面中都会做些什么，右上角更多按钮，右上角分享按钮，Web页面的title，下拉web页面时，能看到该页面由谁提供的，等等这些小功能，我们都可以在<code>- (void)webViewDidFinishLoad:(UIWebView *)webView</code>方法执行后，通过<code>stringByEvaluatingJavaScriptFromString:</code>方法去获取该页面中的配置，这个配置信息其实也是于H5有个协议，我们与H5端先定好一个协议，比如<code>msg_can_share</code>字段值为true时，表示可以分享，那么就会接着配置分享相关信息字段，比如分享的title，分享的url，分享的描述等等信息，这些信息都可以直接通过<code>stringByEvaluatingJavaScriptFromString:</code>去获取。</p>
+<h3 id="H5调用原生代码"><a href="#H5调用原生代码" class="headerlink" title="H5调用原生代码"></a>H5调用原生代码</h3><p>  原生代码调用H5用一个方法就可以搞定，很简单，那么H5调用原生的又怎么来实现呢，又有什么场景呢？驱使我想用实现这种方案的动力来自一个问题，由于H5端查看文章详情时，footer下还有一个查看下一篇文章，点击查看下一篇文章时，需改变我们BaseWebController的title，问题来了，点击查看下一篇文章是，H5是由异步调用服务器数据，所以不会再次进入<code>- (void)webViewDidFinishLoad:(UIWebView *)webView</code>，因此我们无法通过<code>stringByEvaluatingJavaScriptFromString:</code>去拿到最新的title，我们也不知道数据时什么时候来的，这时候我们就只好通过H5来调用原生代码，当H5那边数据已更新后，再调用原生代码来更新title。相信还有更多如此的场景，那么如何来实现这种方案呢？在iOS7之后，我想，大家应该都了解了一些JavaScriptCore.framework的框架吧，对，我们就用这个来实现这个方案，我们看看下面几步，很简单：</p>
+<ol>
+<li><p>首先我们定义一个代理：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">@protocol JSObjcDelegate &lt;JSExport&gt;</div><div class="line">- (void)webViewJSAction:(NSString*)action :(NSString*)arg;</div><div class="line">@end</div></pre></td></tr></table></figure>
+</li>
+<li><p>然后在BaseWebController中定义一个<code>@property (nonatomic, strong) JSContext  *jsContext;</code>属性。</p>
+</li>
+<li><p>然后再在恰当的时候（建议写到<code>- (void)webViewDidFinishLoad:(UIWebView *)webView</code>中）去获取H5的上下文，将刚刚写好的代理赋值给到H5。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">_jsContext = [webView valueForKeyPath:@&quot;documentView.webView.mainFrame.javaScriptContext&quot;];</div><div class="line">  _jsContext[@&quot;WebViewObject&quot;] = self;</div><div class="line">  _jsContext.exceptionHandler = ^(JSContext *context, JSValue *exceptionValue) &#123;</div><div class="line">      context.exception = exceptionValue;</div><div class="line">      NSLog(@&quot;异常信息：%@&quot;, exceptionValue);</div><div class="line">  &#125;;</div></pre></td></tr></table></figure>
+</li>
+<li><p>最后在BaseWebController中实现代理就ok了。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">- (void)webViewJSAction:(NSString*)action :(NSString*)arg</div><div class="line">&#123;</div><div class="line">    if ([action isEqualToString:@&quot;UpdateWebViewTitle&quot;]) &#123;</div><div class="line">        self.title = arg;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>写到这里，我们都是站在原生代码的角度去考虑，实现。那么H5端需要什么做呢？很简单，只需要通过<code>window.WebViewObject.webViewJSAction(&#39;UpdateWebViewTitle&#39;,&#39;title&#39;)</code>就可以将需要的值传过来。调用原生的方法。</p>
 ]]></content>
     
     <summary type="html">
     
-      &lt;p&gt;###&lt;/p&gt;
-
+      &lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h3&gt;&lt;p&gt;  平时开发中，很多页面并非全由原生代码来编写，需求求快，求可扩展性，往往希望页面能够很轻松替换或更改，所以有些页面在不追求体验之下由web
     
     </summary>
     
