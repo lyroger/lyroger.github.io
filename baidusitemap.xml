@@ -311,24 +311,6 @@
 
     
   <url>
-    <loc>http://lyroger.github.io/2016/01/07/%E5%8A%A8%E6%80%81%E4%BF%AE%E5%A4%8D%E7%BA%BF%E4%B8%8Abug/</loc>
-    <lastmod>2016-10-09T01:39:25.000Z</lastmod>
-    <data>
-        <display>
-        <title>动态修复线上bug</title>
-        <pubTime>2016-01-07T06:23:00.000Z</pubTime>
-        
-         
-           
-             
-              <breadCrumb title="高效篇" url="http://lyroger.github.io/categories/%E9%AB%98%E6%95%88%E7%AF%87/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
     <loc>http://lyroger.github.io/2016/02/24/%E5%85%B3%E4%BA%8E%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9A%84%E5%88%86%E5%89%B2/</loc>
     <lastmod>2016-10-09T01:39:25.000Z</lastmod>
     <data>
@@ -340,6 +322,24 @@
            
              
               <breadCrumb title="基础篇" url="http://lyroger.github.io/categories/%E5%9F%BA%E7%A1%80%E7%AF%87/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://lyroger.github.io/2016/01/07/%E5%8A%A8%E6%80%81%E4%BF%AE%E5%A4%8D%E7%BA%BF%E4%B8%8Abug/</loc>
+    <lastmod>2016-10-09T01:39:25.000Z</lastmod>
+    <data>
+        <display>
+        <title>动态修复线上bug</title>
+        <pubTime>2016-01-07T06:23:00.000Z</pubTime>
+        
+         
+           
+             
+              <breadCrumb title="高效篇" url="http://lyroger.github.io/categories/%E9%AB%98%E6%95%88%E7%AF%87/"/>
           
         </display>
     </data>
@@ -397,6 +397,7 @@
     </url>
 
     
+    
   <url>
     <loc>http://lyroger.github.io/2016/07/07/Mac%E4%B8%8A%E7%9A%84%E5%B0%8F%E6%8A%80%E5%B7%A7/</loc>
     <lastmod>2016-10-09T01:39:25.000Z</lastmod>
@@ -414,6 +415,5 @@
     </data>
     </url>
 
-    
     
 </urlset>
