@@ -19,3 +19,7 @@ id_rsa.pub
 2. 隐藏Mac隐藏文件的命令：`defaults write com.apple.finder AppleShowAllFiles  NO`
 3. 设置完后，不会立马起效，需要重新启动Finder.可以通过命令:`killall Finder` 。
 	
+### 3.vim命令退出方式
+ ":x"和":wq"的真正区别，如下：
+        :wq   强制性写入文件并退出。即使文件没有被修改也强制写入，并更新文件的修改时间。
+        :x    写入文件并退出。仅当文件被修改时才写入，并更新文件修改时间，否则不会更新文件修改时间。
