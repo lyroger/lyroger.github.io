@@ -4,8 +4,26 @@
 
     
   <url>
+    <loc>http://lyroger.github.io/2017/01/11/2016%E5%B9%B4%E4%B8%AA%E4%BA%BA%E6%80%BB%E7%BB%93/</loc>
+    <lastmod>2017-01-11T08:33:53.000Z</lastmod>
+    <data>
+        <display>
+        <title>2016年个人总结</title>
+        <pubTime>2017-01-11T03:29:48.000Z</pubTime>
+        
+         
+           
+             
+              <breadCrumb title="summary" url="http://lyroger.github.io/categories/summary/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://lyroger.github.io/2016/11/29/JS%E4%B8%8EOC%E4%BA%A4%E4%BA%92/</loc>
-    <lastmod>2017-01-09T08:31:01.000Z</lastmod>
+    <lastmod>2017-01-09T08:54:41.000Z</lastmod>
     <data>
         <display>
         <title>JS与OC交互</title>
@@ -112,42 +130,6 @@
 
     
   <url>
-    <loc>http://lyroger.github.io/2015/12/25/Objective-C%E4%BB%A3%E7%A0%81%E6%B7%B7%E6%B7%86/</loc>
-    <lastmod>2016-10-09T01:39:25.000Z</lastmod>
-    <data>
-        <display>
-        <title>Objective-C代码混淆</title>
-        <pubTime>2015-12-25T07:41:00.000Z</pubTime>
-        
-         
-           
-             
-              <breadCrumb title="高效篇" url="http://lyroger.github.io/categories/%E9%AB%98%E6%95%88%E7%AF%87/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://lyroger.github.io/2016/07/06/ReactiveCocoa%E5%AD%A6%E4%B9%A0/</loc>
-    <lastmod>2016-10-09T01:39:25.000Z</lastmod>
-    <data>
-        <display>
-        <title>ReactiveCocoa学习</title>
-        <pubTime>2016-07-06T01:39:00.000Z</pubTime>
-        
-         
-           
-             
-              <breadCrumb title="框架" url="http://lyroger.github.io/categories/%E6%A1%86%E6%9E%B6/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
     <loc>http://lyroger.github.io/2015/10/14/UISearchBar%E7%9A%84%E4%BD%BF%E7%94%A8/</loc>
     <lastmod>2016-10-09T01:39:25.000Z</lastmod>
     <data>
@@ -160,21 +142,6 @@
              
               <breadCrumb title="基础篇" url="http://lyroger.github.io/categories/%E5%9F%BA%E7%A1%80%E7%AF%87/"/>
           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://lyroger.github.io/2015/12/23/FMDB%E6%95%B0%E6%8D%AE%E5%BA%93%E5%8A%A0%E5%AF%86/</loc>
-    <lastmod>2016-10-09T01:39:25.000Z</lastmod>
-    <data>
-        <display>
-        <title>FMDB使用SQLCipher加密</title>
-        <pubTime>2015-12-23T09:33:00.000Z</pubTime>
-        
-         
-           
         </display>
     </data>
     </url>
@@ -255,18 +222,33 @@
 
     
   <url>
-    <loc>http://lyroger.github.io/2015/12/14/swift%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E5%9F%BA%E7%A1%80%E7%AF%87%EF%BC%89/</loc>
+    <loc>http://lyroger.github.io/2016/07/08/MVVM%E6%A8%A1%E5%BC%8F%E7%9A%84%E5%AD%A6%E4%B9%A0/</loc>
     <lastmod>2016-10-09T01:39:25.000Z</lastmod>
     <data>
         <display>
-        <title>swift学习笔记（基础篇）</title>
-        <pubTime>2015-12-14T06:35:00.000Z</pubTime>
+        <title>MVVM模式的学习</title>
+        <pubTime>2016-07-08T03:15:00.000Z</pubTime>
         
          
            
              
-              <breadCrumb title="swift" url="http://lyroger.github.io/categories/swift/"/>
+              <breadCrumb title="设计模式" url="http://lyroger.github.io/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://lyroger.github.io/2015/12/23/FMDB%E6%95%B0%E6%8D%AE%E5%BA%93%E5%8A%A0%E5%AF%86/</loc>
+    <lastmod>2016-10-09T01:39:25.000Z</lastmod>
+    <data>
+        <display>
+        <title>FMDB使用SQLCipher加密</title>
+        <pubTime>2015-12-23T09:33:00.000Z</pubTime>
+        
+         
+           
         </display>
     </data>
     </url>
@@ -293,12 +275,12 @@
 
     
   <url>
-    <loc>http://lyroger.github.io/2015/10/14/Markdown%E5%AD%A6%E4%B9%A0/</loc>
+    <loc>http://lyroger.github.io/2016/02/24/%E5%85%B3%E4%BA%8E%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9A%84%E5%88%86%E5%89%B2/</loc>
     <lastmod>2016-10-09T01:39:25.000Z</lastmod>
     <data>
         <display>
-        <title>Markdown学习</title>
-        <pubTime>2015-10-14T05:16:00.000Z</pubTime>
+        <title>关于字符串的分割</title>
+        <pubTime>2016-02-24T02:47:00.000Z</pubTime>
         
          
            
@@ -328,18 +310,37 @@
     </url>
 
     
+    
   <url>
-    <loc>http://lyroger.github.io/2016/02/24/%E5%85%B3%E4%BA%8E%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9A%84%E5%88%86%E5%89%B2/</loc>
+    <loc>http://lyroger.github.io/2015/10/14/Markdown%E5%AD%A6%E4%B9%A0/</loc>
     <lastmod>2016-10-09T01:39:25.000Z</lastmod>
     <data>
         <display>
-        <title>关于字符串的分割</title>
-        <pubTime>2016-02-24T02:47:00.000Z</pubTime>
+        <title>Markdown学习</title>
+        <pubTime>2015-10-14T05:16:00.000Z</pubTime>
         
          
            
              
               <breadCrumb title="基础篇" url="http://lyroger.github.io/categories/%E5%9F%BA%E7%A1%80%E7%AF%87/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://lyroger.github.io/2015/12/25/Objective-C%E4%BB%A3%E7%A0%81%E6%B7%B7%E6%B7%86/</loc>
+    <lastmod>2016-10-09T01:39:25.000Z</lastmod>
+    <data>
+        <display>
+        <title>Objective-C代码混淆</title>
+        <pubTime>2015-12-25T07:41:00.000Z</pubTime>
+        
+         
+           
+             
+              <breadCrumb title="高效篇" url="http://lyroger.github.io/categories/%E9%AB%98%E6%95%88%E7%AF%87/"/>
           
         </display>
     </data>
@@ -417,21 +418,38 @@
     
     
   <url>
-    <loc>http://lyroger.github.io/2016/07/08/MVVM%E6%A8%A1%E5%BC%8F%E7%9A%84%E5%AD%A6%E4%B9%A0/</loc>
+    <loc>http://lyroger.github.io/2016/07/06/ReactiveCocoa%E5%AD%A6%E4%B9%A0/</loc>
     <lastmod>2016-10-09T01:39:25.000Z</lastmod>
     <data>
         <display>
-        <title>MVVM模式的学习</title>
-        <pubTime>2016-07-08T03:15:00.000Z</pubTime>
+        <title>ReactiveCocoa学习</title>
+        <pubTime>2016-07-06T01:39:00.000Z</pubTime>
         
          
            
              
-              <breadCrumb title="设计模式" url="http://lyroger.github.io/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+              <breadCrumb title="框架" url="http://lyroger.github.io/categories/%E6%A1%86%E6%9E%B6/"/>
           
         </display>
     </data>
     </url>
 
     
+  <url>
+    <loc>http://lyroger.github.io/2015/12/14/swift%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E5%9F%BA%E7%A1%80%E7%AF%87%EF%BC%89/</loc>
+    <lastmod>2016-10-09T01:39:25.000Z</lastmod>
+    <data>
+        <display>
+        <title>swift学习笔记（基础篇）</title>
+        <pubTime>2015-12-14T06:35:00.000Z</pubTime>
+        
+         
+           
+             
+              <breadCrumb title="swift" url="http://lyroger.github.io/categories/swift/"/>
+          
+        </display>
+    </data>
+    </url>
+
 </urlset>

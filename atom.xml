@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://lyroger.github.io/"/>
-  <updated>2016-12-13T02:01:58.000Z</updated>
+  <updated>2017-01-11T08:33:53.000Z</updated>
   <id>http://lyroger.github.io/</id>
   
   <author>
@@ -14,6 +14,48 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>2016年个人总结</title>
+    <link href="http://lyroger.github.io/2017/01/11/2016%E5%B9%B4%E4%B8%AA%E4%BA%BA%E6%80%BB%E7%BB%93/"/>
+    <id>http://lyroger.github.io/2017/01/11/2016年个人总结/</id>
+    <published>2017-01-11T03:29:48.000Z</published>
+    <updated>2017-01-11T08:33:53.000Z</updated>
+    
+    <content type="html"><![CDATA[<h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>  2016年已经过去快半个月了，其实早就有想法想要给自己这一年来总结一下，最近也一直忙着公司年底年会的事情，心态也一直没有收拾好，所以也就一直拖到现在。</p>
+<h4 id="离职篇"><a href="#离职篇" class="headerlink" title="离职篇"></a>离职篇</h4><hr>
+<p>  3月份从TCL离职，找了好几家公司面试，大的小的都有，面试结果都还不错，可感觉如今的iOS市场行情没有了前两年的效应了，能给的待遇都不太高，有些公司听了我的要求，都没有了下文了。从换工作那段时间来看，接到的电话，收到的邮件，都没有了以前的频繁了，已经能完全感觉iOS寒冬的到来了。<br>  由于在TCL就职时，我们做的是健康医疗方面的事情，所以在换工作的时候，大部分收到的都是做健康医疗方面公司的面试邀请，偶尔也还会收到做车友互联相关行业的公司邀请，其中最让我感觉无头绪的公司就是中兴：一面时是一个技术负责人，面完后他觉得ok，过了一天后叫HR联系我过去再面，说是能给的上我的待遇要求，可过去后，既然是笔试，然后就是他们老大的面谈，面谈的时候我怎么都感觉他要的不是一个技术人员，而是一个产品经理，因此后面我也就被委婉的拒绝了。其次让我感觉很没经验的一次面试的公司就是嗒嗒巴士了：那天下午下班后过去了嗒嗒巴士面试，三个iOS开发人员，我过去的比较晚，很多人都已经下班了，只留下了一个iOS开发技术人员，刚走进办公室，那位面试我的面试人员一身的紧张感，感觉是第一次面试别人，开始也不知道从何面起，随便找了些基础的问题问了几遍，然后问了问我平时的开发习惯，平时用代码写的多还是用StoryBoard多，我跟他说了实话，很少用的StoryBoard，除了偶尔写Demo的时候会用到，大部分都是用的纯代码写的。他想了想，又问了其他问题，然后感觉又不知道问什么了。转来转去又来问关于StoryBoard方面的知识，并没有什么深入的问题，也难怪了，后来了解到，他们开发的项目都是用的StoryBoard开发的。再次让我历经最久的一次面试是在就医160了，下午如约两点到了他们公司，地址还真不好找，幸好每次都喜欢提前到，不然还真迟到了。一开始HR给了一份笔试题给到我，让我在他们的休息区写题。题目还有点多，选择题、填空题、判断题、简答题、问答题、还有个算法题。写了一个小时，总算是写完了。给到他们，然后他们技术负责人在开会，说实话，这时候不是应该给我一杯暖开水吗？谁在乎你呢？好好等吧，等了大半个小时，总算来了，然后就进入正题，说实话，跟这位面试官还真可以聊的，两个人都能对一个问题讨论的很好，不管是说对技术上还是在以前的工作经验上，聊了一个多小时，感觉他还挺满意的，然后说他们部门经理也要面试我，让我再等一下，这一等又是半个小时过去，还好我比较有耐心吧，下午也没安排其他面试。等到部门经理来了后，第一感觉他是一个很稳重的人，不急不躁的，一开始上来就给了一个算法题目让我想想，看我的思维是怎么样的，现在已经不记得那个算法题目了，不过他也挺有耐心的，一直让我想，其实当时那个算法题目一点眉目都没有，感觉当时再想多久都想不出来，但他还是坚持让我多想想。我想的时候他也没打扰我，在假装的看我的简历，看我的笔试题，看了很多遍。等面完他之后，我以为就结束了，没想到他们还要HR那边面试，HR那边还不止一个人面，两个人一起，一个人记录，一个人跟我谈话，记录的人也偶尔会插上几句话。这一聊就是近两个小时，说实话，那个时候我喉咙都已经干了，一下午都没见过一杯水。直至晚上七点多才面试完，我也是醉了吧。走的时候，我都不太报希望来这个公司上班了。但是过了两三天，他们HR给我来电说面试通过了，还能给到我想要的薪水。但这个时候我却已经答应了我目前上班这几公司入职了。目前这家公司其实也是以前的老领导们创业的一家公司，寄托在一家房地产集团公司下面。</p>
+<h4 id="新公司"><a href="#新公司" class="headerlink" title="新公司"></a>新公司</h4><hr>
+<p>  入职后，由于公司是一家初创的创业公司，还有很多相关人员都没有相继入职，入职第一天就跟另一个做安卓的同事跟着领导飞到了上海总部集团那边出差了解项目。也借此项目出差机会，第一次来到了上海，看到了中国最高楼，看到了东方明珠，看到了上海外滩。不过都很匆忙，就连跟同学聚个餐都是匆匆忙忙。也感谢高中班长同学带着我领略了上海的繁华。说多了感觉像是乡下人进城的感觉哈。<br>  出差三天后回深圳，来新公司正式上班已步入四月份了，第一个月大家都是在相互了解，相互磨合公司的工作方式，公司也还没给到具体的项目，基本也是在维护从上海那边带回来的项目，工作量也挺少的，大部分都是以开会来度过这段时间，要么做一些技术分享，要么做一些管理方面的培训，搭建环境，偶尔领导会做个大讲坛，谈谈我们公司的文化及以后的发展计划。<br>  步入五月份时，终于等到项目需求的到来，但同时也等到了目标，集团希望我们能在六月底上一个版本，替换目前使用的APP和后台。这也是我们第一个项目，也是大家第一次磨合的项目，大家的态度其实很积极，当然加班加多了，需求的改动，时间的压力，也会让一些同事暴露一些不耐烦的态度。直到整个项目测试完成验收，公司组织了一次去珠海长隆完了几天，让大家好好放松放松了下。<br>  后续集团内需要的项目其实还挺多的，客户端的人员并不是很多，而且响应的需求也并不能达到集团领导所需要的期望，所以公司也希望能够快速响应集团领导们的需求，快速做出响应的产品，于是乎，Hybrid App便在公司形成了，我在<a href="http://blog.devyan.cn/2016/09/23/使用Cordova搭建混合框架/" target="_blank" rel="external">使用Cordova搭建混合框架</a>文章中也稍微提到过此事，但主要还是介绍如何搭建Hybrid App框架的搭建。</p>
+<h4 id="我的收获"><a href="#我的收获" class="headerlink" title="我的收获"></a>我的收获</h4><hr>
+<ul>
+<li>来到新公司，我的职责也开始发生了变化，也不在是存粹的做一名开发者了，同时还要兼顾公司iOS开发方面的技术支持及管理和培养，简称专业线负责人吧。</li>
+<li>由于后期公司大部分产品的开发框架都是由Hybrid APP，因此对这个框架也是日益熟悉，同时也对js和OC之间相互交互更加深入的了解,这里我也写了一篇关于JS与OC之间的交互的文章:<a href="http://blog.devyan.cn/2016/11/29/JS与OC交互/" target="_blank" rel="external">JS与OC交互</a>.</li>
+<li>项目业务的开发也大部分转移到了H5端，我也有大量的时间去整理知识，对以前由于很多机械工作而导致很多理论的不清晰的点，都有机会去梳理一下了。</li>
+<li>已经开始培养了看书籍的习惯了，希望自己以后能看更多的书籍，让自己补充跟多的内容。</li>
+<li>在项目闲暇的情况下，我也组织了我们组内一起学习swift语言，并一起开发了一个项目。感觉对swift也可以开始上手了。</li>
+<li>在生活上，今年也算是完成了一家大事，工作多年，也多多少少积累了些继续，所以也拿的出一些钱去付房款的首付了。</li>
+<li>生活方面我也培养了一些兴趣了，比如游泳，也持续坚持了几个月，每次也可以坚持游一千五百米左右了。还有羽毛球的热情也逐渐上来了，公司每周四都会有羽毛球活动，我作为组织者，每周也一定会过去，再加上周三同学公司的羽毛球活动，他缺一个搭档，于是我也顺其自然的做了他的搭档，今年羽毛球线打断了两根，换了两次线。也给自己买了套羽毛球服，弄了一套完整的装备。至少看起来已经不像以前一样只是过来玩玩而已了。</li>
+</ul>
+<h4 id="今年的计划"><a href="#今年的计划" class="headerlink" title="今年的计划"></a>今年的计划</h4><hr>
+<ul>
+<li>继续会在iOS方面做一部分投入，希望自己专业知识不能放弃。具体可能会在算法、设计模式、架构、swift、新知识等方面的研究吧。</li>
+<li>坚持写博客，也希望有更深层次的博客文章的发表。</li>
+<li>希望自己今年能把看书变成自己生活中的一种常态，让自己有更多的知识。</li>
+<li>兴趣爱好方面：羽毛球应该还是会继续保持的，也希望自己在球技方面有更大的提高。游泳也会继续保持。</li>
+</ul>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h4 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h4&gt;&lt;p&gt;  2016年已经过去快半个月了，其实早就有想法想要给自己这一年来总结一下，最近也一直忙着公司年底年会的事情，心态也一直没有收拾好，所以也就
+    
+    </summary>
+    
+      <category term="summary" scheme="http://lyroger.github.io/categories/summary/"/>
+    
+    
+  </entry>
   
   <entry>
     <title>iterm2配色</title>
@@ -51,7 +93,7 @@
     <link href="http://lyroger.github.io/2016/11/29/JS%E4%B8%8EOC%E4%BA%A4%E4%BA%92/"/>
     <id>http://lyroger.github.io/2016/11/29/JS与OC交互/</id>
     <published>2016-11-29T02:02:51.000Z</published>
-    <updated>2017-01-09T08:31:01.000Z</updated>
+    <updated>2017-01-09T08:54:41.000Z</updated>
     
     <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>  平时开发中，很多页面并非全由原生代码来编写，需求求快，求可扩展性，往往希望页面能够很轻松替换或更改，所以有些页面在不追求体验之下由web来展示是一个比较好的方案。web页面在app端展示其实也有两种方案，一种是把web页面放在服务器端，一种是把web页面等资源一起打包放在App端，这两种方案的各自好处就不在这里详解，第二种方案在我的<a href="http://blog.devyan.cn/2016/09/23/使用Cordova搭建混合框架/" target="_blank" rel="external">使用Cordova搭建混合框架</a>文章中有提到，H5与原生代码直接的交互都有详解。这篇文章主要讲讲H5跟原生代码之间的交互。</p>
 <h3 id="原生代码调用H5"><a href="#原生代码调用H5" class="headerlink" title="原生代码调用H5"></a>原生代码调用H5</h3><p>  这个方案估计很多人都熟悉，也调用的比较频繁。比如现在在我们最近的一个项目中，我们把一个Web页面封装成一个BaseWebController页面了，所有基于远程web页面来展示的页面都通过这个封装好了的BaseWebController页面展示，那么在这个封装好了的页面中我们做了些什么事情呢？想想平时我们在这些web页面中都会做些什么，右上角更多按钮，右上角分享按钮，Web页面的title，下拉web页面时，能看到该页面由谁提供的，等等这些小功能，我们都可以在<code>- (void)webViewDidFinishLoad:(UIWebView *)webView</code>方法执行后，通过<code>stringByEvaluatingJavaScriptFromString:</code>方法去获取该页面中的配置，这个配置信息其实也是于H5有个协议，我们与H5端先定好一个协议，比如<code>msg_can_share</code>字段值为true时，表示可以分享，那么就会接着配置分享相关信息字段，比如分享的title，分享的url，分享的描述等等信息，这些信息都可以直接通过<code>stringByEvaluatingJavaScriptFromString:</code>去获取。</p>
@@ -63,7 +105,7 @@
 <li><p>然后在BaseWebController中定义一个<code>@property (nonatomic, strong) JSContext  *jsContext;</code>属性。</p>
 </li>
 <li><p>然后再在恰当的时候（建议写到<code>- (void)webViewDidFinishLoad:(UIWebView *)webView</code>中）去获取H5的上下文，<del>将刚刚写好的代理赋值给到H5。</del> 将[self class]赋值给到H5的上下文。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">_jsContext = [webView valueForKeyPath:@&quot;documentView.webView.mainFrame.javaScriptContext&quot;];</div><div class="line">//_jsContext[@&quot;WebViewObject&quot;] = self;   //会导致Controller释放不了。</div><div class="line">_jsContext[@&quot;WebViewObject&quot;] = [self class];</div><div class="line">_jsContext.exceptionHandler = ^(JSContext *context, JSValue *exceptionValue) &#123;</div><div class="line">  		context.exception = exceptionValue;</div><div class="line">  		NSLog(@&quot;异常信息：%@&quot;, exceptionValue);</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"> _jsContext = [webView valueForKeyPath:@&quot;documentView.webView.mainFrame.javaScriptContext&quot;];</div><div class="line">//_jsContext[@&quot;WebViewObject&quot;] = self;   //会导致Controller释放不了。</div><div class="line">_jsContext[@&quot;WebViewObject&quot;] = [self class];</div><div class="line">_jsContext.exceptionHandler = ^(JSContext *context, JSValue *exceptionValue) &#123;</div><div class="line">  	context.exception = exceptionValue;</div><div class="line">  	NSLog(@&quot;异常信息：%@&quot;, exceptionValue);</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
 </li>
 <li><p>最后在BaseWebController中实现代理就ok了。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">//改成类方法</div><div class="line">//- (void)webViewJSAction:(NSString*)action :(NSString*)arg</div><div class="line">+ (void)webViewJSAction:(NSString*)action :(NSString*)arg</div><div class="line">&#123;</div><div class="line">    /*</div><div class="line">    if ([action isEqualToString:@&quot;UpdateWebViewTitle&quot;]) &#123;</div><div class="line">        self.title = arg;</div><div class="line">    &#125;</div><div class="line">    */</div><div class="line">    </div><div class="line">    //需在主线程上实现</div><div class="line">    dispatch_async(dispatch_get_main_queue(), ^&#123;</div><div class="line">        //获取当前的BaseWebController类。</div><div class="line">        BaseWebController *webVC = (BaseWebController*)GetAPPDelegate.window.aCurrentViewController;</div><div class="line">        if ([action isEqualToString:@&quot;UpdateWebViewTitle&quot;]) &#123;</div><div class="line">            webVC.title = arg;</div><div class="line">        &#125; else if ([action isEqualToString:@&quot;CloseActoin&quot;]) &#123;</div><div class="line">            [webVC.navigationController popViewControllerAnimated:YES];</div><div class="line">        &#125;</div><div class="line">    &#125;);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
@@ -581,34 +623,6 @@
       &lt;h2 id=&quot;一-报Bitcode相关错误。&quot;&gt;&lt;a href=&quot;#一-报Bitcode相关错误。&quot; class=&quot;headerlink&quot; title=&quot;一.报Bitcode相关错误。&quot;&gt;&lt;/a&gt;一.报Bitcode相关错误。&lt;/h2&gt;&lt;figure class=&quot;highli
     
     </summary>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>动画学习篇一</title>
-    <link href="http://lyroger.github.io/2015/10/16/%E5%8A%A8%E7%94%BB%E5%AD%A6%E4%B9%A0%E7%AF%87%E4%B8%80/"/>
-    <id>http://lyroger.github.io/2015/10/16/动画学习篇一/</id>
-    <published>2015-10-16T03:06:00.000Z</published>
-    <updated>2016-10-09T01:39:25.000Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>  最近玩手游比较多，看到了GameCenter中个人中心有一些气泡效果特别好，于是想想怎么实现的，要是能放到自己写的程序中，也是一种不错的感觉，能感觉到应用有一种活力.</p>
-<h2 id="进入正题"><a href="#进入正题" class="headerlink" title="进入正题"></a>进入正题</h2><p>先看看gamecenter中的效果是怎样的，然后我们在着步分析：</p>
-<p><img src="/images/gameCenter1.gif" alt=""><br>我们先参考单个气泡效果，就拿GameCenter气泡来说吧，仔细看看，他有一个整体画圈的效果，还有一个一张一缩的动画，想到多个动画组合成的一个效果就可以想到动画帧来做：CAKeyframeAnimation；<br>首先我们来实现一个画圈的效果，看看下面代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">CAKeyframeAnimation *pathAnimation = [CAKeyframeAnimation animationWithKeyPath:@&quot;position&quot;];</div><div class="line">    pathAnimation.calculationMode = kCAAnimationPaced;</div><div class="line">    pathAnimation.fillMode = kCAFillModeForwards;</div><div class="line">    pathAnimation.removedOnCompletion = NO;</div><div class="line">    pathAnimation.repeatCount = INFINITY;</div><div class="line">    pathAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];</div><div class="line">    pathAnimation.duration = 6.0;</div><div class="line">    </div><div class="line">    CGMutablePathRef curvedPath = CGPathCreateMutable();</div><div class="line">    CGFloat amplitude = 10;</div><div class="line">    CGRect circleContainer = CGRectInset(gameView.frame, gameView.bounds.size.width / 2 - amplitude, gameView.bounds.size.width / 2 - amplitude);</div><div class="line">    CGPathAddEllipseInRect(curvedPath, NULL, circleContainer);</div><div class="line">    </div><div class="line">    pathAnimation.path = curvedPath;</div><div class="line">    CGPathRelease(curvedPath);</div><div class="line">    [gameView.layer addAnimation:pathAnimation forKey:@&quot;gameCenterAnimation&quot;];</div></pre></td></tr></table></figure></p>
-<p>代码实现效果如下图：</p>
-<p><img src="/images/game1.gif" alt=""><br>接下来我们来实现一张一缩的效果：<br>代码如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">CAKeyframeAnimation *scaleX = [CAKeyframeAnimation animationWithKeyPath:@&quot;transform.scale.x&quot;];</div><div class="line">    scaleX.duration = 1;</div><div class="line">    scaleX.values = @[@1.0, @1.1, @1.0];</div><div class="line">    scaleX.keyTimes = @[@0.0, @0.5, @1.0];</div><div class="line">    scaleX.repeatCount = INFINITY;</div><div class="line">    scaleX.autoreverses = YES;</div><div class="line">    </div><div class="line">    scaleX.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];</div><div class="line">    [gameView.layer addAnimation:scaleX forKey:@&quot;scaleX&quot;];</div><div class="line">    </div><div class="line">    </div><div class="line">    CAKeyframeAnimation *scaleY = [CAKeyframeAnimation animationWithKeyPath:@&quot;transform.scale.y&quot;];</div><div class="line">    scaleY.duration = 1.5;</div><div class="line">    scaleY.values = @[@1.0, @1.1, @1.0];</div><div class="line">    scaleY.keyTimes = @[@0.0, @0.5, @1.0];</div><div class="line">    scaleY.repeatCount = INFINITY;</div><div class="line">    scaleY.autoreverses = YES;</div><div class="line">    scaleX.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];</div><div class="line">    [gameView.layer addAnimation:scaleY forKey:@&quot;scaleY&quot;];</div></pre></td></tr></table></figure></p>
-<p>结合上面的代码一起，便可以看到整体效果：</p>
-<p><img src="/images/game2.gif" alt=""></p>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>很多动画其实就是由多个动画分解组合而成，所以要学会使用CAKeyframeAnimation。</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h2&gt;&lt;p&gt;  最近玩手游比较多，看到了GameCenter中个人中心有一些气泡效果特别好，于是想想怎么实现的，要是能放到自己写的程序中，也是一种不错的
-    
-    </summary>
-    
-      <category term="动画" scheme="http://lyroger.github.io/categories/%E5%8A%A8%E7%94%BB/"/>
     
     
   </entry>

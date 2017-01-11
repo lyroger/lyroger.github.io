@@ -17,7 +17,7 @@
 <meta property="og:url" content="http://lyroger.github.io/2016/11/29/JS与OC交互/index.html">
 <meta property="og:site_name" content="罗琰的技术博客">
 <meta property="og:description" content="前言  平时开发中，很多页面并非全由原生代码来编写，需求求快，求可扩展性，往往希望页面能够很轻松替换或更改，所以有些页面在不追求体验之下由web来展示是一个比较好的方案。web页面在app端展示其实也有两种方案，一种是把web页面放在服务器端，一种是把web页面等资源一起打包放在App端，这两种方案的各自好处就不在这里详解，第二种方案在我的使用Cordova搭建混合框架文章中有提到，H5与原生代码">
-<meta property="og:updated_time" content="2017-01-09T08:31:01.000Z">
+<meta property="og:updated_time" content="2017-01-09T08:54:41.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JS与OC交互">
 <meta name="twitter:description" content="前言  平时开发中，很多页面并非全由原生代码来编写，需求求快，求可扩展性，往往希望页面能够很轻松替换或更改，所以有些页面在不追求体验之下由web来展示是一个比较好的方案。web页面在app端展示其实也有两种方案，一种是把web页面放在服务器端，一种是把web页面等资源一起打包放在App端，这两种方案的各自好处就不在这里详解，第二种方案在我的使用Cordova搭建混合框架文章中有提到，H5与原生代码">
@@ -43,7 +43,7 @@
 				<h1 class="site-name"><a href="/" title="罗琰的技术博客">罗琰的技术博客</a></h1>
 				<h2 class="blog-motto">积累与分享成长的技术经验</h2>
 			</div>
-			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
 			</a></div>
 			<nav class="animated">
 				<ul>
@@ -59,7 +59,7 @@
  					
 					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
 						<label>Search</label>
-						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
 						<input type="hidden" name="q" value="site:lyroger.github.io">
 					</form>
 					
@@ -84,13 +84,13 @@
 		
     <span id="busuanzi_container_page_pv">阅读<span id="busuanzi_value_page_pv"></span></span>
   <p class="article-time">
-    <time datetime="2016-11-29T02:02:51.000Z" itemprop="datePublished"> 发表于 2016-11-29</time>
+    <time datetime="2016-11-29T02:02:51.000Z" itemprop="datePublished"> Published 2016-11-29</time>
   </p>
 </header>
 	<div class="article-content">
 		
 		<div id="toc" class="toc-article">
-			<strong class="toc-title">文章目录</strong>
+			<strong class="toc-title">Contents</strong>
 		
 			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#原生代码调用H5"><span class="toc-number">2.</span> <span class="toc-text">原生代码调用H5</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#H5调用原生代码"><span class="toc-number">3.</span> <span class="toc-text">H5调用原生代码</span></a></li></ol>
 		
@@ -106,7 +106,7 @@
 <li><p>然后在BaseWebController中定义一个<code>@property (nonatomic, strong) JSContext  *jsContext;</code>属性。</p>
 </li>
 <li><p>然后再在恰当的时候（建议写到<code>- (void)webViewDidFinishLoad:(UIWebView *)webView</code>中）去获取H5的上下文，<del>将刚刚写好的代理赋值给到H5。</del> 将[self class]赋值给到H5的上下文。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">_jsContext = [webView valueForKeyPath:@&quot;documentView.webView.mainFrame.javaScriptContext&quot;];</div><div class="line">//_jsContext[@&quot;WebViewObject&quot;] = self;   //会导致Controller释放不了。</div><div class="line">_jsContext[@&quot;WebViewObject&quot;] = [self class];</div><div class="line">_jsContext.exceptionHandler = ^(JSContext *context, JSValue *exceptionValue) &#123;</div><div class="line">  		context.exception = exceptionValue;</div><div class="line">  		NSLog(@&quot;异常信息：%@&quot;, exceptionValue);</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"> _jsContext = [webView valueForKeyPath:@&quot;documentView.webView.mainFrame.javaScriptContext&quot;];</div><div class="line">//_jsContext[@&quot;WebViewObject&quot;] = self;   //会导致Controller释放不了。</div><div class="line">_jsContext[@&quot;WebViewObject&quot;] = [self class];</div><div class="line">_jsContext.exceptionHandler = ^(JSContext *context, JSValue *exceptionValue) &#123;</div><div class="line">  	context.exception = exceptionValue;</div><div class="line">  	NSLog(@&quot;异常信息：%@&quot;, exceptionValue);</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
 </li>
 <li><p>最后在BaseWebController中实现代理就ok了。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">//改成类方法</div><div class="line">//- (void)webViewJSAction:(NSString*)action :(NSString*)arg</div><div class="line">+ (void)webViewJSAction:(NSString*)action :(NSString*)arg</div><div class="line">&#123;</div><div class="line">    /*</div><div class="line">    if ([action isEqualToString:@&quot;UpdateWebViewTitle&quot;]) &#123;</div><div class="line">        self.title = arg;</div><div class="line">    &#125;</div><div class="line">    */</div><div class="line">    </div><div class="line">    //需在主线程上实现</div><div class="line">    dispatch_async(dispatch_get_main_queue(), ^&#123;</div><div class="line">        //获取当前的BaseWebController类。</div><div class="line">        BaseWebController *webVC = (BaseWebController*)GetAPPDelegate.window.aCurrentViewController;</div><div class="line">        if ([action isEqualToString:@&quot;UpdateWebViewTitle&quot;]) &#123;</div><div class="line">            webVC.title = arg;</div><div class="line">        &#125; else if ([action isEqualToString:@&quot;CloseActoin&quot;]) &#123;</div><div class="line">            [webVC.navigationController popViewControllerAnimated:YES];</div><div class="line">        &#125;</div><div class="line">    &#125;);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
@@ -169,23 +169,27 @@
 
 
 </div>  
-      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
 
   <div id="toc" class="toc-aside">
-  <strong class="toc-title">文章目录</strong>
+  <strong class="toc-title">Contents</strong>
  
  <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#原生代码调用H5"><span class="toc-number">2.</span> <span class="toc-text">原生代码调用H5</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#H5调用原生代码"><span class="toc-number">3.</span> <span class="toc-text">H5调用原生代码</span></a></li></ol>
  
   </div>
 
 <div id="asidepart">
-<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
 <aside class="clearfix">
 
   
 <div class="categorieslist">
-	<p class="asidetitle">分类</p>
+	<p class="asidetitle">Categories</p>
 		<ul>
+		
+		  
+			<li><a href="/categories/summary/" title="summary">summary<sup>1</sup></a></li>
+		  
 		
 		  
 			<li><a href="/categories/swift/" title="swift">swift<sup>2</sup></a></li>
@@ -221,7 +225,7 @@
 
   
 <div class="tagslist">
-	<p class="asidetitle">标签</p>
+	<p class="asidetitle">Tags</p>
 		<ul class="clearfix">
 		
 			
@@ -248,7 +252,7 @@
 
 
   <div class="rsspart">
-	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+	<a href="/atom.xml" target="_blank" title="rss">RSS</a>
 </div>
 
 </aside>
@@ -490,7 +494,7 @@ $(document).ready(function(){
 <!-- Totop Begin -->
 
 	<div id="totop">
-	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	<a title="Back to Top"><img src="/img/scrollup.png"/></a>
 	</div>
 	<script src="/js/totop.js"></script>
 
