@@ -18,22 +18,40 @@ category: 基础篇
 @end
 ```
 2. 然后在BaseWebController中定义一个`@property (nonatomic, strong) JSContext  *jsContext;`属性。
-3. 然后再在恰当的时候（建议写到`- (void)webViewDidFinishLoad:(UIWebView *)webView`中）去获取H5的上下文，将刚刚写好的代理赋值给到H5。
+3. 然后再在恰当的时候（建议写到`- (void)webViewDidFinishLoad:(UIWebView *)webView`中）去获取H5的上下文，~~将刚刚写好的代理赋值给到H5。~~ 将[self class]赋值给到H5的上下文。
 ```objective-c
-	_jsContext = [webView valueForKeyPath:@"documentView.webView.mainFrame.javaScriptContext"];
-   _jsContext[@"WebViewObject"] = self;
-   _jsContext.exceptionHandler = ^(JSContext *context, JSValue *exceptionValue) {
-       context.exception = exceptionValue;
-       NSLog(@"异常信息：%@", exceptionValue);
-   };
+  _jsContext = [webView valueForKeyPath:@"documentView.webView.mainFrame.javaScriptContext"];
+	//_jsContext[@"WebViewObject"] = self;   //会导致Controller释放不了。
+	_jsContext[@"WebViewObject"] = [self class];
+	_jsContext.exceptionHandler = ^(JSContext *context, JSValue *exceptionValue) {
+   	context.exception = exceptionValue;
+   	NSLog(@"异常信息：%@", exceptionValue);
+	}; 
 ```
+
+
 4. 最后在BaseWebController中实现代理就ok了。
 ```objective-c
-- (void)webViewJSAction:(NSString*)action :(NSString*)arg
+//改成类方法
+//- (void)webViewJSAction:(NSString*)action :(NSString*)arg
++ (void)webViewJSAction:(NSString*)action :(NSString*)arg
 {
+    /*
     if ([action isEqualToString:@"UpdateWebViewTitle"]) {
         self.title = arg;
     }
+    */
+    
+    //需在主线程上实现
+    dispatch_async(dispatch_get_main_queue(), ^{
+        //获取当前的BaseWebController类。
+        BaseWebController *webVC = (BaseWebController*)GetAPPDelegate.window.aCurrentViewController;
+        if ([action isEqualToString:@"UpdateWebViewTitle"]) {
+            webVC.title = arg;
+        } else if ([action isEqualToString:@"CloseActoin"]) {
+            [webVC.navigationController popViewControllerAnimated:YES];
+        }
+    });
 }
 ```
 写到这里，我们都是站在原生代码的角度去考虑，实现。那么H5端需要什么做呢？很简单，只需要通过`window.WebViewObject.webViewJSAction('UpdateWebViewTitle','title')`就可以将需要的值传过来。调用原生的方法。
