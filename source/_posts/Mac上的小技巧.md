@@ -28,6 +28,6 @@ id_rsa.pub
 1. git clone 'https://github.com/lyroger/lyroger.github.io.git'  #这个会让你输入账号和密码
 2. git clone 'git@github.com:lyroger/lyroger.github.io.git' #这个需要你提供sshkey
 3. git add . #将所有变动添加到仓库
-4. git commit -a '提交备注' #将所有添加到仓库的变动提交到仓库
+4. git commit -a '提交备注' #将所有添加到仓库的变动提交到仓库  如果提交失败：‘fatal: Paths with -a does not make sense.’可以使用"git commit -am '提交备注'".
 5. git pull #拉取最新文件
 5. git push origin master #推送到远程仓库
