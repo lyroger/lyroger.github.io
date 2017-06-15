@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://lyroger.github.io/"/>
-  <updated>2017-01-12T02:08:59.000Z</updated>
+  <updated>2017-06-15T07:08:44.000Z</updated>
   <id>http://lyroger.github.io/</id>
   
   <author>
@@ -14,6 +14,28 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>React Native小疙瘩</title>
+    <link href="http://lyroger.github.io/2017/06/15/React%20Native%E5%B0%8F%E7%96%99%E7%98%A9/"/>
+    <id>http://lyroger.github.io/2017/06/15/React Native小疙瘩/</id>
+    <published>2017-06-15T06:17:48.000Z</published>
+    <updated>2017-06-15T07:08:44.000Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>  从去年开始，混合框架开发模式就开始步入到我的实际工作当中，听说过<a href="http://reactnative.cn" target="_blank" rel="external">React Native</a>,但重来没有真正花时间和精力去了解和学习使用他。去年还写过一篇关于混合框架开发的<a href="http://blog.devyan.cn/2016/09/23/使用Cordova搭建混合框架/" target="_blank" rel="external">使用Cordova搭建混合框架</a>文章。主要是介绍使用Cordova框架，这个框架已经在我们公司实践一年多时间了，到目前为止已经有六个APP使用了该框架，效果还是挺突出的，第一个混合框架的出生，也让我感到很惊讶，使用H5也能写出交互效果如此不逊的APP，顿时也开始担心自己的小饭碗了。<br>然而最近为什么突然想起了<code>React Native</code>呢？总感觉在一个“圈子”里混熟了，混久了，自己很没安全感呢？对，我就是这么一个人，我想多了解一下这方面的技术。毕竟像QQ空间这么热门的APP都在使用该框架，我有什么权利不去了解该框架呢？好了，不多说了，开始学习<code>React Native</code>框架吧！</p>
+<h3 id="‘boost-iterator-iterator-adaptor-hpp’-file-not-found-问题"><a href="#‘boost-iterator-iterator-adaptor-hpp’-file-not-found-问题" class="headerlink" title="‘boost/iterator/iterator_adaptor.hpp’ file not found 问题"></a>‘boost/iterator/iterator_adaptor.hpp’ file not found 问题</h3><p>按照<a href="http://reactnative.cn/docs/0.45/getting-started.html#content" target="_blank" rel="external">官网</a>的指示，我做的挺顺利的。到最后一步的时，被一个<code>‘boost/iterator/iterator_adaptor.hpp’ file not found</code>编译问题折腾了我大半天，google百度出现同样的问题的很多，唯一看到一篇很靠谱的解决方案的<a href="http://vanessa.b3log.org/articles/2017/06/12/1497235254333.html" target="_blank" rel="external">文章</a>，却感觉说的很含糊，或着说吧，扯进了一些无关紧要的信息进来，导致我无从下手，其实只需要将<code>boost_1_63_0.tar.gz</code>下载下来解压放到<code>node_modules/react-native/third-party</code>下即可,跟.rncache文件夹没有任何关系，误导了我找这个文件夹就花了半天，也不知道如何下载该文件！不过总之还是得感谢该作者！让我从不断更新和重装node版本，各个软件环境等错误的尝试中找到一丝灵感。找到了.rncache文件夹，尝试这解压下面的压缩文件，只有<code>boost_1_63_0.tar.gz</code>文件解压有问题，所以去<a href="https://sourceforge.net/projects/boost/files/boost/1.63.0/" target="_blank" rel="external">官网</a>下载了该文件。总之解决该问题之后，迫不及待的就想要写出第一个Hellow World程序了。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h3&gt;&lt;p&gt;  从去年开始，混合框架开发模式就开始步入到我的实际工作当中，听说过&lt;a href=&quot;http://reactnative.cn&quot; targ
+    
+    </summary>
+    
+      <category term="summary" scheme="http://lyroger.github.io/categories/summary/"/>
+    
+    
+  </entry>
   
   <entry>
     <title>2016年个人总结</title>
@@ -606,31 +628,6 @@
     </summary>
     
       <category term="swift" scheme="http://lyroger.github.io/categories/swift/"/>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>升级XCode7和iOS9相关问题</title>
-    <link href="http://lyroger.github.io/2015/10/22/%E5%8D%87%E7%BA%A7XCode7%E5%92%8CiOS9%E7%9B%B8%E5%85%B3%E9%97%AE%E9%A2%98/"/>
-    <id>http://lyroger.github.io/2015/10/22/升级XCode7和iOS9相关问题/</id>
-    <published>2015-10-22T06:29:00.000Z</published>
-    <updated>2016-10-09T01:39:25.000Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="一-报Bitcode相关错误。"><a href="#一-报Bitcode相关错误。" class="headerlink" title="一.报Bitcode相关错误。"></a>一.报Bitcode相关错误。</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Framework/libraries/extends/QQSDK/TencentOpenAPI.framework/TencentOpenAPI(WeiyunAPI.o)&apos; does not contain bitcode. You must rebuild it with bitcode enabled (Xcode setting ENABLE_BITCODE), obtain an updated library from the vendor, or disable bitcode for this target. for architecture arm64</div><div class="line">clang: error: linker command failed with exit code 1 (use -v to see invocation)</div></pre></td></tr></table></figure>
-<p>1.解决方案<br>工程文件中找到target-&gt;Build Settings-&gt;搜索bitcode，然后出现Enablecode选项，设置为NO即可。如图：</p>
-<p><img src="/images/code.jpg" alt=""><br>重新build即可消除bitcode相关问题。</p>
-<p>2.问题出现原因可以参考：<a href="http://www.cocoachina.com/ios/20150818/13078.html" title="理解Bitcode：一种中间代码" target="_blank" rel="external">理解Bitcode：一种中间代码</a></p>
-<h2 id="二-iOS9设备网络请求失败"><a href="#二-iOS9设备网络请求失败" class="headerlink" title="二.iOS9设备网络请求失败"></a>二.iOS9设备网络请求失败</h2><p>1.出现问题原因<br>iOS9把所有的http请求都改为https了：iOS9系统发送的网络请求将统一使用TLS 1.2 SSL。采用TLS 1.2 协议，目的是:强制增强数据访问安全，而且，系统 Foundation 框架下的相关网络请求，将不再默认使用 Http 等不安全的网络协议，而默认采用 TLS 1.2。服务器因此需要更新，以解析相关数据。如不更新，可通过在 Info.plist 中声明。<br>2.具体如何在info.plist中声明<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&lt;key&gt;NSAppTransportSecurity&lt;/key&gt;</div><div class="line">&lt;dict&gt;</div><div class="line">    &lt;key&gt;NSAllowsArbitraryLoads&lt;/key&gt;</div><div class="line">    &lt;true/&gt;</div><div class="line">&lt;/dict&gt;</div></pre></td></tr></table></figure></p>
-<p>如图所示:</p>
-<p><img src="/images/plist.jpg" alt=""></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;一-报Bitcode相关错误。&quot;&gt;&lt;a href=&quot;#一-报Bitcode相关错误。&quot; class=&quot;headerlink&quot; title=&quot;一.报Bitcode相关错误。&quot;&gt;&lt;/a&gt;一.报Bitcode相关错误。&lt;/h2&gt;&lt;figure class=&quot;highli
-    
-    </summary>
     
     
   </entry>

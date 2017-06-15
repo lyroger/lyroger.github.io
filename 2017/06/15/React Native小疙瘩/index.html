@@ -4,23 +4,23 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>关于字符串的分割 | 罗琰的技术博客</title>
+    <title>React Native小疙瘩 | 罗琰的技术博客</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="luoyan">
     
 
     
-    <meta name="description" content="今天在字符串分割上遇到一个坑，一不小心便踩了，问题是这样的：我接收到服务端传过来的一个包含多个图片地址的字符串，使用“,”分割，我使用”componentsSeparatedByString:”来分割，将多个图片地址存入数组，并根据数组的个数来加载默认图片，等图片下载完成后替换对应的默认图片。现在服务端给我返回了一个@””字符串，我的代码如下:1NSArray *descImages = [des">
+    <meta name="description" content="前言  从去年开始，混合框架开发模式就开始步入到我的实际工作当中，听说过React Native,但重来没有真正花时间和精力去了解和学习使用他。去年还写过一篇关于混合框架开发的使用Cordova搭建混合框架文章。主要是介绍使用Cordova框架，这个框架已经在我们公司实践一年多时间了，到目前为止已经有六个APP使用了该框架，效果还是挺突出的，第一个混合框架的出生，也让我感到很惊讶，使用H5也能写出">
 <meta property="og:type" content="article">
-<meta property="og:title" content="关于字符串的分割">
-<meta property="og:url" content="http://lyroger.github.io/2016/02/24/关于字符串的分割/index.html">
+<meta property="og:title" content="React Native小疙瘩">
+<meta property="og:url" content="http://lyroger.github.io/2017/06/15/React Native小疙瘩/index.html">
 <meta property="og:site_name" content="罗琰的技术博客">
-<meta property="og:description" content="今天在字符串分割上遇到一个坑，一不小心便踩了，问题是这样的：我接收到服务端传过来的一个包含多个图片地址的字符串，使用“,”分割，我使用”componentsSeparatedByString:”来分割，将多个图片地址存入数组，并根据数组的个数来加载默认图片，等图片下载完成后替换对应的默认图片。现在服务端给我返回了一个@””字符串，我的代码如下:1NSArray *descImages = [des">
-<meta property="og:updated_time" content="2016-10-09T01:39:25.000Z">
+<meta property="og:description" content="前言  从去年开始，混合框架开发模式就开始步入到我的实际工作当中，听说过React Native,但重来没有真正花时间和精力去了解和学习使用他。去年还写过一篇关于混合框架开发的使用Cordova搭建混合框架文章。主要是介绍使用Cordova框架，这个框架已经在我们公司实践一年多时间了，到目前为止已经有六个APP使用了该框架，效果还是挺突出的，第一个混合框架的出生，也让我感到很惊讶，使用H5也能写出">
+<meta property="og:updated_time" content="2017-06-15T07:08:44.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="关于字符串的分割">
-<meta name="twitter:description" content="今天在字符串分割上遇到一个坑，一不小心便踩了，问题是这样的：我接收到服务端传过来的一个包含多个图片地址的字符串，使用“,”分割，我使用”componentsSeparatedByString:”来分割，将多个图片地址存入数组，并根据数组的个数来加载默认图片，等图片下载完成后替换对应的默认图片。现在服务端给我返回了一个@””字符串，我的代码如下:1NSArray *descImages = [des">
+<meta name="twitter:title" content="React Native小疙瘩">
+<meta name="twitter:description" content="前言  从去年开始，混合框架开发模式就开始步入到我的实际工作当中，听说过React Native,但重来没有真正花时间和精力去了解和学习使用他。去年还写过一篇关于混合框架开发的使用Cordova搭建混合框架文章。主要是介绍使用Cordova框架，这个框架已经在我们公司实践一年多时间了，到目前为止已经有六个APP使用了该框架，效果还是挺突出的，第一个混合框架的出生，也让我感到很惊讶，使用H5也能写出">
 
     
     <link rel="alternative" href="/atom.xml" title="罗琰的技术博客" type="application/atom+xml">
@@ -76,7 +76,7 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2016/02/24/关于字符串的分割/" title="关于字符串的分割" itemprop="url">关于字符串的分割</a>
+      <a href="/2017/06/15/React Native小疙瘩/" title="React Native小疙瘩" itemprop="url">React Native小疙瘩</a>
   </h1>
   <p class="article-author">By
        
@@ -84,7 +84,7 @@
 		
     <span id="busuanzi_container_page_pv">阅读<span id="busuanzi_value_page_pv"></span></span>
   <p class="article-time">
-    <time datetime="2016-02-24T02:47:00.000Z" itemprop="datePublished"> 發表於 2016-02-24</time>
+    <time datetime="2017-06-15T06:17:48.000Z" itemprop="datePublished"> 發表於 2017-06-15</time>
   </p>
 </header>
 	<div class="article-content">
@@ -92,14 +92,12 @@
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目錄</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#衍生学习"><span class="toc-number">1.</span> <span class="toc-text">衍生学习</span></a></li></ol>
+			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#‘boost-iterator-iterator-adaptor-hpp’-file-not-found-问题"><span class="toc-number">2.</span> <span class="toc-text">‘boost/iterator/iterator_adaptor.hpp’ file not found 问题</span></a></li></ol>
 		
 		</div>
 		
-		<p>今天在字符串分割上遇到一个坑，一不小心便踩了，问题是这样的：我接收到服务端传过来的一个包含多个图片地址的字符串，使用“,”分割，我使用”componentsSeparatedByString:”来分割，将多个图片地址存入数组，并根据数组的个数来加载默认图片，等图片下载完成后替换对应的默认图片。现在服务端给我返回了一个@””字符串，我的代码如下:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">NSArray *descImages = [descImage componentsSeparatedByString:@&quot;,&quot;];</div></pre></td></tr></table></figure></p>
-<p>其实这个时候descImage等于””，但使用”componentsSeparatedByString:”分割返回的数组是有一个对象的，就是一个空字符串，这个可能我并没想到，导致服务端返回空字符串时，我这边也多加载了一个图片，这个图片还一直下载不下来。这个也让我明白：”componentsSeparatedByString:”的意思，有分割字符就根据字符分割返回数组，没分割字符则返回被分割的字符串，@””也是一个字符串，它也是有内存地址的，跟nil并不一样。看看下面的代码就明白了:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">- (void)testComponentSeparatedByString</div><div class="line">&#123;</div><div class="line">    NSString *descImage = @&quot;&quot;;</div><div class="line">    NSArray *descImages = [descImage componentsSeparatedByString:@&quot;,&quot;];</div><div class="line">    NSLog(@&quot;descImages = %@,descImages.count=%zd,descImage = %p,nil= %p&quot;,descImages,descImages.count,descImage,nil);</div><div class="line">&#125;</div><div class="line">打印出来的</div><div class="line">descImages = (</div><div class="line">    &quot;&quot;</div><div class="line">),descImages.count=1,descImage = 0x1001d5690,nil= 0x0</div></pre></td></tr></table></figure></p>
-<p>因此要解决这个问题就得加一个判断给descImage.length&gt;0即可。</p>
-<h3 id="衍生学习"><a href="#衍生学习" class="headerlink" title="衍生学习"></a>衍生学习</h3><p>componentsSeparatedByCharactersInSet的使用，使用多个字符分割字符串：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">NSString *str = @&quot;A~B^C&quot;;</div><div class="line">NSArray *arr = [str componentsSeparatedByCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@&quot;^~&quot;]];</div><div class="line">NSLog(@&quot;%@&quot;, arr);</div><div class="line">打印出来</div><div class="line">(</div><div class="line">    A,</div><div class="line">    B,</div><div class="line">    C</div><div class="line">)</div></pre></td></tr></table></figure></p>
+		<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>  从去年开始，混合框架开发模式就开始步入到我的实际工作当中，听说过<a href="http://reactnative.cn" target="_blank" rel="external">React Native</a>,但重来没有真正花时间和精力去了解和学习使用他。去年还写过一篇关于混合框架开发的<a href="http://blog.devyan.cn/2016/09/23/使用Cordova搭建混合框架/" target="_blank" rel="external">使用Cordova搭建混合框架</a>文章。主要是介绍使用Cordova框架，这个框架已经在我们公司实践一年多时间了，到目前为止已经有六个APP使用了该框架，效果还是挺突出的，第一个混合框架的出生，也让我感到很惊讶，使用H5也能写出交互效果如此不逊的APP，顿时也开始担心自己的小饭碗了。<br>然而最近为什么突然想起了<code>React Native</code>呢？总感觉在一个“圈子”里混熟了，混久了，自己很没安全感呢？对，我就是这么一个人，我想多了解一下这方面的技术。毕竟像QQ空间这么热门的APP都在使用该框架，我有什么权利不去了解该框架呢？好了，不多说了，开始学习<code>React Native</code>框架吧！</p>
+<h3 id="‘boost-iterator-iterator-adaptor-hpp’-file-not-found-问题"><a href="#‘boost-iterator-iterator-adaptor-hpp’-file-not-found-问题" class="headerlink" title="‘boost/iterator/iterator_adaptor.hpp’ file not found 问题"></a>‘boost/iterator/iterator_adaptor.hpp’ file not found 问题</h3><p>按照<a href="http://reactnative.cn/docs/0.45/getting-started.html#content" target="_blank" rel="external">官网</a>的指示，我做的挺顺利的。到最后一步的时，被一个<code>‘boost/iterator/iterator_adaptor.hpp’ file not found</code>编译问题折腾了我大半天，google百度出现同样的问题的很多，唯一看到一篇很靠谱的解决方案的<a href="http://vanessa.b3log.org/articles/2017/06/12/1497235254333.html" target="_blank" rel="external">文章</a>，却感觉说的很含糊，或着说吧，扯进了一些无关紧要的信息进来，导致我无从下手，其实只需要将<code>boost_1_63_0.tar.gz</code>下载下来解压放到<code>node_modules/react-native/third-party</code>下即可,跟.rncache文件夹没有任何关系，误导了我找这个文件夹就花了半天，也不知道如何下载该文件！不过总之还是得感谢该作者！让我从不断更新和重装node版本，各个软件环境等错误的尝试中找到一丝灵感。找到了.rncache文件夹，尝试这解压下面的压缩文件，只有<code>boost_1_63_0.tar.gz</code>文件解压有问题，所以去<a href="https://sourceforge.net/projects/boost/files/boost/1.63.0/" target="_blank" rel="external">官网</a>下载了该文件。总之解决该问题之后，迫不及待的就想要写出第一个Hellow World程序了。</p>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -107,7 +105,7 @@
 
 <div class="article-categories">
   <span></span>
-  <a class="article-category-link" href="/categories/基础篇/">基础篇</a>
+  <a class="article-category-link" href="/categories/summary/">summary</a>
 </div>
 
 
@@ -117,7 +115,7 @@
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://lyroger.github.io/2016/02/24/关于字符串的分割/" data-title="关于字符串的分割 | 罗琰的技术博客" data-tsina="null" class="share clearfix">
+	  <div data-url="http://lyroger.github.io/2017/06/15/React Native小疙瘩/" data-title="React Native小疙瘩 | 罗琰的技术博客" data-tsina="null" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -130,19 +128,11 @@
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2016/02/25/iOS基础深究/" title="iOS基础深究">
-  <strong>上一篇：</strong><br/>
-  <span>
-  iOS基础深究</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2016/01/21/线上APP使用动态库添加需求方式/"  title="动态添加需求(动态库)">
+<a href="/2017/01/11/2016年个人总结/"  title="2016年个人总结">
  <strong>下一篇：</strong><br/> 
- <span>动态添加需求(动态库)
+ <span>2016年个人总结
 </span>
 </a>
 </div>
@@ -151,7 +141,7 @@
 
 	
 <section id="comments" class="comment">
-	<div class="ds-thread" data-thread-key="2016/02/24/关于字符串的分割/" data-title="关于字符串的分割" data-url="http://lyroger.github.io/2016/02/24/关于字符串的分割/"></div>
+	<div class="ds-thread" data-thread-key="2017/06/15/React Native小疙瘩/" data-title="React Native小疙瘩" data-url="http://lyroger.github.io/2017/06/15/React Native小疙瘩/"></div>
 </section>
 
 
@@ -161,7 +151,7 @@
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目錄</strong>
  
- <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#衍生学习"><span class="toc-number">1.</span> <span class="toc-text">衍生学习</span></a></li></ol>
+ <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#‘boost-iterator-iterator-adaptor-hpp’-file-not-found-问题"><span class="toc-number">2.</span> <span class="toc-text">‘boost/iterator/iterator_adaptor.hpp’ file not found 问题</span></a></li></ol>
  
   </div>
 
