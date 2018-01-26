@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://lyroger.github.io/"/>
-  <updated>2017-06-15T07:08:44.000Z</updated>
+  <updated>2017-06-21T07:49:07.000Z</updated>
   <id>http://lyroger.github.io/</id>
   
   <author>
@@ -14,6 +14,24 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>截屏遇到的那些事</title>
+    <link href="http://lyroger.github.io/2017/06/21/%E6%88%AA%E5%B1%8F%E9%81%87%E5%88%B0%E7%9A%84%E9%82%A3%E4%BA%9B%E4%BA%8B/"/>
+    <id>http://lyroger.github.io/2017/06/21/截屏遇到的那些事/</id>
+    <published>2017-06-21T07:36:02.000Z</published>
+    <updated>2017-06-21T07:49:07.000Z</updated>
+    
+    <content type="html"><![CDATA[<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">- (void)screenShotAction</div><div class="line">&#123;</div><div class="line">    CGSize size = self.webView.size;</div><div class="line">    UIGraphicsBeginImageContextWithOptions(size, NO, [UIScreen mainScreen].scale);</div><div class="line">    [self.webView drawViewHierarchyInRect:CGRectMake(0,0, size.width, size.height) afterScreenUpdates:NO];</div><div class="line">    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();</div><div class="line">    image = [self getImageWithRect:CGRectMake(0, 64, kScreenWidth, kScreenHeight-64-50) image:image];</div><div class="line">    self.shotScreenImage = image;</div><div class="line">    UIGraphicsEndImageContext();</div><div class="line">    </div><div class="line">    //写入相册</div><div class="line">    UIImageWriteToSavedPhotosAlbum(image, self, nil, nil);</div><div class="line">    [self testShare];</div><div class="line">&#125;</div><div class="line"></div><div class="line">//截取图片区域图片</div><div class="line">- (UIImage *)getImageWithRect:(CGRect)rect image:(UIImage*)image</div><div class="line">&#123;</div><div class="line">    //图片的缩放比例</div><div class="line">    rect = CGRectMake(rect.origin.x*image.scale, rect.origin.y*image.scale, rect.size.width*image.scale, rect.size.height*image.scale);</div><div class="line">    </div><div class="line">    CGImageRef imageRef = image.CGImage;</div><div class="line">    CGImageRef imagePartRef = CGImageCreateWithImageInRect(imageRef,rect);</div><div class="line">    UIImage *cropImage = [UIImage imageWithCGImage:imagePartRef];</div><div class="line">    CGImageRelease(imagePartRef);</div><div class="line">    </div><div class="line">    return cropImage;</div><div class="line">&#125;</div></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      &lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/di
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>React Native小疙瘩</title>
@@ -590,44 +608,6 @@
       &lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h3&gt;&lt;p&gt;数据库数据加密的必要性就不多说了，直接进入主题，如何使用FMDB对数据加密。&lt;br&gt;这里我建议使用cocospod来管理第三方库，如果没有安
     
     </summary>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>swift学习笔记（基础篇）</title>
-    <link href="http://lyroger.github.io/2015/12/14/swift%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E5%9F%BA%E7%A1%80%E7%AF%87%EF%BC%89/"/>
-    <id>http://lyroger.github.io/2015/12/14/swift学习笔记（基础篇）/</id>
-    <published>2015-12-14T06:35:00.000Z</published>
-    <updated>2016-10-09T01:39:25.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>####一数值型字面量</p>
-<ul>
-<li>一个十进制数，没有前缀</li>
-<li>一个二进制数，前缀是0b</li>
-<li>一个八进制数，前缀是0o</li>
-<li>一个十六进制数，前缀是0x</li>
-</ul>
-<p>列如：下面的所有整数字面量的十进制值都是17</p>
-<blockquote>
-<p>let decimalInteger = 17<br>let binaryInteger = 0b10001       // 二进制的17<br>let octalInteger = 0o21           // 八进制的17<br>let hexadecimalInteger = 0x11     // 十六进制的17</p>
-</blockquote>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;####一数值型字面量&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;一个十进制数，没有前缀&lt;/li&gt;
-&lt;li&gt;一个二进制数，前缀是0b&lt;/li&gt;
-&lt;li&gt;一个八进制数，前缀是0o&lt;/li&gt;
-&lt;li&gt;一个十六进制数，前缀是0x&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;列如：下面的所有整数字面量的十进制值都
-    
-    </summary>
-    
-      <category term="swift" scheme="http://lyroger.github.io/categories/swift/"/>
     
     
   </entry>
