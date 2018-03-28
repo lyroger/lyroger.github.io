@@ -4,50 +4,23 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>swift学习笔记（基础篇） | 罗琰的技术博客</title>
+    <title>消息发送及转发机制 | 罗琰的技术博客</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="luoyan">
     
 
     
-    <meta name="description" content="####一数值型字面量
-
-一个十进制数，没有前缀
-一个二进制数，前缀是0b
-一个八进制数，前缀是0o
-一个十六进制数，前缀是0x
-
-列如：下面的所有整数字面量的十进制值都是17
-
-let decimalInteger = 17let binaryInteger = 0b10001       // 二进制的17let octalInteger = 0o21           // 八进制的17l">
+    <meta name="description" content="一、消息发送机制  需要了解OC里面消息的发送机制，你的先了解对象的结构，这里不花太多时间去讲解类的结构相关知识，你的了解它有那么一个结构体，有一个cached对象，专门用来缓存近期使用过的方法，还有一个method对象，存储这该对象的所有方法列表。知道有这么一回事后，我们就好讲解消息发送的过程了。  对象调用的方法最终都是通过消息发送的，转换成obj_msgSend(id,sel)函数。那么调用">
 <meta property="og:type" content="article">
-<meta property="og:title" content="swift学习笔记（基础篇）">
-<meta property="og:url" content="http://lyroger.github.io/2015/12/14/swift学习笔记（基础篇）/index.html">
+<meta property="og:title" content="消息发送及转发机制">
+<meta property="og:url" content="http://lyroger.github.io/2018/03/28/消息发送及转发机制/index.html">
 <meta property="og:site_name" content="罗琰的技术博客">
-<meta property="og:description" content="####一数值型字面量
-
-一个十进制数，没有前缀
-一个二进制数，前缀是0b
-一个八进制数，前缀是0o
-一个十六进制数，前缀是0x
-
-列如：下面的所有整数字面量的十进制值都是17
-
-let decimalInteger = 17let binaryInteger = 0b10001       // 二进制的17let octalInteger = 0o21           // 八进制的17l">
-<meta property="og:updated_time" content="2016-10-09T01:39:25.000Z">
+<meta property="og:description" content="一、消息发送机制  需要了解OC里面消息的发送机制，你的先了解对象的结构，这里不花太多时间去讲解类的结构相关知识，你的了解它有那么一个结构体，有一个cached对象，专门用来缓存近期使用过的方法，还有一个method对象，存储这该对象的所有方法列表。知道有这么一回事后，我们就好讲解消息发送的过程了。  对象调用的方法最终都是通过消息发送的，转换成obj_msgSend(id,sel)函数。那么调用">
+<meta property="og:updated_time" content="2018-03-28T07:26:50.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="swift学习笔记（基础篇）">
-<meta name="twitter:description" content="####一数值型字面量
-
-一个十进制数，没有前缀
-一个二进制数，前缀是0b
-一个八进制数，前缀是0o
-一个十六进制数，前缀是0x
-
-列如：下面的所有整数字面量的十进制值都是17
-
-let decimalInteger = 17let binaryInteger = 0b10001       // 二进制的17let octalInteger = 0o21           // 八进制的17l">
+<meta name="twitter:title" content="消息发送及转发机制">
+<meta name="twitter:description" content="一、消息发送机制  需要了解OC里面消息的发送机制，你的先了解对象的结构，这里不花太多时间去讲解类的结构相关知识，你的了解它有那么一个结构体，有一个cached对象，专门用来缓存近期使用过的方法，还有一个method对象，存储这该对象的所有方法列表。知道有这么一回事后，我们就好讲解消息发送的过程了。  对象调用的方法最终都是通过消息发送的，转换成obj_msgSend(id,sel)函数。那么调用">
 
     
     <link rel="alternative" href="/atom.xml" title="罗琰的技术博客" type="application/atom+xml">
@@ -103,7 +76,7 @@ let decimalInteger = 17let binaryInteger = 0b10001       // 二进制的17let oc
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2015/12/14/swift学习笔记（基础篇）/" title="swift学习笔记（基础篇）" itemprop="url">swift学习笔记（基础篇）</a>
+      <a href="/2018/03/28/消息发送及转发机制/" title="消息发送及转发机制" itemprop="url">消息发送及转发机制</a>
   </h1>
   <p class="article-author">By
        
@@ -111,7 +84,7 @@ let decimalInteger = 17let binaryInteger = 0b10001       // 二进制的17let oc
 		
     <span id="busuanzi_container_page_pv">阅读<span id="busuanzi_value_page_pv"></span></span>
   <p class="article-time">
-    <time datetime="2015-12-14T06:35:00.000Z" itemprop="datePublished"> Published 2015-12-14</time>
+    <time datetime="2018-03-28T07:36:02.000Z" itemprop="datePublished"> Published 2018-03-28</time>
   </p>
 </header>
 	<div class="article-content">
@@ -119,30 +92,37 @@ let decimalInteger = 17let binaryInteger = 0b10001       // 二进制的17let oc
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">Contents</strong>
 		
-			
+			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#一、消息发送机制"><span class="toc-number">1.</span> <span class="toc-text">一、消息发送机制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#二、消息转发机制"><span class="toc-number">2.</span> <span class="toc-text">二、消息转发机制</span></a></li></ol>
 		
 		</div>
 		
-		<p>####一数值型字面量</p>
-<ul>
-<li>一个十进制数，没有前缀</li>
-<li>一个二进制数，前缀是0b</li>
-<li>一个八进制数，前缀是0o</li>
-<li>一个十六进制数，前缀是0x</li>
-</ul>
-<p>列如：下面的所有整数字面量的十进制值都是17</p>
-<blockquote>
-<p>let decimalInteger = 17<br>let binaryInteger = 0b10001       // 二进制的17<br>let octalInteger = 0o21           // 八进制的17<br>let hexadecimalInteger = 0x11     // 十六进制的17</p>
-</blockquote>
+		<h3 id="一、消息发送机制"><a href="#一、消息发送机制" class="headerlink" title="一、消息发送机制"></a>一、消息发送机制</h3><p>  需要了解OC里面消息的发送机制，你的先了解对象的结构，这里不花太多时间去讲解类的结构相关知识，你的了解它有那么一个结构体，有一个cached对象，专门用来缓存近期使用过的方法，还有一个method对象，存储这该对象的所有方法列表。知道有这么一回事后，我们就好讲解消息发送的过程了。<br>  对象调用的方法最终都是通过消息发送的，转换成<code>obj_msgSend(id,sel)</code>函数。那么调用方法OC里面到底是怎么一个流程呢？</p>
+<ol>
+<li>检测@selector是否需要忽略。像具有垃圾回收机制的Mac OX环境，就不会去理会retain release等函数。</li>
+<li>检测target是否为nil.在OC里面是允许nil对象发送消息的，并且不会Crash掉，因为在此直接忽略掉了。</li>
+<li>如果上面两个过程都通过了，则从cached中寻找是否有该消息。找到了就直接执行。</li>
+<li>如果在cache中没有找到，那么就会去该对象的方法分发表。</li>
+<li>如果该对象的方法分发表中没有找到则去父类继续找，一直找到NSObject。</li>
+<li>如果一直找不到。那么消息发送的过程也就到此告一段落了。接下来就要进行消息转发。以至于程序不会那么容易Crash掉。</li>
+</ol>
+<h3 id="二、消息转发机制"><a href="#二、消息转发机制" class="headerlink" title="二、消息转发机制"></a>二、消息转发机制</h3><p>  调用一个函数，系统按照消息发送的机制走过一遍后，都无法正确的执行该函数，如果不处理，将会Crash掉，抛出<code>unrecognized selector sent to instance 0x1c8003f60</code>的异常。为了程序不那么容易Crash掉，系统给了一套转发机制，留给了一些机会让其处理。</p>
+<ol>
+<li><p>首先，系统会调用对象的<code>+ (BOOL)resolveInstanceMethod:(SEL)sel</code>方法，在该方法中让你有机会给该对象添加处理函数。如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"> + (BOOL)resolveInstanceMethod:(SEL)sel &#123;</div><div class="line">   if (sel == @selector(doSomeThing)) &#123;</div><div class="line">       NSLog(@&quot;add method here&quot;);</div><div class="line">       IMP method = (IMP)doOtherSomething;</div><div class="line">       class_addMethod([self class], sel, method, &quot;v@:&quot;);</div><div class="line">       return YES;</div><div class="line">   &#125;</div><div class="line">   return [super resolveInstanceMethod:sel];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>如果以上没有处理或没有成功，系统将继续调用<code>- (id)forwardingTargetForSelector:(SEL)aSelector</code>函数。该方法的作用是让其添加新的对象去处理该事件。相当于一个备用的对象处理，或者说是转让其他对象处理。实现如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">  - (id)forwardingTargetForSelector:(SEL)aSelector&#123;</div><div class="line">       NSLog(@&quot;aSelector = %@&quot;,NSStringFromSelector(aSelector));</div><div class="line">    return [[TargetModel alloc] init];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>如果第二步也没处理，那么将到最后的完整消息转发机制了。他的原理就是获取消息签名，然后将消息的相关信息存储到<code>NSInvocation</code>对象中，包括方法名、参数等信息。然后调用<code>- (void)forwardInvocation:(NSInvocation *)anInvocation</code>函数。实现如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line">- (NSMethodSignature *)methodSignatureForSelector:(SEL)aSelector</div><div class="line">&#123;</div><div class="line">    NSString *method = NSStringFromSelector(aSelector);</div><div class="line">    if ([@&quot;doSomeThing&quot; isEqualToString:method]) &#123;</div><div class="line">        NSMethodSignature *signature = [NSMethodSignature signatureWithObjCTypes:&quot;v@:@&quot;];</div><div class="line">        return signature;</div><div class="line">    &#125;</div><div class="line">    return nil;</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (void)forwardInvocation:(NSInvocation *)anInvocation</div><div class="line">&#123;</div><div class="line">    SEL sel = @selector(doSomeThing:);</div><div class="line">    NSMethodSignature *signature = [NSMethodSignature signatureWithObjCTypes:&quot;v@:@&quot;];</div><div class="line">    anInvocation = [NSInvocation invocationWithMethodSignature:signature];</div><div class="line">    </div><div class="line">    if ([self respondsToSelector:sel]) &#123;</div><div class="line">        [anInvocation invokeWithTarget:self];</div><div class="line">        return;</div><div class="line">    &#125; else &#123;</div><div class="line">        TargetModel *target = [[TargetModel alloc] init];</div><div class="line">        if ([target respondsToSelector:sel]) &#123;</div><div class="line">            [anInvocation invokeWithTarget:target];</div><div class="line">            return;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    // 从继承树中查找</div><div class="line">    [super forwardInvocation:anInvocation];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>如果第三步还未处理，那么该消息将会抛弃，最终导致程序Crash。</p>
+</li>
+</ol>
   
 	</div>
 		<footer class="article-footer clearfix">
 <div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/swift/">swift</a>
-</div>
 
 
 </div>
@@ -151,7 +131,7 @@ let decimalInteger = 17let binaryInteger = 0b10001       // 二进制的17let oc
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://lyroger.github.io/2015/12/14/swift学习笔记（基础篇）/" data-title="swift学习笔记（基础篇） | 罗琰的技术博客" data-tsina="null" class="share clearfix">
+	  <div data-url="http://lyroger.github.io/2018/03/28/消息发送及转发机制/" data-title="消息发送及转发机制 | 罗琰的技术博客" data-tsina="null" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -164,19 +144,11 @@ let decimalInteger = 17let binaryInteger = 0b10001       // 二进制的17let oc
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2015/12/23/FMDB数据库加密/" title="FMDB使用SQLCipher加密">
-  <strong>上一篇：</strong><br/>
-  <span>
-  FMDB使用SQLCipher加密</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2015/10/22/升级XCode7和iOS9相关问题/"  title="升级XCode7和iOS9相关问题">
+<a href="/2017/06/21/截屏遇到的那些事/"  title="截屏遇到的那些事">
  <strong>下一篇：</strong><br/> 
- <span>升级XCode7和iOS9相关问题
+ <span>截屏遇到的那些事
 </span>
 </a>
 </div>
@@ -185,7 +157,7 @@ let decimalInteger = 17let binaryInteger = 0b10001       // 二进制的17let oc
 
 	
 <section id="comments" class="comment">
-	<div class="ds-thread" data-thread-key="2015/12/14/swift学习笔记（基础篇）/" data-title="swift学习笔记（基础篇）" data-url="http://lyroger.github.io/2015/12/14/swift学习笔记（基础篇）/"></div>
+	<div class="ds-thread" data-thread-key="2018/03/28/消息发送及转发机制/" data-title="消息发送及转发机制" data-url="http://lyroger.github.io/2018/03/28/消息发送及转发机制/"></div>
 </section>
 
 
@@ -195,7 +167,7 @@ let decimalInteger = 17let binaryInteger = 0b10001       // 二进制的17let oc
   <div id="toc" class="toc-aside">
   <strong class="toc-title">Contents</strong>
  
- 
+ <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#一、消息发送机制"><span class="toc-number">1.</span> <span class="toc-text">一、消息发送机制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#二、消息转发机制"><span class="toc-number">2.</span> <span class="toc-text">二、消息转发机制</span></a></li></ol>
  
   </div>
 

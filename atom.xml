@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://lyroger.github.io/"/>
-  <updated>2017-06-21T07:49:07.000Z</updated>
+  <updated>2018-03-28T07:26:50.000Z</updated>
   <id>http://lyroger.github.io/</id>
   
   <author>
@@ -14,6 +14,47 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>消息发送及转发机制</title>
+    <link href="http://lyroger.github.io/2018/03/28/%E6%B6%88%E6%81%AF%E5%8F%91%E9%80%81%E5%8F%8A%E8%BD%AC%E5%8F%91%E6%9C%BA%E5%88%B6/"/>
+    <id>http://lyroger.github.io/2018/03/28/消息发送及转发机制/</id>
+    <published>2018-03-28T07:36:02.000Z</published>
+    <updated>2018-03-28T07:26:50.000Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="一、消息发送机制"><a href="#一、消息发送机制" class="headerlink" title="一、消息发送机制"></a>一、消息发送机制</h3><p>  需要了解OC里面消息的发送机制，你的先了解对象的结构，这里不花太多时间去讲解类的结构相关知识，你的了解它有那么一个结构体，有一个cached对象，专门用来缓存近期使用过的方法，还有一个method对象，存储这该对象的所有方法列表。知道有这么一回事后，我们就好讲解消息发送的过程了。<br>  对象调用的方法最终都是通过消息发送的，转换成<code>obj_msgSend(id,sel)</code>函数。那么调用方法OC里面到底是怎么一个流程呢？</p>
+<ol>
+<li>检测@selector是否需要忽略。像具有垃圾回收机制的Mac OX环境，就不会去理会retain release等函数。</li>
+<li>检测target是否为nil.在OC里面是允许nil对象发送消息的，并且不会Crash掉，因为在此直接忽略掉了。</li>
+<li>如果上面两个过程都通过了，则从cached中寻找是否有该消息。找到了就直接执行。</li>
+<li>如果在cache中没有找到，那么就会去该对象的方法分发表。</li>
+<li>如果该对象的方法分发表中没有找到则去父类继续找，一直找到NSObject。</li>
+<li>如果一直找不到。那么消息发送的过程也就到此告一段落了。接下来就要进行消息转发。以至于程序不会那么容易Crash掉。</li>
+</ol>
+<h3 id="二、消息转发机制"><a href="#二、消息转发机制" class="headerlink" title="二、消息转发机制"></a>二、消息转发机制</h3><p>  调用一个函数，系统按照消息发送的机制走过一遍后，都无法正确的执行该函数，如果不处理，将会Crash掉，抛出<code>unrecognized selector sent to instance 0x1c8003f60</code>的异常。为了程序不那么容易Crash掉，系统给了一套转发机制，留给了一些机会让其处理。</p>
+<ol>
+<li><p>首先，系统会调用对象的<code>+ (BOOL)resolveInstanceMethod:(SEL)sel</code>方法，在该方法中让你有机会给该对象添加处理函数。如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"> + (BOOL)resolveInstanceMethod:(SEL)sel &#123;</div><div class="line">   if (sel == @selector(doSomeThing)) &#123;</div><div class="line">       NSLog(@&quot;add method here&quot;);</div><div class="line">       IMP method = (IMP)doOtherSomething;</div><div class="line">       class_addMethod([self class], sel, method, &quot;v@:&quot;);</div><div class="line">       return YES;</div><div class="line">   &#125;</div><div class="line">   return [super resolveInstanceMethod:sel];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>如果以上没有处理或没有成功，系统将继续调用<code>- (id)forwardingTargetForSelector:(SEL)aSelector</code>函数。该方法的作用是让其添加新的对象去处理该事件。相当于一个备用的对象处理，或者说是转让其他对象处理。实现如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">  - (id)forwardingTargetForSelector:(SEL)aSelector&#123;</div><div class="line">       NSLog(@&quot;aSelector = %@&quot;,NSStringFromSelector(aSelector));</div><div class="line">    return [[TargetModel alloc] init];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>如果第二步也没处理，那么将到最后的完整消息转发机制了。他的原理就是获取消息签名，然后将消息的相关信息存储到<code>NSInvocation</code>对象中，包括方法名、参数等信息。然后调用<code>- (void)forwardInvocation:(NSInvocation *)anInvocation</code>函数。实现如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line">- (NSMethodSignature *)methodSignatureForSelector:(SEL)aSelector</div><div class="line">&#123;</div><div class="line">    NSString *method = NSStringFromSelector(aSelector);</div><div class="line">    if ([@&quot;doSomeThing&quot; isEqualToString:method]) &#123;</div><div class="line">        NSMethodSignature *signature = [NSMethodSignature signatureWithObjCTypes:&quot;v@:@&quot;];</div><div class="line">        return signature;</div><div class="line">    &#125;</div><div class="line">    return nil;</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (void)forwardInvocation:(NSInvocation *)anInvocation</div><div class="line">&#123;</div><div class="line">    SEL sel = @selector(doSomeThing:);</div><div class="line">    NSMethodSignature *signature = [NSMethodSignature signatureWithObjCTypes:&quot;v@:@&quot;];</div><div class="line">    anInvocation = [NSInvocation invocationWithMethodSignature:signature];</div><div class="line">    </div><div class="line">    if ([self respondsToSelector:sel]) &#123;</div><div class="line">        [anInvocation invokeWithTarget:self];</div><div class="line">        return;</div><div class="line">    &#125; else &#123;</div><div class="line">        TargetModel *target = [[TargetModel alloc] init];</div><div class="line">        if ([target respondsToSelector:sel]) &#123;</div><div class="line">            [anInvocation invokeWithTarget:target];</div><div class="line">            return;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    // 从继承树中查找</div><div class="line">    [super forwardInvocation:anInvocation];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>如果第三步还未处理，那么该消息将会抛弃，最终导致程序Crash。</p>
+</li>
+</ol>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;一、消息发送机制&quot;&gt;&lt;a href=&quot;#一、消息发送机制&quot; class=&quot;headerlink&quot; title=&quot;一、消息发送机制&quot;&gt;&lt;/a&gt;一、消息发送机制&lt;/h3&gt;&lt;p&gt;  需要了解OC里面消息的发送机制，你的先了解对象的结构，这里不花太多时间去讲解类的结构相关
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>截屏遇到的那些事</title>
@@ -585,29 +626,6 @@
     </summary>
     
       <category term="高效篇" scheme="http://lyroger.github.io/categories/%E9%AB%98%E6%95%88%E7%AF%87/"/>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>FMDB使用SQLCipher加密</title>
-    <link href="http://lyroger.github.io/2015/12/23/FMDB%E6%95%B0%E6%8D%AE%E5%BA%93%E5%8A%A0%E5%AF%86/"/>
-    <id>http://lyroger.github.io/2015/12/23/FMDB数据库加密/</id>
-    <published>2015-12-23T09:33:00.000Z</published>
-    <updated>2016-10-09T01:39:25.000Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>数据库数据加密的必要性就不多说了，直接进入主题，如何使用FMDB对数据加密。<br>这里我建议使用cocospod来管理第三方库，如果没有安装可以参考<a href="http://blog.devtang.com/blog/2014/05/25/use-cocoapod-to-manage-ios-lib-dependency/" target="_blank" rel="external">这里</a>来安装.</p>
-<h4 id="1-首先，我们的下载SQLCipher依赖库"><a href="#1-首先，我们的下载SQLCipher依赖库" class="headerlink" title="1.首先，我们的下载SQLCipher依赖库"></a>1.首先，我们的下载SQLCipher依赖库</h4><p>1.1 <figure class="highlight plain"><figcaption><span>'SQLCipher', '~> 3.1.0'```</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">#### 2.其次，我们需要一个具有加密功能的FMDB版本；</div><div class="line">加密的FMDB其实是一个分支，也就是说，如果你的FMDB版本不支持SQLCipher加密，那么你就需要替换FMDB。Github上关于该分支的安装只提供了cocospod的安装方式。Github上FMDB的[地址](https://github.com/ccgus/fmdb);</div><div class="line">使用cocospod来跟新具有加密功能的FMDB</div><div class="line">2.1 将以前```pod &apos;FMDB&apos;``` 改成```pod &apos;FMDB/SQLCipher&apos;</div></pre></td></tr></table></figure></p>
-<p>2.2 更新pod <code>pod update</code></p>
-<h4 id="3-最后，修改一下你的代码"><a href="#3-最后，修改一下你的代码" class="headerlink" title="3.最后，修改一下你的代码"></a>3.最后，修改一下你的代码</h4><p>定义一个加密的key,这里我自定义了一个宏<code>DB_SECRETKEY</code>,然后在FMDB中的FMDatabase.m类中加一句代码，如下图:<br><img src="/images/F0547994-4A8E-43A8-A937-DC94A4637CA2.png" alt=""></p>
-<h4 id="4-效果"><a href="#4-效果" class="headerlink" title="4.效果"></a>4.效果</h4><p>run下你的工程，并对数据库做一些操作，然后在使用其他管理工具打开数据时，你就发现他会提示你file is encrypted or is not a database<br><img src="/images/AFB7BECA-A6FF-4CE4-BAA1-99097EFAD5BF.png" alt=""></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h3&gt;&lt;p&gt;数据库数据加密的必要性就不多说了，直接进入主题，如何使用FMDB对数据加密。&lt;br&gt;这里我建议使用cocospod来管理第三方库，如果没有安
-    
-    </summary>
     
     
   </entry>
